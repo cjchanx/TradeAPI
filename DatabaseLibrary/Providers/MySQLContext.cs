@@ -24,7 +24,7 @@ namespace DatabaseLibrary.Providers
         #endregion
 
         /// <summary>
-        ///  These methods are from a class example from CPSC471F2021
+        ///  REFERENCE : The following methods are from a class example from CPSC471F2021 Week 8 Lectures.
         /// </summary>
         #region Methods
 

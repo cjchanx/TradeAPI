@@ -8,7 +8,7 @@ using System.Net;
 namespace DatabaseLibrary.Core
 {
     /// <summary>
-    ///  The following class is from a class example from CPSC471F2021.
+    ///  REFERENCE : The following class is from an class example from CPSC471F2021 Week 8 Lectures.
     ///  StatusResponse is a class which stores the specified HTTP response of a request
     ///  when it is called in Database Helper methods.
     /// </summary>
