@@ -45,6 +45,8 @@ The following section includes important information and general guidelines for 
         GetCollection() method : can be different filters based on specific needs of the entity, in general
                                  returns List<[Entity]_db> of queried objects from the database.
     ```
+4. Setup [Entity]Helper.cs inside Webservice.ControllerHelpers
+5. Inside Webservice.Controllers setup [Entity[s]]Controller.cs with all API endpoints.
 
 # Frontend Information
 The following section includes important information and general guidelines for contributing to this project's frontend.
