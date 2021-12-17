@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingDB", "TradingDB\TradingDB.csproj", "{C0B9507D-26A2-490F-90AE-E429E33B3037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "TradingDB\WebService.csproj", "{C0B9507D-26A2-490F-90AE-E429E33B3037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingLibrary", "TradingLibrary\TradingLibrary.csproj", "{D51DED35-68ED-4574-8DB9-2958891BDB45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLibrary", "DatabaseLibrary\DatabaseLibrary.csproj", "{1662186C-992B-46A5-B4DF-F30B36B4AB3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C0B9507D-26A2-490F-90AE-E429E33B3037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B9507D-26A2-490F-90AE-E429E33B3037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B9507D-26A2-490F-90AE-E429E33B3037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51DED35-68ED-4574-8DB9-2958891BDB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51DED35-68ED-4574-8DB9-2958891BDB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51DED35-68ED-4574-8DB9-2958891BDB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51DED35-68ED-4574-8DB9-2958891BDB45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1662186C-992B-46A5-B4DF-F30B36B4AB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1662186C-992B-46A5-B4DF-F30B36B4AB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1662186C-992B-46A5-B4DF-F30B36B4AB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1662186C-992B-46A5-B4DF-F30B36B4AB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
