@@ -12,7 +12,7 @@ namespace DatabaseLibrary.Providers
     /// <summary>
     /// MySQLContext is DBContext specifically for MySQL connections.
     /// </summary>
-    internal class MySQLContext : DBContext
+    public class MySQLContext : DBContext
     {
         #region Constructors
 
