@@ -9,7 +9,7 @@ Uses Libraries available from NuGet.
 
 For internal dependencies, right click Dependencies for a particular project and add the required dependencies.
 - DatabaseLibrary references TradingLibrary
-- WebService references DatbaseLibrary and TradingLibrary
+- WebService references DatabaseLibrary and TradingLibrary
 
 # Backend Information
 The following section includes important information and general guidelines for contributing to this project's backend.
