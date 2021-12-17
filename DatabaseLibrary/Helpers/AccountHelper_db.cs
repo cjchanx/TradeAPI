@@ -10,7 +10,7 @@ using TradingLibrary.Models;
 
 namespace DatabaseLibrary.Helpers
 {
-    public class AccountHelper
+    public class AccountHelper_db
     {
 
         /// <summary>
