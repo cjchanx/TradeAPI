@@ -7,18 +7,22 @@ using Newtonsoft.Json;
 
 namespace TradingLibrary.Models
 {
-    public class RequestResponse
+    /// <summary>
+    ///  REFERENCE : The following class is based on a class example from CPSC471F2021 Week 8 Lectures.
+    /// This class is a response message for data.
+    /// </summary>
+    public class ResponseMessage
     {
         #region Constructors
         /// <summary>
         ///  Default constructor for serialization.
         /// </summary>
-        public RequestResponse() {}
+        public ResponseMessage() {}
 
         /// <summary>
         /// Account constructor with parameters.
         /// </summary>
-        public RequestResponse(bool success, string message, object data)
+        public ResponseMessage(bool success, string message, object data)
         {
             Success = success;
             Message = message;
