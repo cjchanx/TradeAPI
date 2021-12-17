@@ -6,6 +6,7 @@ Uses Libraries available from NuGet.
 - **Newtonsoft.Json**   *TradingDB*
 - **MySQL.Data**    *DatabaseLibrary*
 - Nest
+
 For internal dependencies, right click Dependencies for a particular project and add the required dependencies.
 - DatabaseLibrary references TradingLibrary
 - WebService references DatbaseLibrary and TradingLibrary
