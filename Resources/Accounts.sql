@@ -9,3 +9,6 @@
     CONSTRAINT `AK_Accounts_Id` UNIQUE (`Id`),
 	PRIMARY KEY(`Id`)
 );
+
+ALTER TABLE Accounts
+ADD FOREIGN KEY(Broker) REFERENCES Brokers(Name);
