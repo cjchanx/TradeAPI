@@ -5,6 +5,7 @@ using TradingLibrary.Models;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
+
 namespace Webservice.ControllerHelpers
 {
     public class AccountHelper
@@ -18,7 +19,7 @@ namespace Webservice.ControllerHelpers
         /// <returns>null if inst was null</returns>
         public static Account Convert(Account_db inst)
         {
-            if(inst == null)
+            if (inst == null)
                 return null;
 
             return new Account(inst.Active, inst.Broker, inst.Date, inst.Name);
@@ -32,20 +33,20 @@ namespace Webservice.ControllerHelpers
         /// </summary>
         /// <param name="includeDetails">Whether to include detailed internal server message.</param>
         /// <returns></returns>
-        public static ResponseMessage Add(JObject data ,DBContext context, out HttpStatusCode stat, bool includeDetails = false)
+        public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
             DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
-            string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>(): null);
+            string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
 
             // Add instance to DB
             var inst = AccountHelper_db.Add(broker, name, desc, context, out StatusResponse statusResponse);
 
             // Process includeErrors
-            if(statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
                 statusResponse.Message = "Error occured adding new account.";
             }
@@ -56,6 +57,26 @@ namespace Webservice.ControllerHelpers
                 statusResponse.Message,
                 Convert(inst)
             );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
+        public static ResponseMessage GetCollection(DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Get instances from DB
+            var dbInst = AccountHelper_db.getCollection(context, out StatusResponse statusResponse);
+
+            // Convert to object
+            var inst = dbInst?.Select(x => AccountHelper.Convert(x)).ToList();
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Something went wrong while retrieving the Account.";
+            }
+
+            // Return response
+            var response = new ResponseMessage(inst != null, statusResponse.Message, inst);
             stat = statusResponse.StatusCode;
             return response;
         }
