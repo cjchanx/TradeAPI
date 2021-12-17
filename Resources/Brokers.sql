@@ -1,0 +1,6 @@
+﻿CREATE TABLE Brokers
+(
+	`Name` VARCHAR(25) NOT NULL, 
+	`Website` VARCHAR(30) NOT NULL,
+	PRIMARY KEY(`Name`)
+);
