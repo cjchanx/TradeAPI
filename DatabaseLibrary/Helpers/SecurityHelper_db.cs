@@ -54,13 +54,13 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
-        public static List<Security_db> getCollection(DBContext context, out StatusResponse response)
+        public static List<Security_db> GetCollection(DBContext context, out StatusResponse response)
         {
             try
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM SECURITY",
+                    commandText: "SELECT * FROM Security",
                     parameters: new Dictionary<string, object>
                     {
 
@@ -93,5 +93,7 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
     }
+
 }

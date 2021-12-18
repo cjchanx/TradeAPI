@@ -22,7 +22,7 @@ namespace Webservice.ControllerHelpers
             if (inst == null)
                 return null;
 
-            return new Transactions(inst.Id, inst.AccountRef, inst.Action, inst.AveragePrice, inst.Commission, inst.DateCreated, inst.OrderRef, inst.Price, inst.Quantity, inst.RealizedPNL);
+            return new Transactions(inst.Id, inst.AccountRef, inst.Action, inst.AveragePrice, inst.Commission, inst.DateCreated, inst.Quantity, inst.RealizedPNL);
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace Webservice.ControllerHelpers
             float realizedpnl = (data.ContainsKey("realizedpnl") ? data.GetValue("realizedpnl").Value<float>() : 0);
 
             // Add instance to DB
-            var inst = TransactionsHelper_db.Add(id, accountref, action, averageprice, commission, datecreated, orderref, price, quantity, realizedpnl, context, out StatusResponse statusResponse);
+            var inst = TransactionsHelper_db.Add_id(id, accountref, action, averageprice, commission, datecreated, quantity, realizedpnl, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)

@@ -30,7 +30,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO BROKERS (Name, Website) VALUES (@name, @website)",
+                    commandText: "INSERT INTO Brokers (Name, Website) VALUES (@name, @website)",
                     parameters: new Dictionary<string, object> {
                         {"@name", inst.Name },
                         {"@website", inst.Website }
@@ -58,7 +58,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM BROKERS",
+                    commandText: "SELECT * FROM Brokers",
                     parameters: new Dictionary<string, object>
                     {
 

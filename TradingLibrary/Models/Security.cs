@@ -36,7 +36,7 @@ namespace TradingLibrary.Models
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "price")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>

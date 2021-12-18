@@ -11,11 +11,18 @@ using System.Net;
 
 namespace Webservice.Controllers
 {
-    [Route("api/accounts")]
+    [Route("api/transactions")]
     [ApiController]
     public class TransactionsController : ControllerBase
     {
         #region Intialization
+        public TransactionsController(IWebHostEnvironment h, AppSettingsHelper a, DatabaseContextHelper db)
+        {
+            HostingEnvironment = h;
+            AppSettings = a;
+            Database = db;
+        }
+
         /// <summary>
         /// Reference to hosting environment instance.
         /// </summary>

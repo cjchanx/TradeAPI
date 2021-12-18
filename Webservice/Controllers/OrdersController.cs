@@ -8,14 +8,22 @@ using Webservice.ControllerHelpers;
 using TradingLibrary.Models;
 using DatabaseLibrary.Helpers;
 using System.Net;
+using DatabaseLibrary.Core;
 
 namespace Webservice.Controllers
 {
-    [Route("api/accounts")]
+    [Route("api/orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         #region Intialization
+        public OrdersController(IWebHostEnvironment h, AppSettingsHelper a, DatabaseContextHelper db)
+        {
+            HostingEnvironment = h;
+            AppSettings = a;
+            Database = db;
+        }
+
         /// <summary>
         /// Reference to hosting environment instance.
         /// </summary>
@@ -41,6 +49,24 @@ namespace Webservice.Controllers
         {
             var response = OrdersHelper.GetCollection(Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
+            return response;
+        }
+
+        [HttpPost]
+        [Route("UpdateOrders")]
+        public ResponseMessage UpdateOrders()
+        {
+            // Call for update
+            int rows = OrdersHelper_db.UpdateOrders(Database.DBContext, out StatusResponse statusResponse);
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !HostingEnvironment.IsDevelopment())
+            {
+                statusResponse.Message = "Something went wrong while retrieving the Account.";
+            }
+
+            // Return response
+            var response = new ResponseMessage(rows != -1, statusResponse.Message, rows);
             return response;
         }
 

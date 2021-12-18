@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DatabaseLibrary.Helpers;
-using Webservice.ControllerHelpers;
+using DatabaseLibrary.Core;
+using Webservice.Controllers;
 using TradingLibrary.Models;
 namespace Webservice.Pages
 {
@@ -9,14 +10,6 @@ namespace Webservice.Pages
     {
         public void OnGet()
         {
-        }
-
-        public ActionResult Create() {
-            List<Accounts> list = new List<Accounts>();
-            AccountsHelper accountsHelper = new AccountsHelper();
-            list = accountsHelper.data;
-
-            return ViewComponent(list);
         }
     }
 }

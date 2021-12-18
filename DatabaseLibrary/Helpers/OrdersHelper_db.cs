@@ -7,6 +7,8 @@ using DatabaseLibrary.Core;
 using DatabaseLibrary.Models;
 using System.Data;
 using TradingLibrary.Models;
+using DatabaseLibrary.Helpers;
+using TradingLibrary.Enums;
 
 namespace DatabaseLibrary.Helpers
 {
@@ -37,7 +39,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO ORDERS (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol)",
+                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
@@ -64,6 +66,40 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        /// <summary>
+        /// Remove removes the relevant Order from the database by Id, returns rowsAffected.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="context"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static int Remove(int Id, DBContext context, out StatusResponse response)
+        {
+            try
+            { 
+                // Attempt to remove from database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Orders` WHERE Id = @Id",
+                    parameters: new Dictionary<string, object> {
+                        {"@Id", Id },
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Deleted entry successfully.");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return 0;
+            }
+        }
+
 
         public static List<Orders_db> getCollection(DBContext context, out StatusResponse response)
         {
@@ -71,7 +107,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM ORDERS",
+                    commandText: "SELECT * FROM Orders",
                     parameters: new Dictionary<string, object>
                     {
 
@@ -106,6 +142,73 @@ namespace DatabaseLibrary.Helpers
             {
                 response = new StatusResponse(ex);
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// UpdateOrders processes an update on the database for every order that had the security price
+        /// reach its fulfilled price.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static int UpdateOrders(DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Get all entries from the DB for orders which need to be fulfilled
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Orders AS O, Security AS S WHERE(O.Symbol = S.Symbol AND(O.ACTION = 0 OR O.ACTION = 2 AND O.TargetPrice <= S.Price) OR (O.Symbol = S.Symbol AND(O.ACTION = 1 OR O.ACTION = 3) AND O.TargetPrice >= S.Price)",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // For every order that needs to be fulfilled
+                List<Security_db> inst = new List<Security_db>();
+                int total = inst.Count;
+                foreach (DataRow row in table.Rows)
+                {
+                    int Id = int.Parse(row["id"].ToString());
+                    int AccountRef = int.Parse(row["accountref"].ToString());
+                    int Action = int.Parse(row["action"].ToString());
+                    DateTime date = DateTime.Parse(row["datecreated"].ToString());
+                    float price = float.Parse(row["Price"].ToString());
+                    int Quantity = int.Parse(row["quantity"].ToString());
+                    string symbol = row["symbol"].ToString();
+                    double rate = CommissionsHelper_db.GetCommission(row["BrokerName"].ToString(), Action, context, out StatusResponse resp);
+
+                    // Delete this entry
+                    Remove(Id, context, out StatusResponse statusResponse);
+
+                    // Realized PnL
+                    float realizedPnL = 0;
+                    if(Action == (int)OrderAction.Upper_limit_sell)
+                    {
+                        realizedPnL = price;
+                    }
+                    else if(Action == (int)OrderAction.Lower_limit_sell)
+                    {
+                        realizedPnL = price;
+                    }
+
+                    // Add new entry to Transactions table
+                    TransactionsHelper_db.Add_id(Id, AccountRef, Action, price, (float)(price * (rate / 100)), DateTime.Now, Quantity, realizedPnL, context, out StatusResponse resp1); 
+                }
+
+                // Return
+                response = new StatusResponse("Security successfully retreived.");
+                return total;
+            }
+            catch (Exception ex)
+            {
+                response = new StatusResponse(ex);
+                return -1;
             }
         }
     }

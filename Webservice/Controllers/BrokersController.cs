@@ -10,9 +10,19 @@ using DatabaseLibrary.Helpers;
 using System.Net;
 namespace Webservice.Controllers
 {
+
+    [Route("api/brokers")]
+    [ApiController]
     public class BrokersController : ControllerBase
     {
         #region Intialization
+        public BrokersController(IWebHostEnvironment h, AppSettingsHelper a, DatabaseContextHelper db)
+        {
+            HostingEnvironment = h;
+            AppSettings = a;
+            Database = db;
+        }
+
         /// <summary>
         /// Reference to hosting environment instance.
         /// </summary>

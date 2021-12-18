@@ -48,7 +48,7 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage GetCollection(DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
             // Get instances from DB
-            var dbInst = SecurityHelper_db.getCollection(context, out StatusResponse statusResponse);
+            var dbInst = SecurityHelper_db.GetCollection(context, out StatusResponse statusResponse);
 
             // Convert to object
             var inst = dbInst?.Select(x => SecurityHelper.Convert(x)).ToList();
