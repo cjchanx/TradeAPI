@@ -5,50 +5,33 @@ using TradingLibrary.Models;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-
 namespace Webservice.ControllerHelpers
 {
-    public class AccountHelper
+    public class BrokersHelper
     {
-        #region Converters
 
-        /// <summary>
-        /// Returns a Account from an instance of an Account_db
-        /// </summary>
-        /// <param name="inst"></param>
-        /// <returns>null if inst was null</returns>
-        public static Account Convert(Account_db inst)
+        public static Brokers Convert(Brokers_db inst)
         {
             if (inst == null)
                 return null;
 
-            return new Account(inst.Active, inst.Broker, inst.Date, inst.Name);
+            return new Brokers(inst.Name, inst.Website);
         }
 
-        #endregion
-
-        // Methods
-        /// <summary>
-        /// Sets up a new account based on the given object data.
-        /// </summary>
-        /// <param name="includeDetails">Whether to include detailed internal server message.</param>
-        /// <returns></returns>
         public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
-            string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
-            DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
-            string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
+            string website = (data.ContainsKey("website") ? data.GetValue("website").Value<string>() : null);
+
 
             // Add instance to DB
-            var inst = AccountHelper_db.Add(broker, name, desc, context, out StatusResponse statusResponse);
+            var inst = BrokersHelper_db.Add(name, website, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
-                statusResponse.Message = "Error occured adding new account.";
+                statusResponse.Message = "Error occured adding new broker.";
             }
 
             // Setup and return response
@@ -64,10 +47,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage GetCollection(DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
             // Get instances from DB
-            var dbInst = AccountHelper_db.getCollection(context, out StatusResponse statusResponse);
+            var dbInst = BrokersHelper_db.getCollection(context, out StatusResponse statusResponse);
 
             // Convert to object
-            var inst = dbInst?.Select(x => AccountHelper.Convert(x)).ToList();
+            var inst = dbInst?.Select(x => BrokersHelper.Convert(x)).ToList();
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
@@ -80,5 +63,6 @@ namespace Webservice.ControllerHelpers
             stat = statusResponse.StatusCode;
             return response;
         }
+
     }
 }

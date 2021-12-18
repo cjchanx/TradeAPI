@@ -37,43 +37,43 @@ namespace TradingLibrary.Models
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "AccountRef")]
+        [JsonProperty(PropertyName = "accountref")]
         public int AccountRef { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Action")]
+        [JsonProperty(PropertyName = "action")]
         public int Action { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "DateCreated")]
+        [JsonProperty(PropertyName = "datecreated")]
         public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Quantity")]
+        [JsonProperty(PropertyName = "quantity")]
         public int Quantity { get; set; }
         
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Status")]
+        [JsonProperty(PropertyName = "status")]
         public int Status { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Symbol")]
+        [JsonProperty(PropertyName = "symbol")]
         public String Symbol { get; set; }
 
         #endregion

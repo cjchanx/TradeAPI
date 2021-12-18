@@ -40,63 +40,63 @@ namespace TradingLibrary.Models
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "AccountRef")]
+        [JsonProperty(PropertyName = "accountref")]
         public int AccountRef { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Action")]
+        [JsonProperty(PropertyName = "action")]
         public int Action { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "AveragePrice")]
+        [JsonProperty(PropertyName = "averageprice")]
         public float AveragePrice { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Commission")]
+        [JsonProperty(PropertyName = "commission")]
         public float Commission { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "DateCreated")]
+        [JsonProperty(PropertyName = "datecreated")]
         public DateTime DateCreated { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "OrderRef")]
+        [JsonProperty(PropertyName = "orderref")]
         public int OrderRef { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Price")]
+        [JsonProperty(PropertyName = "price")]
         public float Price { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Quantity")]
+        [JsonProperty(PropertyName = "quantity")]
         public int Quantity { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "RealizedPNL")]
+        [JsonProperty(PropertyName = "realizedpnl")]
         public float RealizedPNL { get; set; }
 
 

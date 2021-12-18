@@ -29,13 +29,13 @@ namespace TradingLibrary.Models
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Symbol")]
+        [JsonProperty(PropertyName = "symbol")]
         public String Symbol { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "Price")]
+        [JsonProperty(PropertyName = "price")]
         public float Price { get; set; }
 
 

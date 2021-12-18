@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Models
 {
-    public class Account_db
+    public class Accounts_db
     {
         #region Constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public Account_db() { }
+        public Accounts_db() { }
 
         /// <summary>
         /// Account constructor with parameters.
@@ -22,7 +22,7 @@ namespace DatabaseLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Account_db(bool active, string broker, DateTime date, string name, string desc, int id)
+        public Accounts_db(bool active, string broker, DateTime date, string name, string desc, int id)
         {
             Id = id;
             Active = active;

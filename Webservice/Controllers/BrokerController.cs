@@ -8,12 +8,9 @@ using Webservice.ControllerHelpers;
 using TradingLibrary.Models;
 using DatabaseLibrary.Helpers;
 using System.Net;
-
 namespace Webservice.Controllers
 {
-    [Route("api/accounts")]
-    [ApiController]
-    public class AccountsController : ControllerBase
+    public class BrokerController : ControllerBase
     {
         #region Intialization
         /// <summary>
@@ -36,19 +33,19 @@ namespace Webservice.Controllers
         // API
 
         [HttpGet]
-        [Route("GetAccounts")]
+        [Route("GetBrokers")]
         public ResponseMessage GetAccounts()
         {
-            var response = AccountsHelper.GetCollection(Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            var response = BrokersHelper.GetCollection(Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return response;
         }
 
         [HttpPost]
-        [Route("AddAccount")]
+        [Route("AddBrokers")]
         public ResponseMessage AddAccount([FromBody] JObject data)
         {
-            var resp = AccountsHelper.Add(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            var resp = BrokersHelper.Add(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }

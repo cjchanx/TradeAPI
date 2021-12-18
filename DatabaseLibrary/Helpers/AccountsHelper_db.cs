@@ -10,14 +10,14 @@ using TradingLibrary.Models;
 
 namespace DatabaseLibrary.Helpers
 {
-    public class AccountHelper_db
+    public class AccountsHelper_db
     {
 
         /// <summary>
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Account_db Add(string broker, string name, string desc, DBContext context, out StatusResponse response)
+        public static Accounts_db Add(string broker, string name, string desc, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace DatabaseLibrary.Helpers
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid broker entered.");
 
                 // Create instance
-                Account_db inst = new Account_db(
+                Accounts_db inst = new Accounts_db(
                     true,
                     broker,
                     DateTime.Now,
@@ -64,7 +64,7 @@ namespace DatabaseLibrary.Helpers
         }
 
 
-        public static List<Account_db> getCollection(DBContext context, out StatusResponse response)
+        public static List<Accounts_db> getCollection(DBContext context, out StatusResponse response)
         {
             try
             {
@@ -82,10 +82,10 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
 
                 // Parse
-                List<Account_db> inst = new List<Account_db>();
+                List<Accounts_db> inst = new List<Accounts_db>();
                 foreach (DataRow row in table.Rows)
                 {
-                    inst.Add(new Account_db(
+                    inst.Add(new Accounts_db(
                         id: int.Parse(row["Id"].ToString()),
                         active: Boolean.Parse(row["Active"].ToString()),
                         broker: row["Broker"].ToString(),

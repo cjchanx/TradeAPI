@@ -33,25 +33,25 @@ namespace TradingLibrary.Models
         /// <summary>
         /// Account Ref
         /// </summary>
-        [JsonProperty(PropertyName = "AccountRef")]
+        [JsonProperty(PropertyName = "accountref")]
         public int AccountRef { get; set; }
 
         /// <summary>
         /// Available Funds
         /// </summary>
-        [JsonProperty(PropertyName = "AvailableFunds")]
+        [JsonProperty(PropertyName = "availablefunds")]
         public float AvailableFunds { get; set; }
 
         /// <summary>
         /// Gross Position
         /// </summary>
-        [JsonProperty(PropertyName = "GrossPositionValue")]
+        [JsonProperty(PropertyName = "grosspositionvalue")]
         public float GrossPositionValue { get; set; }
 
         /// <summary>
         /// Net Liquidation
         /// </summary>
-        [JsonProperty(PropertyName = "NetLiquidation")]
+        [JsonProperty(PropertyName = "netliquidation")]
         public float NetLiquidation { get; set; }
 
         #endregion

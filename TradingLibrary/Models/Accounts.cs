@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace TradingLibrary.Models
 {
-    public class Account
+    public class Accounts
     {
         #region Constructors
 
@@ -19,7 +19,7 @@ namespace TradingLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Account(bool active, string broker, DateTime date, string name)
+        public Accounts(bool active, string broker, DateTime date, string name)
         {
             Active = active;
             Broker = broker; 
@@ -52,7 +52,7 @@ namespace TradingLibrary.Models
         /// <summary>
         /// DateTime object of the Date which the Account was created.
         /// </summary>
-        [JsonProperty(PropertyName = "DateCreated")]
+        [JsonProperty(PropertyName = "datecreated")]
         public DateTime Date { get; set; }
 
         /// <summary>
