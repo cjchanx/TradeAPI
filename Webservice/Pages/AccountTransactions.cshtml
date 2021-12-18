@@ -1,5 +1,8 @@
 ﻿@page
-@model TradingLibrary.Models.Transactions;
+@using Webservice.ContextHelpers
+@using DatabaseLibrary.Helpers
+@inject DatabaseContextHelper context
+@model TradingLibrary.Models.Transactions
 @{
 }
 
@@ -26,7 +29,10 @@
                 </div>
             </div>
             <div>
-                <div class="text-right"><strong>TestAccount</strong></div>
+            @{
+                string name = HttpContext.Session.GetString("AccountID");
+            }
+                <div class="text-right" ><strong>@name</strong></div>
                 <div class="text-right">Logout</div>
             </div>
         </nav>
@@ -36,7 +42,7 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Id)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Id)</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.OrderRef)</a>
@@ -62,6 +68,25 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.RealizedPNL)</a>
             </th>
+            @foreach (var item in TransactionsHelper_db.getCollection(context.DBContext))
+            {
+                int id = int.Parse(HttpContext.Session.GetString("AccountID"));
+                if (id == @item.AccountRef)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.OrderRef</td>
+                    <td>@item.Action</td>
+                    <td>@item.Commission</td>
+                    <td>@item.AveragePrice</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.DateCreated</td>
+                    <td>@item.RealizedPNL</td>
+                </tr>
+                }
+
+            }
         </tr>
     </thead>
     <tbody>

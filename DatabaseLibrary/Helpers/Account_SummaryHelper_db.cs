@@ -106,5 +106,44 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static List<Account_Summary_db> getCollection(DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Account_Summary",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Account_Summary_db> inst = new List<Account_Summary_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Account_Summary_db(
+                        AccountRef: int.Parse(row["accountref"].ToString()),
+                        AvailableFunds: float.Parse(row["availablefunds"].ToString()),
+                        GrossPositionValue: float.Parse(row["grosspositionvalue"].ToString()),
+                        NetLiquidation: float.Parse(row["netliquidation"].ToString())
+                        )
+                    );
+                }
+
+
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿@page
-@model Webservice.Pages.AccountSummaryModel
+@using Webservice.ContextHelpers
+@using DatabaseLibrary.Helpers
+@inject DatabaseContextHelper context
+@model TradingLibrary.Models.Account_Summary
 @{
 }
 
@@ -26,14 +29,27 @@
                 </div>
             </div>
             <div>
-                <div class="text-right"><strong>TestAccount</strong></div>
-                <div class="text-right">Logout</div>
+            @{
+                string name = HttpContext.Session.GetString("AccountID");
+            }
+                <div class="text-right" ><strong>@name</strong></div>
+                <a class="text-right" asp-page="/ClientPage">Logout</a>
             </div>
         </nav>
     </header>
 
         
 <h2>Account Summary</h2>
-<h3>Available Funds: </h3>
-<h3>Gross Position Value: </h3>
-<h3>Net Liquidation: </h3>
+
+            @foreach (var item in Account_SummaryHelper_db.getCollection(context.DBContext))
+            {
+                int id = int.Parse(HttpContext.Session.GetString("AccountID"));
+                if (id == @item.AccountRef)
+                {
+                    <div class="text-left" ><strong>Available Funds: @item.AvailableFunds</strong></div>
+                    <div class="text-left" ><strong>Gross Position Value: @item.GrossPositionValue</strong></div>
+                    <div class="text-left" ><strong>Net Liquidation: @item.NetLiquidation</strong></div>
+                    break;
+                }
+
+            }

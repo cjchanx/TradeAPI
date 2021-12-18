@@ -85,6 +85,15 @@ namespace Webservice
 
             services.AddRazorPages();
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc().AddRazorPagesOptions(options => options.Conventions.AddPageRoute("/Home", ""));
 
         }
@@ -120,6 +129,7 @@ namespace Webservice
                 app.UseStaticFiles();
                 app.UseRouting();
                 app.UseAuthorization();
+                app.UseSession();
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapRazorPages();

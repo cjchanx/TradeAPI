@@ -24,7 +24,7 @@ namespace TradingDB.Pages
 
         public IActionResult OnPostClientLogin()
         {
-            return RedirectToPage("AccountSummary");
+            return RedirectToPage("ClientPage");
         }
     }
 }
