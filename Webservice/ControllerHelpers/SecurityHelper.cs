@@ -32,7 +32,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
-                statusResponse.Message = "Error occured adding new broker.";
+                statusResponse.Message = "Error occured adding new Security.";
             }
 
             // Setup and return response
@@ -56,7 +56,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Something went wrong while retrieving the Account.";
+                statusResponse.Message = "Something went wrong while retrieving the Security.";
             }
 
             // Return response

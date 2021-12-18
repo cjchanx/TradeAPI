@@ -77,7 +77,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Something went wrong while retrieving the Account.";
+                statusResponse.Message = "Something went wrong while retrieving the transaction.";
             }
 
             // Return response
