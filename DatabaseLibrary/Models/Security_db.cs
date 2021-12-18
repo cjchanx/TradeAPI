@@ -6,7 +6,37 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Models
 {
-    internal class Security_db
+    public class Security_db
     {
+        #region Constructors
+        /// <summary>
+        /// Default constructor for serialization.
+        /// </summary>
+        public Security_db() { }
+
+        /// <summary>
+        /// security
+        /// </summary>
+        /// <param name="Symbol"></param>
+        /// <param name="Description"></param>
+        /// <param name="Price"></param>
+        public Security_db(string Symbol, string Description, float Price)
+        {
+            this.Symbol = Symbol;
+            this.Description = Description;
+            this.Price = Price;
+        }
+
+        #endregion
+
+        #region Properties
+
+        public string Symbol { get; set; }
+
+        public string Description { get; set; }
+
+        public float Price { get; set; }
+
+        #endregion
     }
 }
