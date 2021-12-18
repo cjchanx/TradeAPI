@@ -37,7 +37,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO ORDERS (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol)",
+                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
@@ -71,7 +71,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM ORDERS",
+                    commandText: "SELECT * FROM Orders",
                     parameters: new Dictionary<string, object>
                     {
 

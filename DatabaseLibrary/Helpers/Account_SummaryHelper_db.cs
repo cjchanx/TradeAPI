@@ -41,7 +41,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO ACCOUNT_SUMMARY (AccountRef, AvailableFunds, GrossPositionValue, NetLiquidation) VALUES (@accountref, @availablefunds, @grosspositionvalue, @netliquidation)",
+                    commandText: "INSERT INTO Account_Summary (AccountRef, AvailableFunds, GrossPositionValue, NetLiquidation) VALUES (@accountref, @availablefunds, @grosspositionvalue, @netliquidation)",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@availablefunds", inst.AvailableFunds },
@@ -72,7 +72,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM ACCOUNT_SUMMARY",
+                    commandText: "SELECT * FROM Account_Summary",
                     parameters: new Dictionary<string, object>
                     {
 

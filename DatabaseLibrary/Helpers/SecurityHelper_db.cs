@@ -60,7 +60,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM SECURITY",
+                    commandText: "SELECT * FROM Security",
                     parameters: new Dictionary<string, object>
                     {
 

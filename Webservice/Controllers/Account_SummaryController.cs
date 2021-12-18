@@ -11,11 +11,18 @@ using System.Net;
 
 namespace Webservice.Controllers
 {
-    [Route("api/accounts")]
+    [Route("api/account_summary")]
     [ApiController]
     public class Account_SummaryController : ControllerBase
     {
         #region Intialization
+        public Account_SummaryController(IWebHostEnvironment h, AppSettingsHelper a, DatabaseContextHelper db)
+        {
+            HostingEnvironment = h;
+            AppSettings = a;
+            Database = db;
+        }
+
         /// <summary>
         /// Reference to hosting environment instance.
         /// </summary>
@@ -30,7 +37,6 @@ namespace Webservice.Controllers
         /// Reference to the DBContextHelper instance.
         /// </summary>
         private readonly DatabaseContextHelper Database;
-
         #endregion
 
         // API
