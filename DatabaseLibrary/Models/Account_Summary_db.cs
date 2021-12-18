@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Models
 {
-    public class Account_Summarydb
+    public class Account_Summary_db
     {
         #region Constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public Account_Summarydb() { }
+        public Account_Summary_db() { }
 
         /// <summary>
         /// Account_summary
@@ -21,7 +21,7 @@ namespace DatabaseLibrary.Models
         /// <param name="AvailableFunds"></param>
         /// <param name="GrossPositionValue"></param>
         /// <param name="NetLiquidation"></param>
-        public Account_Summarydb(int AccountRef, float AvailableFunds, float GrossPositionValue, float NetLiquidation)
+        public Account_Summary_db(int AccountRef, float AvailableFunds, float GrossPositionValue, float NetLiquidation)
         {
             this.AccountRef = AccountRef;
             this.AvailableFunds = AvailableFunds;
