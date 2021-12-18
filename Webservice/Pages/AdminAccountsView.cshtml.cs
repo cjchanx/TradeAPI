@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DatabaseLibrary.Helpers;
-using DatabaseLibrary.Core;
+using Webservice.ControllerHelpers;
+using TradingLibrary.Models;
 namespace Webservice.Pages
 {
     public class AdminAccountsViewModel : PageModel
@@ -11,9 +12,11 @@ namespace Webservice.Pages
         }
 
         public ActionResult Create() {
-            AccountsHelper_db test = new AccountsHelper_db();
-      
-            return null;
+            List<Accounts> list = new List<Accounts>();
+            AccountsHelper accountsHelper = new AccountsHelper();
+            list = accountsHelper.data;
+
+            return ViewComponent(list);
         }
     }
 }
