@@ -104,9 +104,9 @@ namespace Webservice
                     app.UseHsts();
 
                 // Setup databases
-                /*bool databaseSetupSuccessfully = dbContextHelper.Initialize(out string setupMessage);
+                bool databaseSetupSuccessfully = dbContextHelper.Initialize(out string setupMessage);
                 if (!databaseSetupSuccessfully)
-                    throw new Exception("Failed to establish a valid connection with the database.\n\nError: " + setupMessage);*/
+                    throw new Exception("Failed to establish a valid connection with the database.\n\nError: " + setupMessage);
 
                 // Setup CORS
                 app.UseCors("ALLOW_ALL_CORS");
