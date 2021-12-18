@@ -22,7 +22,7 @@ namespace DatabaseLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Accounts_db(bool active, string broker, DateTime date, string name, string desc, int id)
+        public Accounts_db(int id, bool active, string broker, DateTime date, string name, string desc)
         {
             Id = id;
             Active = active;

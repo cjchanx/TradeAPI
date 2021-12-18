@@ -22,7 +22,7 @@ namespace Webservice.ControllerHelpers
             if (inst == null)
                 return null;
 
-            return new Accounts(inst.Active, inst.Broker, inst.Date, inst.Name);
+            return new Accounts(inst.Id, inst.Active, inst.Broker, inst.Date, inst.Name, inst.Description);
         }
 
         #endregion
@@ -36,6 +36,7 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
+            int id = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
             DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
@@ -43,7 +44,7 @@ namespace Webservice.ControllerHelpers
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
 
             // Add instance to DB
-            var inst = AccountsHelper_db.Add(broker, name, desc, context, out StatusResponse statusResponse);
+            var inst = AccountsHelper_db.Add(id, broker, name, desc, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
@@ -63,6 +64,7 @@ namespace Webservice.ControllerHelpers
 
         public static ResponseMessage GetCollection(DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
+            Console.WriteLine("Something went wrong while retrieving the Account. 1");
             // Get instances from DB
             var dbInst = AccountsHelper_db.getCollection(context, out StatusResponse statusResponse);
 

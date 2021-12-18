@@ -15,7 +15,16 @@ namespace Webservice.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
+
+
         #region Intialization
+        public AccountsController(IWebHostEnvironment h, AppSettingsHelper a, DatabaseContextHelper db)
+        {
+            HostingEnvironment = h;
+            AppSettings = a;
+            Database = db;
+        }
+
         /// <summary>
         /// Reference to hosting environment instance.
         /// </summary>
@@ -39,6 +48,8 @@ namespace Webservice.Controllers
         [Route("GetAccounts")]
         public ResponseMessage GetAccounts()
         {
+            Console.WriteLine("Something went wrong while retrieving the Account. 1");
+
             var response = AccountsHelper.GetCollection(Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return response;

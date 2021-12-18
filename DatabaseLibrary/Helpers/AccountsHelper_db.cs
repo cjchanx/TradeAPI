@@ -17,7 +17,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Accounts_db Add(string broker, string name, string desc, DBContext context, out StatusResponse response)
+        public static Accounts_db Add(int id, string broker, string name, string desc, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -29,17 +29,19 @@ namespace DatabaseLibrary.Helpers
 
                 // Create instance
                 Accounts_db inst = new Accounts_db(
+                    id,
                     true,
                     broker,
                     DateTime.Now,
                     name,
-                    desc,
-                    2);
+                    desc
+                    );
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO ACCOUNTS (Active, Broker, DateCreated, Name, Description) VALUES (@active, @broker, @date, @name, @desc)",
+                    commandText: "INSERT INTO ACCOUNTS (Id, Active, Broker, DateCreated, Name, Description) VALUES (@id, @active, @broker, @date, @name, @desc)",
                     parameters: new Dictionary<string, object> {
+                        {"@id", inst.Id },
                         {"@active", true },
                         {"@broker", inst.Broker },
                         {"@date", inst.Date },
@@ -87,9 +89,9 @@ namespace DatabaseLibrary.Helpers
                 {
                     inst.Add(new Accounts_db(
                         id: int.Parse(row["Id"].ToString()),
-                        active: Boolean.Parse(row["Active"].ToString()),
+                        active: row["Active"].ToString() == "1",
                         broker: row["Broker"].ToString(),
-                        date: DateTime.Parse(row["date"].ToString()),
+                        date: DateTime.Parse(row["datecreated"].ToString()),
                         name: row["name"].ToString(),
                         desc: row["description"].ToString()
                         )

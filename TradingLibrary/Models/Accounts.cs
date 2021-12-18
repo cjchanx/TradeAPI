@@ -19,12 +19,14 @@ namespace TradingLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Accounts(bool active, string broker, DateTime date, string name)
+        public Accounts(int id, bool active, string broker, DateTime date, string name, string desc)
         {
+            Id = id;
             Active = active;
             Broker = broker; 
             Date = date;
             Name = name;
+            Description = desc;
         }
 
         #endregion
