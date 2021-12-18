@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseLibrary.Core;
+﻿using DatabaseLibrary.Core;
 using DatabaseLibrary.Models;
 using System.Data;
-using TradingLibrary.Models;
 
 namespace DatabaseLibrary.Helpers
 {
@@ -42,6 +36,60 @@ namespace DatabaseLibrary.Helpers
                     commandText: "INSERT INTO Transactions (Id, AccountRef, Action, AveragePrice, Commission, DateCreated, Price, Quantity, RealizedPNL) VALUES (@id, @accountref, @action, @averageprice, @commission, @datecreated, @price, @quantity, @realizedpnl)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
+                        {"@accountref", inst.AccountRef },
+                        {"@action", inst.Action },
+                        {"@averageprice", inst.AveragePrice },
+                        {"@commission", inst.Commission },
+                        {"@datecreated", inst.DateCreated },
+                        {"@price", inst.Price },
+                        {"@quantity", inst.Quantity },
+                        {"@realizedpnl", inst.RealizedPNL }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Transaction added successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
+        /// Relies on Id AUTO_INCREMENT
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static Transactions_db Add(int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int Quantity, float RealizedPNL, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+
+
+                // Create instance
+                Transactions_db inst = new Transactions_db(
+                    0,
+                    AccountRef,
+                    Action,
+                    AveragePrice,
+                    Commission,
+                    DateCreated,
+                    Quantity,
+                    RealizedPNL
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "INSERT INTO Transactions (AccountRef, Action, AveragePrice, Commission, DateCreated, Price, Quantity, RealizedPNL) VALUES (@accountref, @action, @averageprice, @commission, @datecreated, @price, @quantity, @realizedpnl)",
+                    parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
                         {"@averageprice", inst.AveragePrice },

@@ -54,7 +54,7 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
-        public static List<Security_db> getCollection(DBContext context, out StatusResponse response)
+        public static List<Security_db> GetCollection(DBContext context, out StatusResponse response)
         {
             try
             {
@@ -132,4 +132,5 @@ namespace DatabaseLibrary.Helpers
             }
         }
     }
+
 }

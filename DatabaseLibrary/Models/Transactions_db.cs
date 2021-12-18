@@ -55,7 +55,6 @@ namespace DatabaseLibrary.Models
 
         public DateTime DateCreated { get; set; }
 
-
         public float Price { get; set; }
 
         public int Quantity { get; set; }
