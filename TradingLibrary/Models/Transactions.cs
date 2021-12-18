@@ -20,7 +20,7 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Transactions(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int OrderRef, float Price, int Quantity, float RealizedPNL)
+        public Transactions(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, float Price, int Quantity, float RealizedPNL)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -29,7 +29,6 @@ namespace TradingLibrary.Models
             this.Commission = Commission;
             this.DateCreated = DateCreated;
             this.Price = Price;
-            this.OrderRef = OrderRef;
             this.Quantity = Quantity;
             this.RealizedPNL = RealizedPNL;
 
@@ -75,11 +74,6 @@ namespace TradingLibrary.Models
         public DateTime DateCreated { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonProperty(PropertyName = "orderref")]
-        public int OrderRef { get; set; }
 
         /// <summary>
         /// 

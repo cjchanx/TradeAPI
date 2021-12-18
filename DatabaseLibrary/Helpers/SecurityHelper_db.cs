@@ -93,5 +93,43 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static List<Security_db> getCollection(DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Security",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Security_db> inst = new List<Security_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Security_db(
+                        Symbol: row["symbol"].ToString(),
+                        Description: row["description"].ToString(),
+                        Price: float.Parse(row["price"].ToString())
+                        )
+                    );
+                }
+
+                // Return
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

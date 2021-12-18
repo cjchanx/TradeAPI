@@ -2,7 +2,7 @@
 @using Webservice.ContextHelpers
 @using DatabaseLibrary.Helpers
 @inject DatabaseContextHelper context
-@model TradingLibrary.Models.Accounts
+@model TradingLibrary.Models.Security
 @{
 }
 
@@ -31,27 +31,27 @@
         </nav>
     </header>
 
-<h2>Accounts</h2>
+<h2>Security</h2>
 <p>
-    <a asp-page="/AdminCreateAccounts">Create New Account</a>
+    <a asp-page="/AdminCreateSecuirty">Create New Security</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Id)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Symbol)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Date)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Price)</a>
             </th>
-            @foreach (var item in AccountsHelper_db.getCollection(context.DBContext))
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Description)</a>
+            </th>
+            @foreach (var item in SecurityHelper_db.getCollection(context.DBContext))
             {
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Active</td>
-                    <td>@item.Name</td>
-                    <td>@item.Broker</td>
-                    <td>@item.Date</td>
+                    <td>@item.Symbol</td>
+                    <td>@item.Price</td>
                     <td>@item.Description</td>
                 </tr>
             }

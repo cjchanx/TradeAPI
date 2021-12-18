@@ -17,7 +17,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Transactions_db Add(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int OrderRef, float Price, int Quantity, float RealizedPNL, DBContext context, out StatusResponse response)
+        public static Transactions_db Add(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, float Price, int Quantity, float RealizedPNL, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -32,7 +32,6 @@ namespace DatabaseLibrary.Helpers
                     AveragePrice,
                     Commission,
                     DateCreated,
-                    OrderRef,
                     Price,
                     Quantity,
                     RealizedPNL
@@ -40,7 +39,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Transactions (Id, AccountRef, Action, AveragePrice, Commission, DateCreated, OrderRef, Price, Quantity, RealizedPNL) VALUES (@id, @accountref, @action, @averageprice, @commission, @datecreated, @orderref, @price, @quantity, @realizedpnl)",
+                    commandText: "INSERT INTO Transactions (Id, AccountRef, Action, AveragePrice, Commission, DateCreated, Price, Quantity, RealizedPNL) VALUES (@id, @accountref, @action, @averageprice, @commission, @datecreated, @price, @quantity, @realizedpnl)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
@@ -48,7 +47,6 @@ namespace DatabaseLibrary.Helpers
                         {"@averageprice", inst.AveragePrice },
                         {"@commission", inst.Commission },
                         {"@datecreated", inst.DateCreated },
-                        {"@orderref", inst.OrderRef },
                         {"@price", inst.Price },
                         {"@quantity", inst.Quantity },
                         {"@realizedpnl", inst.RealizedPNL }
@@ -99,7 +97,6 @@ namespace DatabaseLibrary.Helpers
                         AveragePrice: float.Parse(row["averageprice"].ToString()),
                         Commission: float.Parse(row["commission"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
-                        OrderRef: int.Parse(row["orderref"].ToString()),
                         Price: float.Parse(row["price"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
                         RealizedPNL: float.Parse(row["realizedpnl"].ToString())
@@ -146,7 +143,6 @@ namespace DatabaseLibrary.Helpers
                         AveragePrice: float.Parse(row["averageprice"].ToString()),
                         Commission: float.Parse(row["commission"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
-                        OrderRef: int.Parse(row["orderref"].ToString()),
                         Price: float.Parse(row["price"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
                         RealizedPNL: float.Parse(row["realizedpnl"].ToString())

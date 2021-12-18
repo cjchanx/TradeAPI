@@ -1,0 +1,45 @@
+﻿@page
+@model TradingDB.Pages.AdminCreateSecurityModel
+@{
+}
+
+
+<div class="container border" style="padding:20px">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CreateSecurity.Symbol"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="CreateSecurity.Symbol" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="CreateSecurity.Symbol"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CreateSecurity.Description"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="CreateSecurity.Description" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="CreateSecurity.Description"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CreateSecurity.Price"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="CreateSecurity.Price" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="CreateSecurity.Price"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Create"/>
+            </div>
+        </div>
+    </form>
+</div>

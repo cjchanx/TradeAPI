@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using DatabaseLibrary.Helpers;
 namespace TradingDB.Pages
 {
     public class ClientPageModel : PageModel
@@ -12,8 +12,8 @@ namespace TradingDB.Pages
         }
 
         public IActionResult OnPost() {
-            HttpContext.Session.SetString("AccountID", Credential.UserName.ToString());
-            return RedirectToPage("AccountSummary", "SetAccount", new {account = Credential.UserName.ToString() });
+            HttpContext.Session.SetString("AccountName", Credential.UserName.ToString());
+            return RedirectToPage("AccountSummary");
         }
     }
 

@@ -22,7 +22,7 @@ namespace Webservice.ControllerHelpers
             if (inst == null)
                 return null;
 
-            return new Transactions(inst.Id, inst.AccountRef, inst.Action, inst.AveragePrice, inst.Commission, inst.DateCreated, inst.OrderRef, inst.Price, inst.Quantity, inst.RealizedPNL);
+            return new Transactions(inst.Id, inst.AccountRef, inst.Action, inst.AveragePrice, inst.Commission, inst.DateCreated, inst.Price, inst.Quantity, inst.RealizedPNL);
         }
 
         #endregion
@@ -42,13 +42,12 @@ namespace Webservice.ControllerHelpers
             float averageprice = (data.ContainsKey("averageprice") ? data.GetValue("averageprice").Value<float>() : 0);
             float commission = (data.ContainsKey("commission") ? data.GetValue("commission").Value<float>() : 0);
             DateTime datecreated = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
-            int orderref = (data.ContainsKey("orderref") ? data.GetValue("orderref").Value<int>() : 0);
             float price = (data.ContainsKey("price") ? data.GetValue("price").Value<float>() : 0);
             int quantity = (data.ContainsKey("quantity") ? data.GetValue("quantity").Value<int>() : 0);
             float realizedpnl = (data.ContainsKey("realizedpnl") ? data.GetValue("realizedpnl").Value<float>() : 0);
 
             // Add instance to DB
-            var inst = TransactionsHelper_db.Add(id, accountref, action, averageprice, commission, datecreated, orderref, price, quantity, realizedpnl, context, out StatusResponse statusResponse);
+            var inst = TransactionsHelper_db.Add(id, accountref, action, averageprice, commission, datecreated, price, quantity, realizedpnl, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)

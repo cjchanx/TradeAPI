@@ -90,5 +90,42 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static List<Brokers_db> getCollection(DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Brokers",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Brokers_db> inst = new List<Brokers_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Brokers_db(
+                        name: row["name"].ToString(),
+                        website: row["website"].ToString()
+                        )
+                    );
+                }
+
+                // Return
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

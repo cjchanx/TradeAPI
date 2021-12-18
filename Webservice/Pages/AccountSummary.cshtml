@@ -29,8 +29,19 @@
                 </div>
             </div>
             <div>
+            @foreach (var item in AccountsHelper_db.getCollection(context.DBContext))
+            {
+                string id = HttpContext.Session.GetString("AccountName");
+                if (id == @item.Name.ToString())
+                {
+                    HttpContext.Session.SetString("AccountID", @item.Id.ToString());
+                }
+
+            }
+
             @{
-                string name = HttpContext.Session.GetString("AccountID");
+                string name = "null";
+                name = HttpContext.Session.GetString("AccountName");
             }
                 <div class="text-right" ><strong>@name</strong></div>
                 <a class="text-right" asp-page="/ClientPage">Logout</a>
