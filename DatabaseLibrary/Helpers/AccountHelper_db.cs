@@ -33,7 +33,8 @@ namespace DatabaseLibrary.Helpers
                     broker,
                     DateTime.Now,
                     name,
-                    desc);
+                    desc,
+                    2);
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
@@ -85,6 +86,7 @@ namespace DatabaseLibrary.Helpers
                 foreach (DataRow row in table.Rows)
                 {
                     inst.Add(new Account_db(
+                        id: int.Parse(row["Id"].ToString()),
                         active: Boolean.Parse(row["Active"].ToString()),
                         broker: row["Broker"].ToString(),
                         date: DateTime.Parse(row["date"].ToString()),

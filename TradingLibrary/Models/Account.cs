@@ -10,10 +10,6 @@ namespace TradingLibrary.Models
     public class Account
     {
         #region Constructors
-        /// <summary>
-        ///  Default constructor for serialization.
-        /// </summary>
-        public Account() {}
 
         /// <summary>
         /// Account constructor with parameters.
@@ -34,6 +30,13 @@ namespace TradingLibrary.Models
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Account status, active or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
+
         /// <summary>
         /// Account status, active or not.
         /// </summary>

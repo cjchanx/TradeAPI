@@ -18,12 +18,12 @@ namespace TradingDB.Pages
         }
 
         public IActionResult OnPostAdminLogin() {
-            return RedirectToPage("AdminPage");
+            return RedirectToPage("AdminAccountsView");
         }
 
         public IActionResult OnPostClientLogin()
         {
-            return RedirectToPage("ClientPage");
+            return RedirectToPage("AccountSummary");
         }
     }
 }
