@@ -30,7 +30,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO BROKER (Name, Website) VALUES (@name, @website)",
+                    commandText: "INSERT INTO BROKERS (Name, Website) VALUES (@name, @website)",
                     parameters: new Dictionary<string, object> {
                         {"@name", inst.Name },
                         {"@website", inst.Website }
@@ -81,7 +81,7 @@ namespace DatabaseLibrary.Helpers
                 }
 
                 // Return
-                response = new StatusResponse("Accounts successfully retreived.");
+                response = new StatusResponse("Brokers successfully retreived.");
                 return inst;
             }
             catch (Exception ex)

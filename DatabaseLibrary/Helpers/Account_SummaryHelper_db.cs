@@ -88,16 +88,16 @@ namespace DatabaseLibrary.Helpers
                 foreach (DataRow row in table.Rows)
                 {
                     inst.Add(new Account_Summary_db(
-                        AccountRef: int.Parse(row["AccountRef"].ToString()),
-                        AvailableFunds: float.Parse(row["AvailableFunds"].ToString()),
-                        GrossPositionValue: float.Parse(row["GrossPositionValue"].ToString()),
-                        NetLiquidation: float.Parse(row["NetLiquidation"].ToString())
+                        AccountRef: int.Parse(row["accountref"].ToString()),
+                        AvailableFunds: float.Parse(row["availablefunds"].ToString()),
+                        GrossPositionValue: float.Parse(row["grosspositionvalue"].ToString()),
+                        NetLiquidation: float.Parse(row["netliquidation"].ToString())
                         )
                     );
                 }
 
                 // Return
-                response = new StatusResponse("Accounts successfully retreived.");
+                response = new StatusResponse("Account_Summary successfully retreived.");
                 return inst;
             }
             catch (Exception ex)

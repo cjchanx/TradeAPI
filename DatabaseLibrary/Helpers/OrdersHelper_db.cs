@@ -99,7 +99,7 @@ namespace DatabaseLibrary.Helpers
                 }
 
                 // Return
-                response = new StatusResponse("Accounts successfully retreived.");
+                response = new StatusResponse("Orders successfully retreived.");
                 return inst;
             }
             catch (Exception ex)

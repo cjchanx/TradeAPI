@@ -16,9 +16,10 @@ namespace TradingLibrary.Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="website"></param>
-        public Security(String symbol, float price)
+        public Security(string symbol, string description, float price)
         {
             this.Symbol = symbol;
+            this.Description = description;
             this.Price = price;
         }
 
@@ -31,6 +32,12 @@ namespace TradingLibrary.Models
         /// </summary>
         [JsonProperty(PropertyName = "symbol")]
         public String Symbol { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty(PropertyName = "price")]
+        public string Description { get; set; }
 
         /// <summary>
         /// 

@@ -20,17 +20,18 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Transactions(int Id, int AccountRef, int Action, float AveragePrice, float commission, DateTime date,  float price, int orderef, float realizedPNL)
+        public Transactions(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int OrderRef, float Price, int Quantity, float RealizedPNL)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
             this.Action = Action;
             this.AveragePrice = AveragePrice;
             this.Commission = Commission;
-            this.DateCreated = date;
-            this.Price = price;
-            this.OrderRef = orderef;
-            this.RealizedPNL = realizedPNL;
+            this.DateCreated = DateCreated;
+            this.Price = Price;
+            this.OrderRef = OrderRef;
+            this.Quantity = Quantity;
+            this.RealizedPNL = RealizedPNL;
 
         }
 
