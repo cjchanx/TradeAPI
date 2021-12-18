@@ -12,7 +12,8 @@ namespace TradingDB.Pages
         }
 
         public IActionResult OnPost() {
-               return RedirectToPage("AccountSummary");
+            HttpContext.Session.SetString("AccountID", Credential.UserName.ToString());
+            return RedirectToPage("AccountSummary", "SetAccount", new {account = Credential.UserName.ToString() });
         }
     }
 
