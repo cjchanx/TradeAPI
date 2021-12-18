@@ -1,11 +1,11 @@
 ﻿@page
-@model IndexModel
+@model HomeModel
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-        <form method="post" asp-page="Index">
+        <form method="post" asp-page="Home">
             <input type="submit" value="Admin Login" asp-page-handler="AdminLogin" />
             <input type="submit" value="Client Login" asp-page-handler="ClientLogin" />
         </form>

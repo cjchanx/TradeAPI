@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TradingDB.Pages
 {
-    public class IndexModel : PageModel
+    public class HomeModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<HomeModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public HomeModel(ILogger<HomeModel> logger)
         {
             _logger = logger;
         }
@@ -17,7 +17,8 @@ namespace TradingDB.Pages
 
         }
 
-        public IActionResult OnPostAdminLogin() {
+        public IActionResult OnPostAdminLogin()
+        {
             return RedirectToPage("AdminAccountsView");
         }
 

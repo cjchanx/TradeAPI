@@ -85,7 +85,7 @@ namespace Webservice
 
             services.AddRazorPages();
 
-            services.AddMvc().AddRazorPagesOptions(options => options.Conventions.AddPageRoute("/AccountSummary", ""));
+            services.AddMvc().AddRazorPagesOptions(options => options.Conventions.AddPageRoute("/Home", ""));
 
         }
 
