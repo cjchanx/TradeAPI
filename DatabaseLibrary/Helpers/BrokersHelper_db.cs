@@ -41,7 +41,7 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
 
                 // Return
-                response = new StatusResponse("Account added successfully");
+                response = new StatusResponse("Broker added successfully");
                 return inst;
             }
             catch (Exception ex)
@@ -58,7 +58,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM BROKER",
+                    commandText: "SELECT * FROM BROKERS",
                     parameters: new Dictionary<string, object>
                     {
 
