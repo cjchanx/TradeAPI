@@ -35,6 +35,7 @@ namespace Webservice
         /// </summary>
         public IConfiguration Configuration { get; }
 
+
         /// <summary>
         /// Gives us access to the environment variables of the current selected profile.
         /// List of all profiles can be found in Properties/launchSettings.json.
@@ -81,6 +82,11 @@ namespace Webservice
             services.AddScoped<DatabaseContextHelper>();
             //services.AddMvc().AddNewtonsoftJson();
             services.AddControllers().AddNewtonsoftJson();
+
+            services.AddRazorPages();
+
+            services.AddMvc().AddRazorPagesOptions(options => options.Conventions.AddPageRoute("/AccountSummary", ""));
+
         }
 
         /// <summary>
@@ -110,20 +116,20 @@ namespace Webservice
 
                 // Setup CORS
                 app.UseCors("ALLOW_ALL_CORS");
-                app.UseRouting();
-
                 app.UseHttpsRedirection();
-                //app.UseMvc();
+                app.UseStaticFiles();
+                app.UseRouting();
+                app.UseAuthorization();
                 app.UseEndpoints(endpoints =>
                 {
+                    endpoints.MapRazorPages();
                     endpoints.MapControllerRoute(
                         name: "accounts",
                         pattern: "{controller}/{action}/{id?}");
                 });
-                // Default listener to the app
                 app.Run(async (context) =>
                 {
-                    await context.Response.WriteAsync("Webservice started!");
+                   await context.Response.WriteAsync("Complete");
                 });
             }
         }
