@@ -67,10 +67,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage GetCollection(DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
             // Get instances from DB
-            var dbInst = AccountsHelper_db.getCollection(context, out StatusResponse statusResponse);
+            var dbInst = OrdersHelper_db.getCollection(context, out StatusResponse statusResponse);
 
             // Convert to object
-            var inst = dbInst?.Select(x => AccountsHelper.Convert(x)).ToList();
+            var inst = dbInst?.Select(x => OrdersHelper.Convert(x)).ToList();
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)

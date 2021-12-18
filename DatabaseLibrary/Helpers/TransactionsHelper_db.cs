@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Helpers
 {
-    internal class TransactionHelper_db
+    internal class TransactionsHelper_db
     {
     }
 }

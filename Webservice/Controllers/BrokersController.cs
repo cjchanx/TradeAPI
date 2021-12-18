@@ -10,7 +10,7 @@ using DatabaseLibrary.Helpers;
 using System.Net;
 namespace Webservice.Controllers
 {
-    public class BrokerController : ControllerBase
+    public class BrokersController : ControllerBase
     {
         #region Intialization
         /// <summary>
