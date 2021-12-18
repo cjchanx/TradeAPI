@@ -1,5 +1,8 @@
 ﻿@page
-@model TradingLibrary.Models.Accounts;
+@using Webservice.ContextHelpers
+@using DatabaseLibrary.Helpers
+@inject DatabaseContextHelper context
+@model TradingLibrary.Models.Accounts
 @{
 }
 
@@ -28,6 +31,17 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Date)</a>
             </th>
+            @foreach (var item in AccountsHelper_db.getCollection(context.DBContext))
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Active</td>
+                    <td>@item.Name</td>
+                    <td>@item.Broker</td>
+                    <td>@item.Date</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
         </tr>
     </thead>
     <tbody>

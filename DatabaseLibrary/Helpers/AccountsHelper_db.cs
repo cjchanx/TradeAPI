@@ -107,5 +107,44 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static List<Accounts_db> getCollection(DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Accounts",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Accounts_db> inst = new List<Accounts_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Accounts_db(
+                        id: int.Parse(row["Id"].ToString()),
+                        active: row["Active"].ToString() == "1",
+                        broker: row["Broker"].ToString(),
+                        date: DateTime.Parse(row["datecreated"].ToString()),
+                        name: row["name"].ToString(),
+                        desc: row["description"].ToString()
+                        )
+                    );
+                }
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
