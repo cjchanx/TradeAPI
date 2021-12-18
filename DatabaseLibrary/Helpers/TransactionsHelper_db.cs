@@ -189,8 +189,6 @@ namespace DatabaseLibrary.Helpers
                         AveragePrice: float.Parse(row["averageprice"].ToString()),
                         Commission: float.Parse(row["commission"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
-                        OrderRef: int.Parse(row["orderref"].ToString()),
-                        Price: float.Parse(row["price"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
                         RealizedPNL: float.Parse(row["realizedpnl"].ToString())
                         )
