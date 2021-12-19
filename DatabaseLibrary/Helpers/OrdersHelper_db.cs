@@ -198,7 +198,7 @@ namespace DatabaseLibrary.Helpers
                     }
 
                     // Add new entry to Transactions table
-                    TransactionsHelper_db.Add_id(Id, AccountRef, Action, price, (float)(price * (rate / 100)), DateTime.Now, Quantity, realizedPnL, context, out StatusResponse resp1); 
+                    TransactionsHelper_db.Add(Id, AccountRef, Action, price, (float)(price * (rate / 100)), DateTime.Now, price, Quantity, realizedPnL, context, out StatusResponse resp1); 
                 }
 
                 // Return

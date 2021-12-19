@@ -67,7 +67,7 @@ namespace DatabaseLibrary.Helpers
         /// Relies on Id AUTO_INCREMENT
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Transactions_db Add(int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int Quantity, float RealizedPNL, DBContext context, out StatusResponse response)
+        public static Transactions_db Add(int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int Quantity, float Price, float RealizedPNL, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -82,6 +82,7 @@ namespace DatabaseLibrary.Helpers
                     AveragePrice,
                     Commission,
                     DateCreated,
+                    Price,
                     Quantity,
                     RealizedPNL
                     );
