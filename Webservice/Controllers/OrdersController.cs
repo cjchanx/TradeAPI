@@ -78,5 +78,15 @@ namespace Webservice.Controllers
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }
+
+        [HttpDelete("{id:int}")]
+        [Route("DeleteOrder")]
+        public ResponseMessage DeleteOrder(int id)
+        {
+            var resp = OrdersHelper.Remove(Database.DBContext, id, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
+
     }
 }
