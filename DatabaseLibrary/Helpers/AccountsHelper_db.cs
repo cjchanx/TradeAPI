@@ -54,7 +54,7 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
 
                 // Return
-                Account_SummaryHelper_db.Add(inst.Id, 10000, 0, 10000, context, out response);
+
                 response = new StatusResponse("Account added successfully");
                 return inst;
             } 
