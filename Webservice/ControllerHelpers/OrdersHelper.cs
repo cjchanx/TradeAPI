@@ -84,5 +84,26 @@ namespace Webservice.ControllerHelpers
             return response;
         }
 
+        public static ResponseMessage Remove(DBContext context, int id, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Add instance to DB
+            var inst = OrdersHelper_db.Remove(id, context, out StatusResponse statusResponse);
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Error occured adding new account.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != null,
+                statusResponse.Message,
+                null
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
     }
 }
