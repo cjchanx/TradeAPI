@@ -43,6 +43,7 @@ namespace DatabaseLibrary.Models
         #endregion
 
         #region Properties
+
         public int Id { get; set; }
 
         public int AccountRef { get; set; }
