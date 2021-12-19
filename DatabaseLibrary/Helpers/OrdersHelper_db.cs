@@ -15,6 +15,7 @@ namespace DatabaseLibrary.Helpers
     public class OrdersHelper_db
     {
 
+      
         /// <summary>
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
@@ -211,5 +212,50 @@ namespace DatabaseLibrary.Helpers
                 return -1;
             }
         }
+
+        /// <summary>
+        /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static void Add(int AccountRef, int Action, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context)
+        {
+            try
+            {
+                // Validate current data
+
+
+                // Create instance
+                Orders_db inst = new Orders_db(
+                    0,
+                    AccountRef,
+                    Action,
+                    DateCreated,
+                    Quantity,
+                    Status,
+                    Symbol
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "INSERT INTO Orders (AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@accountref, @action, @datecreated, @quantity, @status, @symbol)",
+                    parameters: new Dictionary<string, object> {
+                        {"@accountref", inst.AccountRef },
+                        {"@action", inst.Action },
+                        {"@datecreated", inst.DateCreated },
+                        {"@quantity", inst.Quantity },
+                        {"@status", inst.Status },
+                        {"@symbol", inst.Symbol }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
