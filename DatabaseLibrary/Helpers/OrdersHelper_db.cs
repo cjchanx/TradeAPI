@@ -20,7 +20,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Orders_db Add(int Id, int AccountRef, int Action, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context, out StatusResponse response)
+        public static Orders_db Add(int Id, int AccountRef, int Action, float TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -32,6 +32,7 @@ namespace DatabaseLibrary.Helpers
                     Id,
                     AccountRef,
                     Action,
+                    TargetPrice,
                     DateCreated,
                     Quantity,
                     Status,
@@ -45,6 +46,7 @@ namespace DatabaseLibrary.Helpers
                         {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
+                        {"@targetprice", inst.TargetPrice },
                         {"@datecreated", inst.DateCreated },
                         {"@quantity", inst.Quantity },
                         {"@status", inst.Status },
@@ -127,6 +129,7 @@ namespace DatabaseLibrary.Helpers
                         Id: int.Parse(row["id"].ToString()),
                         AccountRef: int.Parse(row["accountref"].ToString()),
                         Action: int.Parse(row["action"].ToString()),
+                        TargetPrice: float.Parse(row["targetprice"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
                         Status: int.Parse(row["status"].ToString()),
@@ -217,7 +220,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static void Add(int AccountRef, int Action, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context)
+        public static void Add(int AccountRef, int Action, float TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context)
         {
             try
             {
@@ -229,6 +232,7 @@ namespace DatabaseLibrary.Helpers
                     0,
                     AccountRef,
                     Action,
+                    TargetPrice,
                     DateCreated,
                     Quantity,
                     Status,
@@ -237,10 +241,11 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@accountref, @action, @datecreated, @quantity, @status, @symbol)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol)",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
+                        {"@targetprice", inst.TargetPrice },
                         {"@datecreated", inst.DateCreated },
                         {"@quantity", inst.Quantity },
                         {"@status", inst.Status },

@@ -20,11 +20,12 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Orders(int Id,int AccountRef, int Action, DateTime date,int quantity, int status, String symbol)
+        public Orders(int Id,int AccountRef, int Action, float TargetPrice, DateTime date,int quantity, int status, String symbol)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
             this.Action = Action;
+            this.TargetPrice = TargetPrice;
             this.DateCreated = date;
             this.Quantity = quantity;
             this.Status = status;
@@ -51,6 +52,9 @@ namespace TradingLibrary.Models
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public int Action { get; set; }
+
+        [JsonProperty(PropertyName = "targetprice")]
+        public float TargetPrice { get; set; }
 
         /// <summary>
         /// 
