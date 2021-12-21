@@ -24,7 +24,7 @@ namespace DatabaseLibrary.Models
         /// <param name="Quantity"></param>
         /// <param name="Status"></param>
         /// <param name="Symbol"></param>
-        public Orders_db(int Id, int AccountRef, int Action, float TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol)
+        public Orders_db(int Id, int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -34,6 +34,7 @@ namespace DatabaseLibrary.Models
             this.Quantity = Quantity;
             this.Status = Status;
             this.Symbol = Symbol;
+            this.Broker = Broker;
         }
 
         #endregion
@@ -52,8 +53,9 @@ namespace DatabaseLibrary.Models
         public int Status { get; set; }
 
         public string Symbol { get; set; }
+        public string Broker { get; set; }
 
-        public float TargetPrice { get; set; }
+        public double TargetPrice { get; set; }
 
         #endregion
     }

@@ -20,7 +20,7 @@ namespace DatabaseLibrary.Models
         /// <param name="Symbol"></param>
         /// <param name="Description"></param>
         /// <param name="Price"></param>
-        public Security_db(string Symbol, string Description, float Price)
+        public Security_db(string Symbol, string Description, double Price)
         {
             this.Symbol = Symbol;
             this.Description = Description;
@@ -35,7 +35,7 @@ namespace DatabaseLibrary.Models
 
         public string Description { get; set; }
 
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         #endregion
     }

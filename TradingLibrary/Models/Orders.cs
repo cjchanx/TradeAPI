@@ -20,7 +20,7 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Orders(int Id,int AccountRef, int Action, float TargetPrice, DateTime date,int quantity, int status, String symbol)
+        public Orders(int Id,int AccountRef, int Action, double TargetPrice, DateTime date,int quantity, int status, String symbol)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -54,7 +54,7 @@ namespace TradingLibrary.Models
         public int Action { get; set; }
 
         [JsonProperty(PropertyName = "targetprice")]
-        public float TargetPrice { get; set; }
+        public double TargetPrice { get; set; }
 
         /// <summary>
         /// 

@@ -23,7 +23,7 @@ namespace Webservice.ControllerHelpers
             // Extract parameters
             string symbol = (data.ContainsKey("symbol") ? data.GetValue("symbol").Value<string>() : null);
             string description = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
-            float price = (data.ContainsKey("price") ? data.GetValue("price").Value<float>() : 0);
+            double price = (data.ContainsKey("price") ? data.GetValue("price").Value<double>() : 0);
 
 
             // Add instance to DB

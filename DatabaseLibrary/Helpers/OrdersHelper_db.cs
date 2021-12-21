@@ -20,7 +20,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Orders_db Add(int Id, int AccountRef, int Action, float TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context, out StatusResponse response)
+        public static Orders_db Add(int Id, int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -36,12 +36,13 @@ namespace DatabaseLibrary.Helpers
                     DateCreated,
                     Quantity,
                     Status,
-                    Symbol
+                    Symbol,
+                    Broker
                     );
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol)",
+                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol, Broker) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol, @broker)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
@@ -50,7 +51,8 @@ namespace DatabaseLibrary.Helpers
                         {"@datecreated", inst.DateCreated },
                         {"@quantity", inst.Quantity },
                         {"@status", inst.Status },
-                        {"@symbol", inst.Symbol }
+                        {"@symbol", inst.Symbol },
+                        {"@broker", inst.Broker }
                     },
                     message: out string message
                 );
@@ -129,11 +131,12 @@ namespace DatabaseLibrary.Helpers
                         Id: int.Parse(row["id"].ToString()),
                         AccountRef: int.Parse(row["accountref"].ToString()),
                         Action: int.Parse(row["action"].ToString()),
-                        TargetPrice: float.Parse(row["targetprice"].ToString()),
+                        TargetPrice: double.Parse(row["targetprice"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
                         Status: int.Parse(row["status"].ToString()),
-                        Symbol: row["symbol"].ToString()
+                        Symbol: row["symbol"].ToString(),
+                        Broker: row["Broker"].ToString()
                         )
                     );
                 }
@@ -182,7 +185,7 @@ namespace DatabaseLibrary.Helpers
                     int AccountRef = int.Parse(row["accountref"].ToString());
                     int Action = int.Parse(row["action"].ToString());
                     DateTime date = DateTime.Parse(row["datecreated"].ToString());
-                    float price = float.Parse(row["Price"].ToString());
+                    double price = double.Parse(row["Price"].ToString());
                     int Quantity = int.Parse(row["quantity"].ToString());
                     string symbol = row["symbol"].ToString();
                     double rate = CommissionsHelper_db.GetCommission(row["BrokerName"].ToString(), Action, context, out StatusResponse resp);
@@ -191,7 +194,7 @@ namespace DatabaseLibrary.Helpers
                     Remove(Id, context, out StatusResponse statusResponse);
 
                     // Realized PnL
-                    float realizedPnL = 0;
+                    double realizedPnL = 0;
                     if(Action == (int)OrderAction.Upper_limit_sell)
                     {
                         realizedPnL = price;
@@ -202,7 +205,7 @@ namespace DatabaseLibrary.Helpers
                     }
 
                     // Add new entry to Transactions table
-                    TransactionsHelper_db.Add(Id, AccountRef, Action, price, (float)(price * (rate / 100)), DateTime.Now, price, Quantity, realizedPnL, context, out StatusResponse resp1); 
+                    TransactionsHelper_db.Add(Id, AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, price, Quantity, realizedPnL, context, out StatusResponse resp1); 
                 }
 
                 // Return
@@ -220,7 +223,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static void Add(int AccountRef, int Action, float TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, DBContext context)
+        public static void Add(int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context)
         {
             try
             {
@@ -236,12 +239,13 @@ namespace DatabaseLibrary.Helpers
                     DateCreated,
                     Quantity,
                     Status,
-                    Symbol
+                    Symbol,
+                    Broker
                     );
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, Broker) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol, @broker)",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
@@ -249,7 +253,8 @@ namespace DatabaseLibrary.Helpers
                         {"@datecreated", inst.DateCreated },
                         {"@quantity", inst.Quantity },
                         {"@status", inst.Status },
-                        {"@symbol", inst.Symbol }
+                        {"@symbol", inst.Symbol },
+                        {"@broker", inst.Broker }
                     },
                     message: out string message
                 );

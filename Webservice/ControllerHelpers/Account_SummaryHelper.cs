@@ -37,9 +37,9 @@ namespace Webservice.ControllerHelpers
         {
             // Extract parameters
             int accountref = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
-            float availablefunds = (data.ContainsKey("availablefunds") ? data.GetValue("availablefunds").Value<float>() : 0);
-            float grosspositionvalue = (data.ContainsKey("grosspositionvalue") ? data.GetValue("grosspositionvalue").Value<float>() : 0);
-            float netliquidation = (data.ContainsKey("netliquidation") ? data.GetValue("netliquidation").Value<float>() : 0);
+            double availablefunds = (data.ContainsKey("availablefunds") ? data.GetValue("availablefunds").Value<double>() : 0);
+            double grosspositionvalue = (data.ContainsKey("grosspositionvalue") ? data.GetValue("grosspositionvalue").Value<double>() : 0);
+            double netliquidation = (data.ContainsKey("netliquidation") ? data.GetValue("netliquidation").Value<double>() : 0);
 
             // Add instance to DB
             var inst = Account_SummaryHelper_db.Add(accountref, availablefunds, grosspositionvalue, netliquidation, context, out StatusResponse statusResponse);

@@ -11,7 +11,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Transactions_db Add(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, float Price, int Quantity, float RealizedPNL, DBContext context, out StatusResponse response)
+        public static Transactions_db Add(int Id, int AccountRef, int Action, double AveragePrice, double Commission, DateTime DateCreated, double Price, int Quantity, double RealizedPNL, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace DatabaseLibrary.Helpers
         /// Relies on Id AUTO_INCREMENT
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Transactions_db Add(int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, int Quantity, float Price, float RealizedPNL, DBContext context, out StatusResponse response)
+        public static Transactions_db Add(int AccountRef, int Action, double AveragePrice, double Commission, DateTime DateCreated, int Quantity, double Price, double RealizedPNL, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -143,12 +143,12 @@ namespace DatabaseLibrary.Helpers
                         Id: int.Parse(row["id"].ToString()),
                         AccountRef: int.Parse(row["accountref"].ToString()),
                         Action: int.Parse(row["action"].ToString()),
-                        AveragePrice: float.Parse(row["averageprice"].ToString()),
-                        Commission: float.Parse(row["commission"].ToString()),
+                        AveragePrice: double.Parse(row["averageprice"].ToString()),
+                        Commission: double.Parse(row["commission"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
-                        Price: float.Parse(row["price"].ToString()),
+                        Price: double.Parse(row["price"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
-                        RealizedPNL: float.Parse(row["realizedpnl"].ToString())
+                        RealizedPNL: double.Parse(row["realizedpnl"].ToString())
                         )
                     );
                 }
@@ -189,12 +189,12 @@ namespace DatabaseLibrary.Helpers
                         Id: int.Parse(row["id"].ToString()),
                         AccountRef: int.Parse(row["accountref"].ToString()),
                         Action: int.Parse(row["action"].ToString()),
-                        AveragePrice: float.Parse(row["averageprice"].ToString()),
-                        Commission: float.Parse(row["commission"].ToString()),
+                        AveragePrice: double.Parse(row["averageprice"].ToString()),
+                        Commission: double.Parse(row["commission"].ToString()),
                         DateCreated: DateTime.Parse(row["datecreated"].ToString()),
-                        Price: float.Parse(row["price"].ToString()),
+                        Price: double.Parse(row["price"].ToString()),
                         Quantity: int.Parse(row["quantity"].ToString()),
-                        RealizedPNL: float.Parse(row["realizedpnl"].ToString())
+                        RealizedPNL: double.Parse(row["realizedpnl"].ToString())
                         )
                     );
                 }

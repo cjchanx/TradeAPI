@@ -26,7 +26,7 @@ namespace DatabaseLibrary.Models
         /// <param name="Price"></param>
         /// <param name="Quantity"></param>
         /// <param name="RealizedPNL"></param>
-        public Transactions_db(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, float Price, int Quantity, float RealizedPNL)
+        public Transactions_db(int Id, int AccountRef, int Action, double AveragePrice, double Commission, DateTime DateCreated, double Price, int Quantity, double RealizedPNL)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -50,17 +50,17 @@ namespace DatabaseLibrary.Models
 
         public int Action { get; set; }
 
-        public float AveragePrice { get; set; }
+        public double AveragePrice { get; set; }
 
-        public float Commission { get; set; }
+        public double Commission { get; set; }
 
         public DateTime DateCreated { get; set; }
 
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         public int Quantity { get; set; }
 
-        public float RealizedPNL { get; set; }
+        public double RealizedPNL { get; set; }
 
 
         #endregion

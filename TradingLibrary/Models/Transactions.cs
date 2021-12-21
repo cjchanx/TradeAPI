@@ -20,7 +20,7 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Transactions(int Id, int AccountRef, int Action, float AveragePrice, float Commission, DateTime DateCreated, float Price, int Quantity, float RealizedPNL)
+        public Transactions(int Id, int AccountRef, int Action, double AveragePrice, double Commission, DateTime DateCreated, double Price, int Quantity, double RealizedPNL)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -59,13 +59,13 @@ namespace TradingLibrary.Models
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "averageprice")]
-        public float AveragePrice { get; set; }
+        public double AveragePrice { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "commission")]
-        public float Commission { get; set; }
+        public double Commission { get; set; }
 
         /// <summary>
         /// 
@@ -79,7 +79,7 @@ namespace TradingLibrary.Models
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "price")]
-        public float Price { get; set; }
+        public double Price { get; set; }
 
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace TradingLibrary.Models
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "realizedpnl")]
-        public float RealizedPNL { get; set; }
+        public double RealizedPNL { get; set; }
 
 
         #endregion

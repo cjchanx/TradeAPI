@@ -39,15 +39,16 @@ namespace Webservice.ControllerHelpers
             int Id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             int accountref = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
             int action = (data.ContainsKey("action") ? data.GetValue("action").Value<int>() : 0);
-            float targetprice = (data.ContainsKey("targetprice") ? data.GetValue("action").Value<float>() : 0);
+            double targetprice = (data.ContainsKey("targetprice") ? data.GetValue("action").Value<double>() : 0);
             DateTime datecreated = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
             int quantity = (data.ContainsKey("quantity") ? data.GetValue("quantity").Value<int>() : 0);
             int status = (data.ContainsKey("status") ? data.GetValue("status").Value<int>() : 0);
             string symbol = (data.ContainsKey("symbol") ? data.GetValue("symbol").Value<string>() : null);
+            string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
 
 
             // Add instance to DB
-            var inst = OrdersHelper_db.Add(Id, accountref, action, targetprice, datecreated, quantity, status, symbol, context, out StatusResponse statusResponse);
+            var inst = OrdersHelper_db.Add(Id, accountref, action, targetprice, datecreated, quantity, status, symbol, broker, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)

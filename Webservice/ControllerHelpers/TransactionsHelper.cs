@@ -39,12 +39,12 @@ namespace Webservice.ControllerHelpers
             int id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             int accountref = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
             int action = (data.ContainsKey("action") ? data.GetValue("action").Value<int>() : 0);
-            float averageprice = (data.ContainsKey("averageprice") ? data.GetValue("averageprice").Value<float>() : 0);
-            float commission = (data.ContainsKey("commission") ? data.GetValue("commission").Value<float>() : 0);
+            double averageprice = (data.ContainsKey("averageprice") ? data.GetValue("averageprice").Value<double>() : 0);
+            double commission = (data.ContainsKey("commission") ? data.GetValue("commission").Value<double>() : 0);
             DateTime datecreated = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
-            float price = (data.ContainsKey("price") ? data.GetValue("price").Value<float>() : 0);
+            double price = (data.ContainsKey("price") ? data.GetValue("price").Value<double>() : 0);
             int quantity = (data.ContainsKey("quantity") ? data.GetValue("quantity").Value<int>() : 0);
-            float realizedpnl = (data.ContainsKey("realizedpnl") ? data.GetValue("realizedpnl").Value<float>() : 0);
+            double realizedpnl = (data.ContainsKey("realizedpnl") ? data.GetValue("realizedpnl").Value<double>() : 0);
 
             // Add instance to DB
             var inst = TransactionsHelper_db.Add(id, accountref, action, averageprice, commission, datecreated, price, quantity, realizedpnl, context, out StatusResponse statusResponse);

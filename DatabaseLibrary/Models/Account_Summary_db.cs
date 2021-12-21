@@ -21,7 +21,7 @@ namespace DatabaseLibrary.Models
         /// <param name="AvailableFunds"></param>
         /// <param name="GrossPositionValue"></param>
         /// <param name="NetLiquidation"></param>
-        public Account_Summary_db(int AccountRef, float AvailableFunds, float GrossPositionValue, float NetLiquidation)
+        public Account_Summary_db(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation)
         {
             this.AccountRef = AccountRef;
             this.AvailableFunds = AvailableFunds;
@@ -35,11 +35,11 @@ namespace DatabaseLibrary.Models
 
         public int AccountRef { get; set; }
 
-        public float AvailableFunds { get; set; }
+        public double AvailableFunds { get; set; }
 
-        public float GrossPositionValue { get; set; }
+        public double GrossPositionValue { get; set; }
 
-        public float NetLiquidation { get; set; }
+        public double NetLiquidation { get; set; }
 
 
 

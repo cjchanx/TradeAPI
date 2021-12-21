@@ -18,7 +18,7 @@ namespace TradingLibrary.Models
         /// <param name="AvailableFunds"></param>
         /// <param name="GrossPositionValue"></param>
         /// <param name="NetLiquidation"></param>
-        public Account_Summary(int AccountRef, float AvailableFunds, float GrossPositionValue, float NetLiquidation)
+        public Account_Summary(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation)
         {
             this.AccountRef = AccountRef;
             this.AvailableFunds = AvailableFunds;
@@ -40,19 +40,19 @@ namespace TradingLibrary.Models
         /// Available Funds
         /// </summary>
         [JsonProperty(PropertyName = "availablefunds")]
-        public float AvailableFunds { get; set; }
+        public double AvailableFunds { get; set; }
 
         /// <summary>
         /// Gross Position
         /// </summary>
         [JsonProperty(PropertyName = "grosspositionvalue")]
-        public float GrossPositionValue { get; set; }
+        public double GrossPositionValue { get; set; }
 
         /// <summary>
         /// Net Liquidation
         /// </summary>
         [JsonProperty(PropertyName = "netliquidation")]
-        public float NetLiquidation { get; set; }
+        public double NetLiquidation { get; set; }
 
         #endregion
 

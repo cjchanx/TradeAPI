@@ -17,7 +17,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Account_Summary_db Add(int AccountRef, float AvailableFunds, float GrossPositionValue, float NetLiquidation, DBContext context, out StatusResponse response)
+        public static Account_Summary_db Add(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -89,9 +89,9 @@ namespace DatabaseLibrary.Helpers
                 {
                     inst.Add(new Account_Summary_db(
                         AccountRef: int.Parse(row["accountref"].ToString()),
-                        AvailableFunds: float.Parse(row["availablefunds"].ToString()),
-                        GrossPositionValue: float.Parse(row["grosspositionvalue"].ToString()),
-                        NetLiquidation: float.Parse(row["netliquidation"].ToString())
+                        AvailableFunds: double.Parse(row["availablefunds"].ToString()),
+                        GrossPositionValue: double.Parse(row["grosspositionvalue"].ToString()),
+                        NetLiquidation: double.Parse(row["netliquidation"].ToString())
                         )
                     );
                 }
@@ -130,9 +130,9 @@ namespace DatabaseLibrary.Helpers
                 {
                     inst.Add(new Account_Summary_db(
                         AccountRef: int.Parse(row["accountref"].ToString()),
-                        AvailableFunds: float.Parse(row["availablefunds"].ToString()),
-                        GrossPositionValue: float.Parse(row["grosspositionvalue"].ToString()),
-                        NetLiquidation: float.Parse(row["netliquidation"].ToString())
+                        AvailableFunds: double.Parse(row["availablefunds"].ToString()),
+                        GrossPositionValue: double.Parse(row["grosspositionvalue"].ToString()),
+                        NetLiquidation: double.Parse(row["netliquidation"].ToString())
                         )
                     );
                 }

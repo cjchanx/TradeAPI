@@ -12,7 +12,7 @@ namespace DatabaseLibrary.Helpers
 {
     public class SecurityHelper_db
     {
-        public static Security_db Add(string symbol, string description, float price, DBContext context, out StatusResponse response)
+        public static Security_db Add(string symbol, string description, double price, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace DatabaseLibrary.Helpers
                     inst.Add(new Security_db(
                         Symbol: row["symbol"].ToString(),
                         Description: row["description"].ToString(),
-                        Price: float.Parse(row["price"].ToString())
+                        Price: double.Parse(row["price"].ToString())
                         )
                     );
                 }
@@ -118,7 +118,7 @@ namespace DatabaseLibrary.Helpers
                     inst.Add(new Security_db(
                         Symbol: row["symbol"].ToString(),
                         Description: row["description"].ToString(),
-                        Price: float.Parse(row["price"].ToString())
+                        Price: double.Parse(row["price"].ToString())
                         )
                     );
                 }
