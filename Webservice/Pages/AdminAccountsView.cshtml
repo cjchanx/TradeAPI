@@ -39,10 +39,22 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Id)</a>
+                <a >@Html.DisplayNameFor(model => model.Id)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Date)</a>
+                <a >@Html.DisplayNameFor(model => model.Active)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Broker)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Date)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Description)</a>
             </th>
             @foreach (var item in AccountsHelper_db.getCollection(context.DBContext))
             {

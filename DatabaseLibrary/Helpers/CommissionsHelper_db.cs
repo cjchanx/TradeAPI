@@ -29,7 +29,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Comissions (BrokerName, OrderType, Rate) VALUES (@name, @type, @rate)",
+                    commandText: "INSERT INTO Commissions (BrokerName, OrderType, Rate) VALUES (@name, @type, @rate)",
                     parameters: new Dictionary<string, object> {
                         {"@name", inst.Broker},
                         {"@type", inst.Type },

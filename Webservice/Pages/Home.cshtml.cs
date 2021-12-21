@@ -14,7 +14,8 @@ namespace TradingDB.Pages
 
         public void OnGet()
         {
-
+            HttpContext.Session.SetString("AccountName", "-1");
+            HttpContext.Session.SetString("AccountID", "-1");
         }
 
         public IActionResult OnPostAdminLogin()

@@ -20,7 +20,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Orders_db Add(int Id, int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
+        public static Orders_db Add(int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Create instance
                 Orders_db inst = new Orders_db(
-                    Id,
+                    0,
                     AccountRef,
                     Action,
                     TargetPrice,
@@ -42,9 +42,8 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, DateCreated, Quantity, Status, Symbol, Broker) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol, @broker)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, DateCreated, Quantity, Status, Symbol, Broker) VALUES (@id, @accountref, @action, @datecreated, @quantity, @status, @symbol, @broker)",
                     parameters: new Dictionary<string, object> {
-                        {"@id", inst.Id },
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
                         {"@targetprice", inst.TargetPrice },
@@ -223,7 +222,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static void Add(int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context)
+        public static void Add(int AccountRef, int Action, double TargetPrice, int Quantity, int Status, string Symbol, string Broker, DBContext context)
         {
             try
             {
@@ -236,16 +235,16 @@ namespace DatabaseLibrary.Helpers
                     AccountRef,
                     Action,
                     TargetPrice,
-                    DateCreated,
+                    DateTime.Now,
                     Quantity,
                     Status,
                     Symbol,
                     Broker
                     );
-
+                
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, Broker) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol, @broker)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol, @broker)",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
@@ -263,6 +262,7 @@ namespace DatabaseLibrary.Helpers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message.ToString());
                 throw new Exception(ex.Message);
             }
         }

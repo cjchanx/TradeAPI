@@ -36,7 +36,6 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            int Id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             int accountref = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
             int action = (data.ContainsKey("action") ? data.GetValue("action").Value<int>() : 0);
             double targetprice = (data.ContainsKey("targetprice") ? data.GetValue("action").Value<double>() : 0);
@@ -48,7 +47,7 @@ namespace Webservice.ControllerHelpers
 
 
             // Add instance to DB
-            var inst = OrdersHelper_db.Add(Id, accountref, action, targetprice, datecreated, quantity, status, symbol, broker, context, out StatusResponse statusResponse);
+            var inst = OrdersHelper_db.Add(accountref, action, targetprice, datecreated, quantity, status, symbol, broker, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)

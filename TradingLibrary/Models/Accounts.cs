@@ -19,7 +19,7 @@ namespace TradingLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Accounts(int id, bool active, string broker, DateTime date, string name, string desc)
+        public Accounts(int id, bool active, string broker, DateTime date, string name, string desc, string pass)
         {
             Id = id;
             Active = active;
@@ -27,6 +27,7 @@ namespace TradingLibrary.Models
             Date = date;
             Name = name;
             Description = desc;
+            Password = pass;
         }
 
         #endregion
@@ -68,6 +69,9 @@ namespace TradingLibrary.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        [JsonProperty(PropertyName = "description")]
+        public string Password { get; set; }
         #endregion
 
         #region Methods

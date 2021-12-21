@@ -17,7 +17,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Accounts_db Add(int id, string broker, string name, string desc, DBContext context, out StatusResponse response)
+        public static Accounts_db Add(int id, string broker, string name, string desc, string pass, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -34,19 +34,21 @@ namespace DatabaseLibrary.Helpers
                     broker,
                     DateTime.Now,
                     name,
-                    desc
+                    desc,
+                    pass
                     );
-
+                Console.WriteLine(DateTime.Now);
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Accounts (Id, Active, Broker, DateCreated, Name, Description) VALUES (@id, @active, @broker, @date, @name, @desc)",
+                    commandText: "INSERT INTO Accounts (Id, Active, Broker, DateCreated, Name, Description, Password) VALUES (@id, @active, @broker, @date, @name, @desc, @pass)",
                     parameters: new Dictionary<string, object> {
                         {"@id", inst.Id },
                         {"@active", true },
                         {"@broker", inst.Broker },
                         {"@date", inst.Date },
                         {"@name", inst.Name },
-                        {"@desc", inst.Description }
+                        {"@desc", inst.Description },
+                        {"@pass", inst.Password }
                     },
                     message: out string message
                 );
@@ -94,7 +96,8 @@ namespace DatabaseLibrary.Helpers
                         broker: row["Broker"].ToString(),
                         date: DateTime.Parse(row["datecreated"].ToString()),
                         name: row["name"].ToString(),
-                        desc: row["description"].ToString()
+                        desc: row["description"].ToString(),
+                        pass: row["password"].ToString()
                         )
                     );
                 }
@@ -136,7 +139,8 @@ namespace DatabaseLibrary.Helpers
                         broker: row["Broker"].ToString(),
                         date: DateTime.Parse(row["datecreated"].ToString()),
                         name: row["name"].ToString(),
-                        desc: row["description"].ToString()
+                        desc: row["description"].ToString(),
+                        pass: row["password"].ToString()
                         )
                     );
                 }

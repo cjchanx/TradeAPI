@@ -29,16 +29,6 @@
                 </div>
             </div>
             <div>
-            @foreach (var item in AccountsHelper_db.getCollection(context.DBContext))
-            {
-                string id = HttpContext.Session.GetString("AccountName");
-                if (id == @item.Name.ToString())
-                {
-                    HttpContext.Session.SetString("AccountID", @item.Id.ToString());
-                }
-
-            }
-
             @{
                 string name = "null";
                 name = HttpContext.Session.GetString("AccountName");

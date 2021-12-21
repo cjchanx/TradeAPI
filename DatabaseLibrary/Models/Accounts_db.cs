@@ -22,7 +22,7 @@ namespace DatabaseLibrary.Models
         /// <param name="date"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public Accounts_db(int id, bool active, string broker, DateTime date, string name, string desc)
+        public Accounts_db(int id, bool active, string broker, DateTime date, string name, string desc, string pass)
         {
             Id = id;
             Active = active;
@@ -30,6 +30,7 @@ namespace DatabaseLibrary.Models
             Date = date;
             Name = name;
             Description = desc;
+            Password = pass;
         }
 
         #endregion
@@ -45,6 +46,7 @@ namespace DatabaseLibrary.Models
         public string Broker { get; set; }
 
         public string Description { get; set; }
+        public string Password { get; set; }
 
         public int Id { get; set; }
 

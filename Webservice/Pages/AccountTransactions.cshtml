@@ -33,7 +33,7 @@
                 string name = HttpContext.Session.GetString("AccountName");
             }
                 <div class="text-right" ><strong>@name</strong></div>
-                <div class="text-right">Logout</div>
+                <a class="text-right" asp-page="/ClientPage">Logout</a>
             </div>
         </nav>
     </header>
@@ -42,28 +42,28 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Id)</a>
+                <a >@Html.DisplayNameFor(model => model.Id)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Action)</a>
+                <a >@Html.DisplayNameFor(model => model.Action)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Commission)</a>
+                <a >@Html.DisplayNameFor(model => model.Commission)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.AveragePrice)</a>
+                <a >@Html.DisplayNameFor(model => model.AveragePrice)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Price)</a>
+                <a >@Html.DisplayNameFor(model => model.Price)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Quantity)</a>
+                <a >@Html.DisplayNameFor(model => model.Quantity)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.DateCreated)</a>
+                <a >@Html.DisplayNameFor(model => model.DateCreated)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.RealizedPNL)</a>
+                <a >@Html.DisplayNameFor(model => model.RealizedPNL)</a>
             </th>
             @foreach (var item in TransactionsHelper_db.getCollection(context.DBContext))
             {

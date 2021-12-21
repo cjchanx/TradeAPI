@@ -33,19 +33,19 @@
 
 <h2>Security</h2>
 <p>
-    <a asp-page="/AdminCreateSecuirty">Create New Security</a>
+    <a asp-page="/AdminCreateSecurity">Create New Security</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Symbol)</a>
+                <a >@Html.DisplayNameFor(model => model.Symbol)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Price)</a>
+                <a >@Html.DisplayNameFor(model => model.Price)</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Description)</a>
+                <a >@Html.DisplayNameFor(model => model.Description)</a>
             </th>
             @foreach (var item in SecurityHelper_db.getCollection(context.DBContext))
             {

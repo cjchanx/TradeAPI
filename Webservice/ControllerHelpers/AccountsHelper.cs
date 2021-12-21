@@ -22,7 +22,7 @@ namespace Webservice.ControllerHelpers
             if (inst == null)
                 return null;
 
-            return new Accounts(inst.Id, inst.Active, inst.Broker, inst.Date, inst.Name, inst.Description);
+            return new Accounts(inst.Id, inst.Active, inst.Broker, inst.Date, inst.Name, inst.Description, inst.Password);
         }
 
         #endregion
@@ -42,9 +42,10 @@ namespace Webservice.ControllerHelpers
             DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
+            string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
 
             // Add instance to DB
-            var inst = AccountsHelper_db.Add(id, broker, name, desc, context, out StatusResponse statusResponse);
+            var inst = AccountsHelper_db.Add(id, broker, name, desc, pass, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
