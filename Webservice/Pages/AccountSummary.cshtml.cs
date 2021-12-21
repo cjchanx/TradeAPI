@@ -6,8 +6,7 @@ namespace Webservice.Pages
 {
     public class AccountSummaryModel : PageModel
     {
-        public void OnGet()
-        {
+        public void OnGet(){
         }
 
         public void OnGetSetAccount(string account) {

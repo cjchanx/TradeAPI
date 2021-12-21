@@ -65,6 +65,9 @@
                     <td>@item.Broker</td>
                     <td>@item.Date</td>
                     <td>@item.Description</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </tr>
             }
         </tr>

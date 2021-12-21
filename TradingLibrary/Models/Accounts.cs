@@ -70,6 +70,7 @@ namespace TradingLibrary.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+
         [JsonProperty(PropertyName = "description")]
         public string Password { get; set; }
         #endregion
