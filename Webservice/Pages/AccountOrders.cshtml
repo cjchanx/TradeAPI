@@ -1,4 +1,8 @@
 ﻿@page
+@using Webservice.ContextHelpers
+@using DatabaseLibrary.Helpers
+@using DatabaseLibrary.Core;
+@inject DatabaseContextHelper context
 @model TradingLibrary.Models.Orders;
 @{
 }
@@ -59,6 +63,22 @@
             <th>
                 <a>@Html.DisplayNameFor(model => model.Symbol)</a>
             </th>
+            @foreach (var item in OrdersHelper_db.getCollection(context.DBContext))
+            {
+                int id = int.Parse(HttpContext.Session.GetString("AccountID"));
+                if (id == @item.AccountRef)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Action</td>
+                    <td>@item.DateCreated</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Status</td>
+                    <td>@item.Symbol</td>
+                </tr>
+                }
+
+            }
         </tr>
     </thead>
     <tbody>

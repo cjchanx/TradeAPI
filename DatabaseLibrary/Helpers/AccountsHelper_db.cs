@@ -37,7 +37,7 @@ namespace DatabaseLibrary.Helpers
                     desc,
                     pass
                     );
-                Console.WriteLine(DateTime.Now);
+                
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
                     commandText: "INSERT INTO Accounts (Id, Active, Broker, DateCreated, Name, Description, Password) VALUES (@id, @active, @broker, @date, @name, @desc, @pass)",

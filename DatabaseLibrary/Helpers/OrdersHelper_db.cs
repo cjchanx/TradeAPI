@@ -135,7 +135,7 @@ namespace DatabaseLibrary.Helpers
                         Quantity: int.Parse(row["quantity"].ToString()),
                         Status: int.Parse(row["status"].ToString()),
                         Symbol: row["symbol"].ToString(),
-                        Broker: row["Broker"].ToString()
+                        Broker: row["brokername"].ToString()
                         )
                     );
                 }
@@ -147,6 +147,51 @@ namespace DatabaseLibrary.Helpers
             catch (Exception ex)
             {
                 response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
+        public static List<Orders_db> getCollection(DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Orders",
+                    parameters: new Dictionary<string, object>
+                    {
+
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Orders_db> inst = new List<Orders_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Orders_db(
+                        Id: int.Parse(row["id"].ToString()),
+                        AccountRef: int.Parse(row["accountref"].ToString()),
+                        Action: int.Parse(row["action"].ToString()),
+                        TargetPrice: double.Parse(row["targetprice"].ToString()),
+                        DateCreated: DateTime.Parse(row["datecreated"].ToString()),
+                        Quantity: int.Parse(row["quantity"].ToString()),
+                        Status: int.Parse(row["status"].ToString()),
+                        Symbol: row["symbol"].ToString(),
+                        Broker: row["brokername"].ToString()
+                        )
+                    );
+                }
+
+                // Return
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -244,7 +289,7 @@ namespace DatabaseLibrary.Helpers
                 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@accountref, @action, @targetprice @datecreated, @quantity, @status, @symbol, @broker)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@accountref, @action, @targetprice, @datecreated, @quantity, @status, @symbol, @brokername)",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
@@ -253,7 +298,7 @@ namespace DatabaseLibrary.Helpers
                         {"@quantity", inst.Quantity },
                         {"@status", inst.Status },
                         {"@symbol", inst.Symbol },
-                        {"@broker", inst.Broker }
+                        {"@brokername", inst.Broker }
                     },
                     message: out string message
                 );
