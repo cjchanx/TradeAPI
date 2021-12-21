@@ -90,6 +90,11 @@ namespace Webservice.ControllerHelpers
             // Add instance to DB
             var inst = OrdersHelper_db.Remove(id, context, out StatusResponse statusResponse);
 
+            if(inst == 0)
+            {
+                statusResponse.Message = "Error occured adding new account.";
+            }
+
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
@@ -98,7 +103,7 @@ namespace Webservice.ControllerHelpers
 
             // Setup and return response
             var response = new ResponseMessage(
-                inst != null,
+                inst != 0,
                 statusResponse.Message,
                 null
             );
