@@ -37,6 +37,6 @@ namespace TradingDB.Pages
         public string Description { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required]
-        public float Price { get; set; }
+        public double Price { get; set; }
     }
 }
