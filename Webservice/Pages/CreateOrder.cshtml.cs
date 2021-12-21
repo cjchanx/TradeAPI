@@ -24,7 +24,7 @@ namespace TradingDB.Pages
 
         public IActionResult OnPost()
         {
-            OrdersHelper_db.Add(0, int.Parse(HttpContext.Session.GetString("AccountID")), CreateOrder.Action, CreateOrder.TargetPrice, DateTime.Now, CreateOrder.Quantity, CreateOrder.Symbol, "Broker", _context.DBContext, out StatusResponse resps);
+            OrdersHelper_db.Add(int.Parse(HttpContext.Session.GetString("AccountID")), CreateOrder.Action, CreateOrder.TargetPrice, DateTime.Now, CreateOrder.Quantity,1,  CreateOrder.Symbol, "Broker", _context.DBContext);
             return RedirectToPage("AccountOrders");
         }
     }
