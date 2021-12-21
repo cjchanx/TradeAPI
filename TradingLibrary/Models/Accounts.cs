@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,9 +70,12 @@ namespace TradingLibrary.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
-
-        [JsonProperty(PropertyName = "description")]
+        /// <summary>
+        /// string password for account
+        /// </summary>
+        [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
+
         #endregion
 
         #region Methods

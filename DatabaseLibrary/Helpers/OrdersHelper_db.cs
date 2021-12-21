@@ -91,6 +91,11 @@ namespace DatabaseLibrary.Helpers
                 );
                 if (rowsAffected == -1)
                     throw new Exception(message);
+                if (rowsAffected == 0)
+                {
+                    response = new StatusResponse("Deletion unsucessful.");
+                    throw new Exception(message);
+                }
 
                 // Return
                 response = new StatusResponse("Deleted entry successfully.");
