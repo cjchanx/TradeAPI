@@ -58,7 +58,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM Comissions",
+                    commandText: "SELECT * FROM Commissions",
                     parameters: new Dictionary<string, object>
                     {
 
@@ -98,7 +98,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to get from the database
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM Comissions WHERE BrokerName = @name, OrderType = @typ",
+                    commandText: "SELECT * FROM Commissions WHERE BrokerName = @name, OrderType = @typ",
                     parameters: new Dictionary<string, object>
                     {
                         {"@name", broker},
@@ -148,7 +148,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to remove from database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "DELETE FROM `Comissions` WHERE BrokerName=@name AND Type=@type",
+                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@name AND Type=@type",
                     parameters: new Dictionary<string, object> {
                         {"@brokername", broker},
                         {"@type", type }
@@ -187,7 +187,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to remove from database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "DELETE FROM `Comissions` WHERE BrokerName=@name",
+                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@name",
                     parameters: new Dictionary<string, object> {
                         {"@brokername", broker},
                     },
