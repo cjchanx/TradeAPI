@@ -112,14 +112,14 @@ namespace Webservice.ControllerHelpers
 
             if(inst == 0)
             {
-                statusResponse.Message = "Error occured removing account.";
+                statusResponse.Message = "Error occured removing order.";
                 Console.WriteLine(statusResponse.Message);
             }
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Error occured removing account.";
+                statusResponse.Message = "Error occured removing order.";
             }
 
             // Setup and return response

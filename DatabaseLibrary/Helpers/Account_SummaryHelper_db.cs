@@ -117,6 +117,54 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        /// <summary>
+        /// Updates existing Account Summary's available funds in the DB
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static Account_Summary_db UpdateFunds(int AccountRef, double AvailableFunds,DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (AccountRef < 1)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid accountref entered.");
+                if (AvailableFunds < 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid funds entered.");
+
+                // Create instance
+                Account_Summary_db inst = new Account_Summary_db(
+                    AccountRef,
+                    AvailableFunds,
+                    0,
+                    0
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "UPDATE Account_Summary SET AvailableFunds=@availablefunds WHERE AccountRef=@accountref",
+                    parameters: new Dictionary<string, object> {
+                        {"@accountref", inst.AccountRef },
+                        {"@availablefunds", inst.AvailableFunds },
+                        {"@grosspositionvalue", inst.GrossPositionValue },
+                        {"@netliquidation", inst.NetLiquidation }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Account_Summary added successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
 
         public static List<Account_Summary_db> getCollection(DBContext context, out StatusResponse response)
         {
