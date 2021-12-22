@@ -17,7 +17,7 @@ namespace DatabaseLibrary.Helpers
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Account_Summary_db Add(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation, DBContext context, out StatusResponse response)
+        public static Account_Summary_db Add(int AccountRef, double AvailableFunds, double GrossPositionValue, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -28,15 +28,13 @@ namespace DatabaseLibrary.Helpers
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid funds entered.");
                 if (GrossPositionValue < 0)
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid GrossPositionValue entered.");
-                if (NetLiquidation < 0)
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid NetLiquidation entered.");
 
                 // Create instance
                 Account_Summary_db inst = new Account_Summary_db(
                     AccountRef,
                     AvailableFunds,
                     GrossPositionValue,
-                    NetLiquidation
+                    AvailableFunds+GrossPositionValue
                     );
 
                 // Attempt to add to database
@@ -66,10 +64,10 @@ namespace DatabaseLibrary.Helpers
         }
 
         /// <summary>
-        /// Updates existing Account Summary in the DB
+        /// Updates existing Account Summary in the DB.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Account_Summary_db Update(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation, DBContext context, out StatusResponse response)
+        public static Account_Summary_db Update(int AccountRef, double AvailableFunds, double GrossPositionValue, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -80,15 +78,13 @@ namespace DatabaseLibrary.Helpers
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid funds entered.");
                 if (GrossPositionValue < 0)
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid GrossPositionValue entered.");
-                if (NetLiquidation < 0)
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid NetLiquidation entered.");
 
                 // Create instance
                 Account_Summary_db inst = new Account_Summary_db(
                     AccountRef,
                     AvailableFunds,
                     GrossPositionValue,
-                    NetLiquidation
+                    AvailableFunds+GrossPositionValue
                     );
 
                 // Attempt to add to database
@@ -118,10 +114,55 @@ namespace DatabaseLibrary.Helpers
         }
 
         /// <summary>
+        /// Deletes a Account Summary from the DB
+        /// Warning : If the summary is deleted deleting the account itself is highly recommended.
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static int DeleteSummary(int AccountRef, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (AccountRef < 1)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid accountref entered.");
+
+                // Get the summary by account
+                List<Account_Summary_db> list = GetSummaryByAccount(AccountRef, context, out StatusResponse resp);
+                if (list.Count == 0)
+                {
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Account summary does not exist.");
+                }
+
+                // Attempt to delete from database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Account_Summary` WHERE AccountRef=@accountref",
+                    parameters: new Dictionary<string, object> {
+                        {"@accountref", AccountRef},
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                    throw new Exception("No relevant Account_Summary to delete.");
+
+                // Return
+                response = new StatusResponse("Account_Summary deleted successfully");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Updates existing Account Summary's available funds in the DB
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Account_Summary_db UpdateFunds(int AccountRef, double AvailableFunds,DBContext context, out StatusResponse response)
+        public static Account_Summary_db UpdateFunds(int AccountRef, double AvailableFunds, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -131,17 +172,89 @@ namespace DatabaseLibrary.Helpers
                 if (AvailableFunds < 0)
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid funds entered.");
 
+                // Get the summary by account
+                List<Account_Summary_db> list = GetSummaryByAccount(AccountRef, context, out StatusResponse resp);
+                if(list.Count == 0)
+                {
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Account summary does not exist.");
+                }
+                Account_Summary_db original = list[0];
+
+                double originalNetLiq = original.NetLiquidation;
+                double difference = AvailableFunds - original.AvailableFunds;
+                originalNetLiq += difference;
+
                 // Create instance
                 Account_Summary_db inst = new Account_Summary_db(
                     AccountRef,
                     AvailableFunds,
                     0,
-                    0
+                    originalNetLiq
                     );
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "UPDATE Account_Summary SET AvailableFunds=@availablefunds WHERE AccountRef=@accountref",
+                    commandText: "UPDATE Account_Summary SET AvailableFunds=@availablefunds, NetLiquidation=@netliquidation WHERE AccountRef=@accountref",
+                    parameters: new Dictionary<string, object> {
+                        {"@accountref", inst.AccountRef },
+                        {"@availablefunds", inst.AvailableFunds },
+                        {"@grosspositionvalue", inst.GrossPositionValue },
+                        {"@netliquidation", inst.NetLiquidation }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Account_Summary added successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Updates existing Account Summary's available funds in the DB.
+        /// Intentionally does NOT protect against difference beyond bounds, since accounts can technically go below avail funds
+        /// if there are held funds for commisions.
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static Account_Summary_db UpdateFundsDiff(int AccountRef, double difference, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (AccountRef < 1)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid accountref entered.");
+
+                // Get the summary by account
+                List<Account_Summary_db> list = GetSummaryByAccount(AccountRef, context, out StatusResponse resp);
+                if (list.Count == 0)
+                {
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Account summary does not exist.");
+                }
+                Account_Summary_db original = list[0];
+
+                double newNetLiq = original.NetLiquidation + difference;
+
+                double newAvailableFunds = original.AvailableFunds + difference;
+
+                // Create instance
+                Account_Summary_db inst = new Account_Summary_db(
+                    AccountRef,
+                    newAvailableFunds,
+                    0,
+                    newNetLiq
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "UPDATE Account_Summary SET AvailableFunds=@availablefunds, NetLiquidation=@netliquidation WHERE AccountRef=@accountref",
                     parameters: new Dictionary<string, object> {
                         {"@accountref", inst.AccountRef },
                         {"@availablefunds", inst.AvailableFunds },

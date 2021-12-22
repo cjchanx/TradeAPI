@@ -290,7 +290,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Get all entries from the DB for orders which need to be fulfilled
                 DataTable table = context.ExecuteDataQueryCommand(
-                    commandText: "SELECT * FROM Orders AS O, Security AS S WHERE(O.Symbol = S.Symbol AND(O.ACTION = 0 OR O.ACTION = 2 AND O.TargetPrice <= S.Price) OR (O.Symbol = S.Symbol AND(O.ACTION = 1 OR O.ACTION = 3) AND O.TargetPrice >= S.Price)",
+                    commandText: "SELECT * FROM Orders AS O, Security AS S WHERE(O.Symbol = S.Symbol AND((O.ACTION = 0 OR O.ACTION = 2) AND O.TargetPrice <= S.Price) OR (O.Symbol = S.Symbol AND(O.ACTION = 1 OR O.ACTION = 3) AND O.TargetPrice >= S.Price))",
                     parameters: new Dictionary<string, object>
                     {
 

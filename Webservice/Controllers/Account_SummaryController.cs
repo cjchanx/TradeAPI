@@ -59,6 +59,10 @@ namespace Webservice.Controllers
             return resp;
         }
 
+        [HttpDelete]
+        [Route("DeleteAccount_Summary")]
+        
+
         [HttpGet("{id:int}")]
         [Route("GetAccount_Summary/{id}")]
         public ResponseMessage GetAccount_SummaryByAccount(int id)

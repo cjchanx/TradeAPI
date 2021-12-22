@@ -42,7 +42,7 @@ namespace Webservice.ControllerHelpers
             double netliquidation = (data.ContainsKey("netliquidation") ? data.GetValue("netliquidation").Value<double>() : 0);
 
             // Add instance to DB
-            var inst = Account_SummaryHelper_db.Add(accountref, availablefunds, grosspositionvalue, netliquidation, context, out StatusResponse statusResponse);
+            var inst = Account_SummaryHelper_db.Add(accountref, availablefunds, grosspositionvalue, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
@@ -96,6 +96,38 @@ namespace Webservice.ControllerHelpers
 
             // Return response
             var response = new ResponseMessage(inst != null, statusResponse.Message, inst);
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
+        /// <summary>
+        /// Deletes account summary from provided ID
+        /// </summary>
+        /// <param name="includeDetails">Whether to include detailed internal server message.</param>
+        /// <returns></returns>
+        public static ResponseMessage DeleteAccountSummary(int Id, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
+        {
+            // Add instance to DB
+            var inst = Account_SummaryHelper_db.DeleteSummary(Id, context, out StatusResponse statusResponse);
+
+            if (inst == 0)
+            {
+                statusResponse.Message = "Error occured removing order.";
+                Console.WriteLine(statusResponse.Message);
+            }
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
+            {
+                statusResponse.Message = "Error occured removing order.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
             stat = statusResponse.StatusCode;
             return response;
         }
