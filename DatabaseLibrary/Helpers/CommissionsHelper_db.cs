@@ -52,6 +52,46 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        public static Commission_db Update(string broker, int type, double rate, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (string.IsNullOrEmpty(broker?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid symbol entered."); ;
+
+                // Create instance
+                Commission_db inst = new Commission_db(
+                    broker,
+                    type,
+                    rate
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "UPDATE `Commissions` SET `Rate`=@rate WHERE `BrokerName`=@name AND `OrderType`=@type",
+                    parameters: new Dictionary<string, object> {
+                        {"@name", inst.Broker},
+                        {"@type", inst.Type },
+                        {"@rate", inst.Rate }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Comission updated successfully.");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
         public static List<Commission_db> GetCollection(DBContext context, out StatusResponse response)
         {
             try
@@ -143,12 +183,11 @@ namespace DatabaseLibrary.Helpers
         /// <returns></returns>
         public static int Remove(string broker, int type, DBContext context, out StatusResponse response)
         {
-            Console.WriteLine("Running REMOVE.");
             try
             {
                 // Attempt to remove from database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@name AND Type=@type",
+                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@brokername AND OrderType=@type",
                     parameters: new Dictionary<string, object> {
                         {"@brokername", broker},
                         {"@type", type }
