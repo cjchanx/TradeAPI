@@ -53,3 +53,78 @@ The following section includes important information and general guidelines for 
 
 # Providers Information
 Currently implemented for a MySQL database with extensible support for other databases possible.
+
+# API Information
+Following is sample API calls and basic documentation
+## ORDERS API
+```
+DELETE
+https://localhost:7182/api/orders/DeleteOrder/{Id}
+GET
+https://localhost:7182/api/orders/GetOrders
+https://localhost:7182/api/orders/GetOrdersByAccount/{AccountId}
+POST
+https://localhost:7182/api/orders/UpdateOrders
+https://localhost:7182/api/orders/AddOrders
+>> Use "Body->Raw->JSON" and following JSON Object
+{
+    "accountref": 1,
+    "action": 3,
+    "targetprice": 2.0,
+    "datecreated": "2021-12-09T17:38:26",
+    "quantity": 0,
+    "status": 1,
+    "symbol": "FB",
+    "broker": "IBKR"
+}
+
+PUT
+https://localhost:7182/api/orders/EditOrder/{Id}
+{
+    "accountref": 3,
+    "action": 4,
+    "targetprice": 2.0,
+    "datecreated": "2021-12-09T17:38:26",
+    "quantity": 0,
+    "status": 1,
+    "symbol": "FB",
+    "broker": "IBKR"
+}
+```
+## ACCOUNT SUMMARY API
+```
+GET
+https://localhost:7182/api/account_summary/GetAccount_Summary
+https://localhost:7182/api/account_summary/GetAccount_Summary/{Id}
+DELETE
+https://localhost:7182/api/account_summary/DeleteAccount_Summary/{Id}
+POST
+https://localhost:7182/api/account_summary/AddAccount_Summary
+{
+    "accountref": 3,
+    "availablefunds": 431.0,
+    "grosspositionvalue": 1.0,
+}
+PUT
+https://localhost:7182/api/account_summary/EditAccountSummary/{Id}
+{
+    "availablefunds": 10000000000,
+    "grosspositionvalue": 1.0,
+}
+```
+## BROKER API
+```
+GET
+https://localhost:7182/api/brokers/GetBrokers
+DELETE
+https://localhost:7182/api/brokers/DeleteBroker
+{
+    "name": "For Deletion"
+}
+POST
+https://localhost:7182/api/brokers/AddBrokers
+{
+    "name": "Test Broker",
+    "website": "https://www.testbrokerpostman.com/"
+}
+```
