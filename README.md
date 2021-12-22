@@ -53,3 +53,41 @@ The following section includes important information and general guidelines for 
 
 # Providers Information
 Currently implemented for a MySQL database with extensible support for other databases possible.
+
+# API Information
+Following is sample API calls and basic documentation
+## Orders API
+```
+DELETE
+https://localhost:7182/api/orders/DeleteOrder/{Id}
+GET
+https://localhost:7182/api/orders/GetOrders
+https://localhost:7182/api/orders/GetOrdersByAccount/{AccountId}
+POST
+https://localhost:7182/api/orders/UpdateOrders
+https://localhost:7182/api/orders/AddOrders
+>> Use "Body->Raw->JSON" and following JSON Object
+{
+    "accountref": 1,
+    "action": 3,
+    "targetprice": 2.0,
+    "datecreated": "2021-12-09T17:38:26",
+    "quantity": 0,
+    "status": 1,
+    "symbol": "FB",
+    "broker": "IBKR"
+}
+
+PUT
+https://localhost:7182/api/orders/EditOrder/{Id}
+{
+    "accountref": 3,
+    "action": 4,
+    "targetprice": 2.0,
+    "datecreated": "2021-12-09T17:38:26",
+    "quantity": 0,
+    "status": 1,
+    "symbol": "FB",
+    "broker": "IBKR"
+}
+```
