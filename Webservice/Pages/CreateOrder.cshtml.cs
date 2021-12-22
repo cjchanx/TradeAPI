@@ -28,9 +28,16 @@ namespace TradingDB.Pages
             {
                 if (HttpContext.Session.GetString("AccountID") == item.Id.ToString())
                 {
-                    OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
-                    OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
-                    return RedirectToPage("AccountOrders");
+                    foreach (var summary in Account_SummaryHelper_db.getCollection(_context.DBContext)) {
+                        if (summary.AccountRef == item.Id) {
+                            if (summary.AvailableFunds >= (CreateOrder.TargetPrice * CreateOrder.Quantity) ){
+                                Account_SummaryHelper_db.UpdateFunds(item.Id, summary.AvailableFunds - (CreateOrder.TargetPrice * CreateOrder.Quantity), _context.DBContext, out StatusResponse ressp);
+                                OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
+                                OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
+                                return RedirectToPage("AccountOrders");
+                            }
+                        }
+                    }
                 }
             }
             return RedirectToPage("CreateOrder");
