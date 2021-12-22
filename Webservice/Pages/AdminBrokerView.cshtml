@@ -1,6 +1,7 @@
 ﻿@page
 @using Webservice.ContextHelpers
 @using DatabaseLibrary.Helpers
+@using DatabaseLibrary.Core;
 @inject DatabaseContextHelper context
 @model TradingLibrary.Models.Brokers
 @{
@@ -49,6 +50,9 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.Website</td>
+                    <td>
+                        <a type="submit" asp-action="Delete"  asp-controller="AdminBrokerViewModel" asp-route-name="@item.Name" >Delete</a>
+                    </td>
                 </tr>
             }
         </tr>
