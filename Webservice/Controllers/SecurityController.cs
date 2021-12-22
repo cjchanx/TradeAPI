@@ -59,5 +59,18 @@ namespace Webservice.Controllers
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }
+
+        [HttpDelete]
+        [Route("DeleteSecurity")]
+        public ResponseMessage DeleteSecurity([FromBody] JObject data)
+        {
+            string name = (data.ContainsKey("symbol") ? data.GetValue("symbol").Value<string>() : null);
+            if (name == null)
+                return new ResponseMessage(false, "Invalid symbol.", null);
+
+            var resp = SecurityHelper.Remove(name, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
     }
 }

@@ -65,6 +65,30 @@ namespace Webservice.ControllerHelpers
             return response;
         }
 
+        public static ResponseMessage Remove(string symbol, DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Remove instance from DB
+            var inst = SecurityHelper_db.Remove(symbol, context, out StatusResponse statusResponse);
 
+            if (inst == 0)
+            {
+                statusResponse.Message = "Error occured removing security.";
+            }
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Error occured removing security.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
     }
 }
