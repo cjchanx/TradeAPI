@@ -26,7 +26,7 @@ namespace TradingDB.Pages
 
             foreach (var item in AccountsHelper_db.getCollection(_context.DBContext))
             {
-                if (item.Name == Credential.Username.ToString() && item.Password == Credential.Password.ToString()) {
+                if (item.Name == Credential.Username.ToString() && item.Password == Credential.Password.ToString() && item.Active) {
                     HttpContext.Session.SetString("AccountName", Credential.Username.ToString());
                     HttpContext.Session.SetString("AccountID", item.Id.ToString());
                     return RedirectToPage("AccountSummary");
