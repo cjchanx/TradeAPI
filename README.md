@@ -128,3 +128,10 @@ https://localhost:7182/api/brokers/AddBrokers
     "website": "https://www.testbrokerpostman.com/"
 }
 ```
+## COMMISSIONS API
+GET
+https://localhost:7182/api/commissions/GetCommissions
+DELETE
+<TO TEST>
+POST
+<TO TEST>
