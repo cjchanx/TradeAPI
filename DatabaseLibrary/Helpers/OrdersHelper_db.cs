@@ -72,7 +72,6 @@ namespace DatabaseLibrary.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 // Error occured.
                 response = new StatusResponse(ex);
                 return null;
@@ -163,7 +162,6 @@ namespace DatabaseLibrary.Helpers
                     message: out string message
                 );
 
-                Console.WriteLine("Rows Affected = " + rowsAffected);
 
                 if (rowsAffected == -1)
                     throw new Exception(message);
@@ -272,7 +270,6 @@ namespace DatabaseLibrary.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -335,7 +332,6 @@ namespace DatabaseLibrary.Helpers
                         {
                             realizedPnL = price;
                         }
-                        Console.WriteLine("YOO");
                         // Add new entry to Transactions table
                         TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price*Quantity,realizedPnL, context, out StatusResponse resp1);
                     }
@@ -396,7 +392,6 @@ namespace DatabaseLibrary.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
                 throw new Exception(ex.Message);
             }
         }
