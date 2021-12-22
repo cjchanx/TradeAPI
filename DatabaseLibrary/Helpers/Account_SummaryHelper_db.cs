@@ -66,7 +66,7 @@ namespace DatabaseLibrary.Helpers
         }
 
         /// <summary>
-        /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
+        /// Updates existing Account Summary in the DB
         /// </summary>
         /// <returns>Account_db object</returns>
         public static Account_Summary_db Update(int AccountRef, double AvailableFunds, double GrossPositionValue, double NetLiquidation, DBContext context, out StatusResponse response)
