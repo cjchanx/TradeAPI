@@ -57,7 +57,17 @@
                 <input type="text" asp-for="UpdateAdminAccount.Password" class="form-control" />
             </div>
             <span class="text-danger" asp-validation-for="UpdateAdminAccount.Password"></span>
-        </div>
+            </div>
+
+                            <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateAdminAccount.AvailableFunds"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateAdminAccount.AvailableFunds" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateAdminAccount.AvailableFunds"></span>
+            </div>
 
         <div class="form-group row">
             <div class="col-2">
@@ -66,5 +76,7 @@
         </div>
         <input type="hidden" asp-for="UpdateAdminAccount.Id" class="form-control" />
         <input type="hidden" asp-for="UpdateAdminAccount.DateCreated" class="form-control" />
+        <input type="hidden" asp-for="UpdateAdminAccount.NetLiquidation" class="form-control" />
+        <input type="hidden" asp-for="UpdateAdminAccount.GrossPositionValue" class="form-control" />
     </form>
 </div>

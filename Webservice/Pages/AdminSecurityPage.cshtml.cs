@@ -21,7 +21,7 @@ namespace TradingDB.Pages
 
         public IActionResult Delete(string symbol)
         {
-            Console.WriteLine("Remove " + symbol);
+            SecurityHelper_db.Remove(symbol, _context.DBContext, out StatusResponse response);
             return RedirectToPage("/AdminSecurityPage");
         }
     }

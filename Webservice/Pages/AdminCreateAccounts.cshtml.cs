@@ -26,7 +26,7 @@ namespace TradingDB.Pages
         public IActionResult OnPost()
         {
             AccountsHelper_db.Add(0, CreateAccount.Broker, CreateAccount.Name, CreateAccount.Description, CreateAccount.Password, _context.DBContext, out StatusResponse resp);
-            Account_SummaryHelper_db.Add(AccountsHelper_db.getCollection(_context.DBContext, out StatusResponse collection).ToArray().Last().Id, 10000, 0, _context.DBContext, out StatusResponse resps);
+            Account_SummaryHelper_db.Add(AccountsHelper_db.getCollection(_context.DBContext, out StatusResponse collection).ToArray().Last().Id, 0, 0, _context.DBContext, out StatusResponse resps);
             return RedirectToPage("AdminAccountsView");
         }
     }

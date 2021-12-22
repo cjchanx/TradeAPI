@@ -51,6 +51,7 @@
                     <td>@item.Name</td>
                     <td>@item.Website</td>
                     <td>
+                        <a asp-page="/AdminEditBroker" asp-route-name="@item.Name">Manage</a>
                         <a type="submit" asp-action="Delete"  asp-controller="AdminBrokerViewModel" asp-route-name="@item.Name" >Delete</a>
                     </td>
                 </tr>
