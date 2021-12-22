@@ -148,8 +148,8 @@ namespace DatabaseLibrary.Helpers
                     message: out string message
                 );
 
-                Console.WriteLine("Rows Affected = " + rowsAffected);
-                Console.WriteLine("Rows Affected = " + message);
+                Console.WriteLine("Broker = " + rowsAffected);
+                Console.WriteLine("Broker = " + message);
                 if (rowsAffected == -1)
                     throw new Exception(message);
                 if (rowsAffected == 0)

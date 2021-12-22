@@ -27,8 +27,8 @@ namespace TradingDB.Pages
                     return RedirectToPage("/AdminBrokerView");
                 }
             }
-            BrokersHelper_db.Remove(name, _context.DBContext, out StatusResponse resp);
-            Console.WriteLine("Done");
+            CommissionsHelper_db.RemoveByBroker(name, _context.DBContext, out StatusResponse response);
+            BrokersHelper_db.Remove(name, _context.DBContext, out StatusResponse statusResponse);
             return RedirectToPage("/AdminBrokerView");
         }
     }

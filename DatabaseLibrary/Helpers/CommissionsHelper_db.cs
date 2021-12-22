@@ -182,7 +182,7 @@ namespace DatabaseLibrary.Helpers
         /// <returns></returns>
         public static int RemoveByBroker(string broker, DBContext context, out StatusResponse response)
         {
-            Console.WriteLine("Running REMOVE.");
+            Console.WriteLine("Running REMOVE Commission.");
             try
             {
                 // Attempt to remove from database
@@ -202,7 +202,7 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
                 }
 
-                // Return
+                Console.WriteLine(message);
                 response = new StatusResponse("Deleted entry successfully.");
                 return rowsAffected;
             }
