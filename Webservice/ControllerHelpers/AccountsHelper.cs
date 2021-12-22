@@ -140,5 +140,31 @@ namespace Webservice.ControllerHelpers
             stat = statusResponse.StatusCode;
             return response;
         }
+
+        /// <summary>
+        /// Deletes an account and all associated links
+        /// </summary>
+        /// <param name="includeDetails">Whether to include detailed internal server message.</param>
+        /// <returns></returns>
+        public static ResponseMessage ForceDelete(int id, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
+        {
+            // Delete instance
+            var inst = AccountsHelper_db.ForceDelete(context, out StatusResponse statusResponse, id);
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
+            {
+                statusResponse.Message = "Error occured updating account.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
     }
 }

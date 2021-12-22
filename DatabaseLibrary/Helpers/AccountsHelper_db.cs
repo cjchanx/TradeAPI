@@ -13,59 +13,36 @@ namespace DatabaseLibrary.Helpers
     public class AccountsHelper_db
     {
         /// <summary>
-        /// Update updates an account's parameters based on it's Id 
+        /// Force deletes an account by its id, by deleting ALL linked assets.
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Accounts_db ForceDelete(int id, string broker, string name, string desc, string pass, DBContext context, out StatusResponse response)
+        public static int ForceDelete(DBContext context, out StatusResponse response, int id = -1)
         {
+            if(id == -1)
+            {
+                throw new Exception("Invalid ID supplied.");
+            }
+
             try
             {
-                // Validate current data
-                if (string.IsNullOrEmpty(name?.Trim()))
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid name entered.");
-                if (string.IsNullOrEmpty(broker?.Trim()))
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid broker entered.");
-                if (string.IsNullOrEmpty(desc?.Trim()))
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid description entered.");
-                if (string.IsNullOrEmpty(pass?.Trim()))
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid password entered.");
-
-                // Create instance
-                Accounts_db inst = new Accounts_db(
-                    id,
-                    true,
-                    broker,
-                    DateTime.Now,
-                    name,
-                    desc,
-                    pass
-                    );
-
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "UPDATE `Accounts` SET `Broker`=@broker,`Name`=@name,`Description`=@desc,`Password`=@pass WHERE `Id`=@Id,",
+                    commandText: "DELETE FROM `Accounts` WHERE `Id`=@Id",
                     parameters: new Dictionary<string, object> {
-                        {"@Id", inst.Id },
-                        {"@broker", inst.Broker },
-                        {"@name", inst.Name },
-                        {"@desc", inst.Description },
-                        {"@pass", inst.Password }
+                        {"@Id", id },
                     },
                     message: out string message
                 );
                 if (rowsAffected == -1 || rowsAffected == 0)
                     throw new Exception(message);
-
-                // Return
-
-                response = new StatusResponse("Account updated successfully");
-                return inst;
+                response = new StatusResponse("Sucessfully deleted.");
+                return rowsAffected;
             }
             catch (Exception ex)
             {
                 // Error occured.
                 response = new StatusResponse(ex);
-                return null;
+                return -1;
             }
         }
 

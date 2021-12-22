@@ -74,12 +74,21 @@ namespace Webservice.Controllers
 
         [HttpGet("{id:int}")]
         [Route("GetAccountById/{id}")]
-        public ResponseMessage GetAccount_SummaryByAccount(int id)
+        public ResponseMessage GetAccountById(int id)
         {
             var response = AccountsHelper.GetAccountById(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return response;
         }
 
+
+        [HttpDelete("{id:int}")]
+        [Route("ForceDelete/{id}")]
+        public ResponseMessage ForceDelete(int id)
+        {
+            var response = AccountsHelper.ForceDelete(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return response;
+        }
     }
 }
