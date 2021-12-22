@@ -60,10 +60,13 @@ namespace Webservice.Controllers
             return resp;
         }
 
-        [HttpDelete("{name}")]
-        [Route("DeleteBroker/{name}")]
-        public ResponseMessage DeleteBroker(string name)
+        [HttpDelete]
+        [Route("DeleteBroker")]
+        public ResponseMessage DeleteBroker([FromBody] JObject data)
         {
+            string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
+            if (name == null)
+                return new ResponseMessage(false, "Invalid name.", null);
             var resp = BrokersHelper.Remove(name, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return resp;

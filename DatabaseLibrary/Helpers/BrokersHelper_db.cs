@@ -138,9 +138,10 @@ namespace DatabaseLibrary.Helpers
         {
             try
             {
+                Console.WriteLine("Removing " + name);
                 // Attempt to remove from database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "DELETE FROM `BROKERS` WHERE Name=@name",
+                    commandText: "DELETE FROM `Brokers` WHERE Name=@name",
                     parameters: new Dictionary<string, object> {
                         {"@name", name },
                     },

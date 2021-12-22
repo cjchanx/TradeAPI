@@ -72,7 +72,6 @@ namespace Webservice.ControllerHelpers
             if (inst == 0)
             {
                 statusResponse.Message = "Error occured removing broker.";
-                Console.WriteLine(statusResponse.Message);
             }
 
             // Process includeErrors
