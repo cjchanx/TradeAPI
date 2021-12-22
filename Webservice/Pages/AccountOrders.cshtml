@@ -75,12 +75,14 @@
                     <td>@item.Quantity</td>
                     <td>@item.Status</td>
                     <td>@item.Symbol</td>
+                    <td>
+                        <a asp-page="/AccountEditOrders" asp-route-id="@item.Id" >Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>   
+                    </td>
                 </tr>
                 }
 
             }
         </tr>
     </thead>
-    <tbody>
-    </tbody>
 </table>
