@@ -75,7 +75,12 @@
                 {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.Action</td>
+                    @{if(@item.Action == 0 || @item.Action == 1){
+                    <td>Sell</td>
+                    } else if(@item.Action == 2 || @item.Action == 3){
+                    <td>Buy</td>
+                    }
+                    }
                     <td>@item.Commission</td>
                     <td>@item.AveragePrice</td>
                     <td>@item.Price</td>

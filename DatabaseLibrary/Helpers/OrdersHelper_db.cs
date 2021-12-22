@@ -44,7 +44,6 @@ namespace DatabaseLibrary.Helpers
                     Symbol,
                     Broker
                     );
-
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
                     commandText: "UPDATE Orders SET AccountRef=@accountref, Action=@action, TargetPrice=@targetprice, DateCreated=@datecreated, Quantity=@quantity, Status=@status, Symbol=@symbol, BrokerName=@broker WHERE Id=@Id",
@@ -73,6 +72,7 @@ namespace DatabaseLibrary.Helpers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 // Error occured.
                 response = new StatusResponse(ex);
                 return null;
