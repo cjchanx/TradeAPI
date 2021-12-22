@@ -131,6 +131,50 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static int Remove(string symbol, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (string.IsNullOrEmpty(symbol?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid symbol entered.");
+
+                // Create instance
+                Security_db inst = new Security_db(
+                    symbol,
+                    null,
+                    0
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Security` WHERE Symbol=@symbol",
+                    parameters: new Dictionary<string, object> {
+                        {"@symbol", inst.Symbol },
+                    },
+                    message: out string message
+                );
+
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                {
+                    response = new StatusResponse("Deletion unsucessful.");
+                    throw new Exception(message);
+                }
+
+                // Return
+                response = new StatusResponse("Security removed successfully");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return 0;
+            }
+        }
     }
 
 }

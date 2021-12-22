@@ -31,7 +31,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
-                statusResponse.Message = "Error occured adding new broker.";
+                statusResponse.Message = "Error occured adding new entry.";
             }
 
             // Setup and return response
@@ -71,13 +71,13 @@ namespace Webservice.ControllerHelpers
 
             if (inst == 0)
             {
-                statusResponse.Message = "Error occured removing broker.";
+                statusResponse.Message = "Error occured removing commission.";
             }
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Error occured removing broker.";
+                statusResponse.Message = "Error occured removing commission.";
             }
 
             // Setup and return response
@@ -97,13 +97,13 @@ namespace Webservice.ControllerHelpers
 
             if (inst == 0)
             {
-                statusResponse.Message = "Error occured removing broker.";
+                statusResponse.Message = "Error occured removing commission.";
             }
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Error occured removing broker.";
+                statusResponse.Message = "Error occured removing commissions.";
             }
 
             // Setup and return response

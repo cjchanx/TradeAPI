@@ -81,7 +81,7 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
 
                 // Return
-                response = new StatusResponse("Comission updated successfully.");
+                response = new StatusResponse("Commission updated successfully.");
                 return inst;
             }
             catch (Exception ex)
