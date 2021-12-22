@@ -1,4 +1,70 @@
 ﻿@page
-@model Webservice.Pages.AdminEditBrokerModel
+@using Webservice.ContextHelpers
+@model TradingDB.Pages.AdminEditBrokerModel
+@inject DatabaseContextHelper context
 @{
 }
+
+<div class="container border" style="padding:20px">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateBroker.Website"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateBroker.Website" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateBroker.Website"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateBroker.Upper_limit_sell"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateBroker.Upper_limit_sell" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateBroker.Upper_limit_sell"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateBroker.Lower_limit_sell"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateBroker.Lower_limit_sell" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateBroker.Lower_limit_sell"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateBroker.Upper_limit_buy"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateBroker.Upper_limit_buy" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateBroker.Upper_limit_buy"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="UpdateBroker.Lower_limit_buy"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="UpdateBroker.Lower_limit_buy" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="UpdateBroker.Lower_limit_buy"></span>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Update"/>
+            </div>
+        </div>
+        <input type="hidden" asp-for="UpdateBroker.Name" class="form-control" />
+    </form>
+</div>

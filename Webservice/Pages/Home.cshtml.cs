@@ -20,7 +20,7 @@ namespace TradingDB.Pages
 
         public IActionResult OnPostAdminLogin()
         {
-            return RedirectToPage("AdminAccountsView");
+            return RedirectToPage("AdminPage");
         }
 
         public IActionResult OnPostClientLogin()

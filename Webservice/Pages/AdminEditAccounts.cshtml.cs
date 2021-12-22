@@ -33,10 +33,22 @@ namespace TradingDB.Pages
                     UpdateAdminAccount.Password = @item.Password;
                 }
             }
+
+            foreach (var item in Account_SummaryHelper_db.getCollection(_context.DBContext))
+            {
+                if (@item.AccountRef == id)
+                {
+                    UpdateAdminAccount.AvailableFunds = item.AvailableFunds;
+                }
+            }
         }
 
         public IActionResult OnPost()
         {
+            if (UpdateAdminAccount.AvailableFunds > 0) {
+                Account_SummaryHelper_db.UpdateFunds(UpdateAdminAccount.Id, UpdateAdminAccount.AvailableFunds, _context.DBContext, out StatusResponse resp);
+            }
+            
             return RedirectToPage("AdminAccountsView");
         }
     }
@@ -63,6 +75,16 @@ namespace TradingDB.Pages
 
         [System.ComponentModel.DataAnnotations.Required]
         public string Password { get; set; }
+
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public double AvailableFunds { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public double GrossPositionValue { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public double NetLiquidation { get; set; }
 
     }
 }
