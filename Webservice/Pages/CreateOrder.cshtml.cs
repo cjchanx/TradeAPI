@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Webservice.ContextHelpers;
 using DatabaseLibrary.Helpers;
 using DatabaseLibrary.Core;
-
+using DatabaseLibrary.Models;
 
 namespace TradingDB.Pages
 {
     public class CreateOrderModel : PageModel
     {
         private readonly DatabaseContextHelper _context;
+
+        public List<Security_db> Symbols { get; set; }
 
         public CreateOrderModel(DatabaseContextHelper context)
         {
@@ -18,8 +20,11 @@ namespace TradingDB.Pages
 
         [BindProperty]
         public CreateOrder CreateOrder { get; set; }
+
         public void OnGet()
         {
+            Symbols = new List<string>();
+            Symbols.Add("hi");
         }
 
         public IActionResult OnPost()

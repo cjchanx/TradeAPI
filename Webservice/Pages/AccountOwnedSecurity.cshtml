@@ -2,7 +2,7 @@
 @using Webservice.ContextHelpers
 @using DatabaseLibrary.Helpers
 @inject DatabaseContextHelper context
-@model TradingLibrary.Models.Account_Summary
+@model TradingLibrary.Models.OwnedSecurity
 @{
 }
 
@@ -36,27 +36,32 @@
             </div>
             <div>
             @{
-                string name = "null";
-                name = HttpContext.Session.GetString("AccountName");
+                string name = HttpContext.Session.GetString("AccountName");
             }
                 <div class="text-right" ><strong>@name</strong></div>
                 <a class="text-right" asp-page="/ClientPage">Logout</a>
             </div>
         </nav>
     </header>
-
-        
-<h2>Account Summary</h2>
-            <a asp-page="/AccountAddFunds" >Manage Funds</a>
-            @foreach (var item in Account_SummaryHelper_db.getCollection(context.DBContext))
+        <h2>Transaction</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Symbol)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.Quantity)</a>
+            </th>
+            <th>
+                <a >@Html.DisplayNameFor(model => model.AveragePrice)</a>
+            </th>
+            @foreach (var item in TransactionsHelper_db.getCollection(context.DBContext))
             {
-                int id = int.Parse(HttpContext.Session.GetString("AccountID"));
-                if (id == @item.AccountRef)
-                {
-                    <div class="text-left" ><strong>Available Funds: @item.AvailableFunds</strong></div>
-                    <div class="text-left" ><strong>Gross Position Value: @item.GrossPositionValue</strong></div>
-                    <div class="text-left" ><strong>Net Liquidation: @item.NetLiquidation</strong></div>
-                    break;
-                }
 
             }
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
