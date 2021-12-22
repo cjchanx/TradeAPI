@@ -91,6 +91,48 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        public static Brokers_db UpdateWebsite(string name, string website, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (string.IsNullOrEmpty(name?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid name entered.");
+                if (string.IsNullOrEmpty(website?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid website entered.");
+
+                // Create instance
+                Brokers_db inst = new Brokers_db(
+                    name,
+                    website
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "UPDATE `Brokers` SET `Website`=@website WHERE `Name`=@name",
+                    parameters: new Dictionary<string, object> {
+                        {"@name", inst.Name },
+                        {"@website", inst.Website }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Broker updated successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
         public static List<Brokers_db> getCollection(DBContext context)
         {
             try
