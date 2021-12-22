@@ -131,5 +131,36 @@ namespace Webservice.ControllerHelpers
             stat = statusResponse.StatusCode;
             return response;
         }
+
+
+        /// <summary>
+        /// Updates an order based on the given Id
+        /// </summary>
+        /// <param name="includeDetails">Whether to include detailed internal server message.</param>
+        /// <returns></returns>
+        public static ResponseMessage Edit(int Id, JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
+        {
+            // Extract parameters
+            double availablefunds = (data.ContainsKey("availablefunds") ? data.GetValue("availablefunds").Value<double>() : 0);
+            double grosspositionvalue = (data.ContainsKey("grosspositionvalue") ? data.GetValue("grosspositionvalue").Value<double>() : 0);
+
+            // Add instance to DB
+            var inst = Account_SummaryHelper_db.Update(Id, availablefunds, grosspositionvalue, context, out StatusResponse statusResponse);
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
+            {
+                statusResponse.Message = "Error editing Summary.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != null,
+                statusResponse.Message,
+                Convert(inst)
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
     }
 }

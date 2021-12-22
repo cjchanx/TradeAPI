@@ -59,8 +59,14 @@ namespace Webservice.Controllers
             return resp;
         }
 
-        [HttpDelete]
-        [Route("DeleteAccount_Summary")]
+        [HttpDelete("{id:int}")]
+        [Route("DeleteAccount_Summary/{id}")]
+        public ResponseMessage DeleteSummary(int id)
+        {
+            var resp = Account_SummaryHelper.DeleteAccountSummary(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
         
 
         [HttpGet("{id:int}")]
@@ -72,5 +78,13 @@ namespace Webservice.Controllers
             return response;
         }
 
+        [HttpPut("{id:int}")]
+        [Route("EditAccountSummary/{id}")]
+        public ResponseMessage EditOrder(int id, [FromBody] JObject data)
+        {
+            var resp = Account_SummaryHelper.Edit(id, data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Something went wrong while retrieving the Account.";
+                statusResponse.Message = "Something went wrong while retrieving the order.";
             }
 
             // Return response
@@ -96,7 +96,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Something went wrong while retrieving the Account.";
+                statusResponse.Message = "Something went wrong while retrieving the orders.";
             }
 
             // Return response
@@ -107,7 +107,7 @@ namespace Webservice.ControllerHelpers
 
         public static ResponseMessage Remove(DBContext context, int id, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
-            // Add instance to DB
+            // Remove instance from DB
             var inst = OrdersHelper_db.Remove(id, context, out StatusResponse statusResponse);
 
             if(inst == 0)
@@ -156,7 +156,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
-                statusResponse.Message = "Error occured adding new account.";
+                statusResponse.Message = "Error occured editing order.";
             }
 
             // Setup and return response
