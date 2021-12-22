@@ -1,9 +1,8 @@
 ﻿@page
 @using Webservice.ContextHelpers
 @using DatabaseLibrary.Helpers
-@using DatabaseLibrary.Core;
 @inject DatabaseContextHelper context
-@model TradingLibrary.Models.Orders;
+@model TradingLibrary.Models.Security
 @{
 }
 
@@ -32,60 +31,33 @@
                     </ul>
                 </div>
             </div>
-            <div>
-            @{
-                string name = HttpContext.Session.GetString("AccountName");
-            }
-                <div class="text-right" ><strong>@name</strong></div>
-                <a class="text-right" asp-page="/ClientPage">Logout</a>
-            </div>
         </nav>
     </header>
-    <h2>Orders</h2>
-<p>
-    <a asp-page="/CreateOrder">Create New Order</a>
-</p>
+
+<h2>Security</h2>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a>@Html.DisplayNameFor(model => model.Id)</a>
+                <a >@Html.DisplayNameFor(model => model.Symbol)</a>
             </th>
             <th>
-                <a>@Html.DisplayNameFor(model => model.Action)</a>
+                <a >@Html.DisplayNameFor(model => model.Price)</a>
             </th>
             <th>
-                <a>@Html.DisplayNameFor(model => model.DateCreated)</a>
+                <a >@Html.DisplayNameFor(model => model.Description)</a>
             </th>
-            <th>
-                <a>@Html.DisplayNameFor(model => model.Quantity)</a>
-            </th>
-            <th>
-                <a>@Html.DisplayNameFor(model => model.Status)</a>
-            </th>
-            <th>
-                <a>@Html.DisplayNameFor(model => model.Symbol)</a>
-            </th>
-            @foreach (var item in OrdersHelper_db.getCollection(context.DBContext))
+            @foreach (var item in SecurityHelper_db.getCollection(context.DBContext))
             {
-                int id = int.Parse(HttpContext.Session.GetString("AccountID"));
-                if (id == @item.AccountRef)
-                {
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Action</td>
-                    <td>@item.DateCreated</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Status</td>
                     <td>@item.Symbol</td>
-                    <td>
-                        <a asp-page="/AccountEditOrders" asp-route-id="@item.Id" >Edit</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>   
-                    </td>
+                    <td>@item.Price</td>
+                    <td>@item.Description</td>
                 </tr>
-                }
-
             }
         </tr>
     </thead>
+    <tbody>
+    </tbody>
 </table>
