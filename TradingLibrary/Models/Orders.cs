@@ -20,7 +20,7 @@ namespace TradingLibrary.Models
         /// <param name="quantity"></param>
         /// <param name="status"></param>
         /// <param name="symbol"></param>
-        public Orders(int Id,int AccountRef, int Action, double TargetPrice, DateTime date,int quantity, int status, String symbol)
+        public Orders(int Id,int AccountRef, int Action, double TargetPrice, DateTime date,int quantity, int status, String symbol, String broker)
         {
             this.Id = Id;
             this.AccountRef = AccountRef;
@@ -30,6 +30,7 @@ namespace TradingLibrary.Models
             this.Quantity = quantity;
             this.Status = status;
             this.Symbol = symbol;
+            this.Broker = broker;
         }
 
         #endregion
@@ -79,6 +80,12 @@ namespace TradingLibrary.Models
         /// </summary>
         [JsonProperty(PropertyName = "symbol")]
         public String Symbol { get; set; }
+
+        /// <summary>
+        /// broker object
+        /// </summary>
+        [JsonProperty(PropertyName = "broker")]
+        public String Broker { get; set; }
 
         #endregion
 

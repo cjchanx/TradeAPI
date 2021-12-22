@@ -52,6 +52,15 @@ namespace Webservice.Controllers
             return response;
         }
 
+        [HttpGet("{id:int}")]
+        [Route("GetOrdersByAccount/{id}")]
+        public ResponseMessage GetOrdersByAccount(int id)
+        {
+            var response = OrdersHelper.GetCollectionByAccount(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return response;
+        }
+
         [HttpPost]
         [Route("UpdateOrders")]
         public ResponseMessage UpdateOrders()
@@ -62,7 +71,7 @@ namespace Webservice.Controllers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !HostingEnvironment.IsDevelopment())
             {
-                statusResponse.Message = "Something went wrong while retrieving the Account.";
+                statusResponse.Message = "Something went wrong while attempting update.";
             }
 
             // Return response

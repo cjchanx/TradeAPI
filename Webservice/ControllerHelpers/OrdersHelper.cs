@@ -22,7 +22,7 @@ namespace Webservice.ControllerHelpers
             if (inst == null)
                 return null;
 
-            return new Orders(inst.Id, inst.AccountRef, inst.Action, inst.TargetPrice, inst.DateCreated, inst.Quantity, inst.Status, inst.Symbol);
+            return new Orders(inst.Id, inst.AccountRef, inst.Action, inst.TargetPrice, inst.DateCreated, inst.Quantity, inst.Status, inst.Symbol, inst.Broker);
         }
 
         #endregion
@@ -85,6 +85,26 @@ namespace Webservice.ControllerHelpers
             return response;
         }
 
+        public static ResponseMessage GetCollectionByAccount(int id, DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Get instances from DB
+            var dbInst = OrdersHelper_db.GetCollectionByAccount(id, context, out StatusResponse statusResponse);
+
+            // Convert to object
+            var inst = dbInst?.Select(x => OrdersHelper.Convert(x)).ToList();
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Something went wrong while retrieving the Account.";
+            }
+
+            // Return response
+            var response = new ResponseMessage(inst != null, statusResponse.Message, inst);
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
         public static ResponseMessage Remove(DBContext context, int id, out HttpStatusCode stat, bool includeDetailsErrors = false)
         {
             // Add instance to DB
@@ -92,13 +112,14 @@ namespace Webservice.ControllerHelpers
 
             if(inst == 0)
             {
-                statusResponse.Message = "Error occured adding new account.";
+                statusResponse.Message = "Error occured removing account.";
+                Console.WriteLine(statusResponse.Message);
             }
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
             {
-                statusResponse.Message = "Error occured adding new account.";
+                statusResponse.Message = "Error occured removing account.";
             }
 
             // Setup and return response
