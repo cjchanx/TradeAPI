@@ -129,9 +129,11 @@ https://localhost:7182/api/brokers/AddBrokers
 }
 ```
 ## COMMISSIONS API
+```
 GET
 https://localhost:7182/api/commissions/GetCommissions
 DELETE
-<TO TEST>
+( TO TEST )
 POST
-<TO TEST>
+( TO TEST )
+```
