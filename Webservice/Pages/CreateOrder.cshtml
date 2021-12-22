@@ -1,5 +1,6 @@
 ﻿@page
 @model TradingDB.Pages.CreateOrderModel
+@using TradingLibrary.Enums;
 @{
 }
 
@@ -9,10 +10,10 @@
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="CreateOrder.Action"></label>
+                <label asp-for="CreateOrder.Action" ></label>
             </div>
-            <div class="col-5">
-                <input type="text" asp-for="CreateOrder.Action" class="form-control" />
+            <div class="col-md-10">
+                <select  asp-for="CreateOrder.Action" asp-items="Html.GetEnumSelectList<OrderAction>()" class="form-control"> </select>
             </div>
             <span class="text-danger" asp-validation-for="CreateOrder.Action"></span>
         </div>
