@@ -36,7 +36,7 @@ namespace TradingDB.Pages
         public IActionResult OnPost()
         {
             if (UpdateSecurity.Price > 0) {
-                Console.WriteLine("Update");
+                SecurityHelper_db.Update(UpdateSecurity.Symbol, UpdateSecurity.Description, UpdateSecurity.Price, _context.DBContext, out StatusResponse response);
                 return RedirectToPage("AdminSecurityPage");
 
             }
