@@ -36,10 +36,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            int id = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
+            int id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
-            DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
+            DateTime date = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
             string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
@@ -72,10 +72,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Update(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            int id = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
+            int id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
-            DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
+            DateTime date = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
             string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
@@ -137,6 +137,32 @@ namespace Webservice.ControllerHelpers
 
             // Return response
             var response = new ResponseMessage(inst != null, statusResponse.Message, inst);
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
+        /// <summary>
+        /// Deletes an account and all associated links
+        /// </summary>
+        /// <param name="includeDetails">Whether to include detailed internal server message.</param>
+        /// <returns></returns>
+        public static ResponseMessage ForceDelete(int id, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
+        {
+            // Delete instance
+            var inst = AccountsHelper_db.ForceDelete(context, out StatusResponse statusResponse, id);
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
+            {
+                statusResponse.Message = "Error occured updating account.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
             stat = statusResponse.StatusCode;
             return response;
         }
