@@ -50,6 +50,8 @@ namespace DatabaseLibrary.Helpers
                 );
                 if (rowsAffected == -1)
                     throw new Exception(message);
+                if (rowsAffected == 0)
+                    throw new Exception(message);
 
                 // Return
                 response = new StatusResponse("Account_Summary added successfully");

@@ -53,6 +53,7 @@ namespace DatabaseLibrary.Models
         public int Status { get; set; }
 
         public string Symbol { get; set; }
+
         public string Broker { get; set; }
 
         public double TargetPrice { get; set; }
