@@ -335,9 +335,9 @@ namespace DatabaseLibrary.Helpers
                         {
                             realizedPnL = price;
                         }
-
+                        Console.WriteLine("YOO");
                         // Add new entry to Transactions table
-                        TransactionsHelper_db.Add(Id, AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, price, Quantity, realizedPnL, context, out StatusResponse resp1);
+                        TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price*Quantity,realizedPnL, context, out StatusResponse resp1);
                     }
                 }
 

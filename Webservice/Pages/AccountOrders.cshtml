@@ -61,7 +61,7 @@
                 <a>@Html.DisplayNameFor(model => model.Quantity)</a>
             </th>
             <th>
-                <a>@Html.DisplayNameFor(model => model.Status)</a>
+                <a>@Html.DisplayNameFor(model => model.TargetPrice)</a>
             </th>
             <th>
                 <a>@Html.DisplayNameFor(model => model.Symbol)</a>
@@ -73,14 +73,19 @@
                 {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.Action</td>
+                    @{if(@item.Action == 0 || @item.Action == 1){
+                    <td>Sell</td>
+                    } else if(@item.Action == 2 || @item.Action == 3){
+                    <td>Buy</td>
+                    }
+                    }
                     <td>@item.DateCreated</td>
                     <td>@item.Quantity</td>
-                    <td>@item.Status</td>
+                    <td>@item.TargetPrice</td>
                     <td>@item.Symbol</td>
                     <td>
                         <a asp-page="/AccountEditOrders" asp-route-id="@item.Id" >Edit</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>   
+                        <a type="submit" asp-action="Delete"  asp-controller="AccountOrdersModel" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
                 }

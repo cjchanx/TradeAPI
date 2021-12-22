@@ -86,7 +86,7 @@ namespace DatabaseLibrary.Helpers
                     Quantity,
                     RealizedPNL
                     );
-
+                Console.WriteLine(inst.Action);
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
                     commandText: "INSERT INTO Transactions (AccountRef, Action, AveragePrice, Commission, DateCreated, Price, Quantity, RealizedPNL) VALUES (@accountref, @action, @averageprice, @commission, @datecreated, @price, @quantity, @realizedpnl)",
@@ -106,11 +106,14 @@ namespace DatabaseLibrary.Helpers
                     throw new Exception(message);
 
                 // Return
+                Console.WriteLine("here1");
                 response = new StatusResponse("Transaction added successfully");
                 return inst;
             }
             catch (Exception ex)
             {
+                
+                Console.WriteLine(ex);
                 // Error occured.
                 response = new StatusResponse(ex);
                 return null;
