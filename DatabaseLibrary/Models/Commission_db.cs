@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Models
 {
-    internal class Commission_db
+    public class Commission_db
     {
         #region Constructors
         public Commission_db() { }
