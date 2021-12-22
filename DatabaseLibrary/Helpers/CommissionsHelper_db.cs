@@ -187,7 +187,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Attempt to remove from database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@name",
+                    commandText: "DELETE FROM `Commissions` WHERE BrokerName=@brokername",
                     parameters: new Dictionary<string, object> {
                         {"@brokername", broker},
                     },
