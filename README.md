@@ -56,7 +56,7 @@ Currently implemented for a MySQL database with extensible support for other dat
 
 # API Information
 Following is sample API calls and basic documentation
-## Orders API
+## ORDERS API
 ```
 DELETE
 https://localhost:7182/api/orders/DeleteOrder/{Id}
@@ -89,5 +89,41 @@ https://localhost:7182/api/orders/EditOrder/{Id}
     "status": 1,
     "symbol": "FB",
     "broker": "IBKR"
+}
+```
+## ACCOUNT SUMMARY API
+```
+GET
+https://localhost:7182/api/account_summary/GetAccount_Summary
+https://localhost:7182/api/account_summary/GetAccount_Summary/{Id}
+DELETE
+https://localhost:7182/api/account_summary/DeleteAccount_Summary/{Id}
+POST
+https://localhost:7182/api/account_summary/AddAccount_Summary
+{
+    "accountref": 3,
+    "availablefunds": 431.0,
+    "grosspositionvalue": 1.0,
+}
+PUT
+https://localhost:7182/api/account_summary/EditAccountSummary/{Id}
+{
+    "availablefunds": 10000000000,
+    "grosspositionvalue": 1.0,
+}
+```
+## BROKER API
+GET
+https://localhost:7182/api/brokers/GetBrokers
+DELETE
+https://localhost:7182/api/brokers/DeleteBroker
+{
+    "name": "For Deletion"
+}
+POST
+https://localhost:7182/api/brokers/AddBrokers
+{
+    "name": "Test Broker",
+    "website": "https://www.testbrokerpostman.com/"
 }
 ```
