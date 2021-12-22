@@ -64,5 +64,32 @@ namespace Webservice.ControllerHelpers
             return response;
         }
 
+        public static ResponseMessage Remove(string name, DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Remove instance from DB
+            var inst = BrokersHelper_db.Remove(name, context, out StatusResponse statusResponse);
+
+            if (inst == 0)
+            {
+                statusResponse.Message = "Error occured removing broker.";
+                Console.WriteLine(statusResponse.Message);
+            }
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Error occured removing broker.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
     }
 }

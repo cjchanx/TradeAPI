@@ -44,7 +44,7 @@ namespace Webservice.Controllers
 
         [HttpGet]
         [Route("GetBrokers")]
-        public ResponseMessage GetAccounts()
+        public ResponseMessage GetBrokers()
         {
             var response = BrokersHelper.GetCollection(Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
@@ -53,9 +53,18 @@ namespace Webservice.Controllers
 
         [HttpPost]
         [Route("AddBrokers")]
-        public ResponseMessage AddAccount([FromBody] JObject data)
+        public ResponseMessage AddBroker([FromBody] JObject data)
         {
             var resp = BrokersHelper.Add(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
+
+        [HttpDelete("{name:string}")]
+        [Route("DeleteBroker/{name}")]
+        public ResponseMessage DeleteBroker(string name)
+        {
+            var resp = BrokersHelper.Remove(name, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }

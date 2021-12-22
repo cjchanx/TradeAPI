@@ -105,6 +105,5 @@ namespace Webservice.Controllers
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }
-
     }
 }
