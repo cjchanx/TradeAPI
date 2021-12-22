@@ -100,9 +100,9 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "UPDATE `Accounts` SET `Broker`=@broker,`Name`=@name,`Description`=@desc,`Password`=@pass, `Active`=@active WHERE `Id`=@Id,",
+                    commandText: "UPDATE `Accounts` SET `Broker`=@broker,`Name`=@name,`Description`=@desc,`Password`=@pass, `Active`=@active WHERE `Id`=@id",
                     parameters: new Dictionary<string, object> {
-                        {"@Id", inst.Id },
+                        {"@id", inst.Id },
                         {"@broker", inst.Broker },
                         {"@name", inst.Name },
                         {"@desc", inst.Description },

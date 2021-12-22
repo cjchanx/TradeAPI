@@ -36,10 +36,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Add(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            int id = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
+            int id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
-            DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
+            DateTime date = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
             string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
@@ -72,10 +72,10 @@ namespace Webservice.ControllerHelpers
         public static ResponseMessage Update(JObject data, DBContext context, out HttpStatusCode stat, bool includeDetails = false)
         {
             // Extract parameters
-            int id = (data.ContainsKey("accountref") ? data.GetValue("accountref").Value<int>() : 0);
+            int id = (data.ContainsKey("id") ? data.GetValue("id").Value<int>() : 0);
             bool active = (data.ContainsKey("active") ? data.GetValue("active").Value<bool>() : false);
             string broker = (data.ContainsKey("broker") ? data.GetValue("broker").Value<string>() : null);
-            DateTime date = (data.ContainsKey("date") ? data.GetValue("date").Value<DateTime>() : DateTime.UnixEpoch);
+            DateTime date = (data.ContainsKey("datecreated") ? data.GetValue("datecreated").Value<DateTime>() : DateTime.UnixEpoch);
             string name = (data.ContainsKey("name") ? data.GetValue("name").Value<string>() : null);
             string desc = (data.ContainsKey("description") ? data.GetValue("description").Value<string>() : null);
             string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
