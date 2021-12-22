@@ -1,5 +1,7 @@
 ﻿@page
+@using Webservice.ContextHelpers
 @model TradingDB.Pages.AccountEditOrdersModel
+@inject DatabaseContextHelper context
 @{
 }
 
@@ -50,5 +52,8 @@
                 <input type="submit" class="btn btn-primary" value="Update"/>
             </div>
         </div>
+        <input type="hidden" asp-for="updateorder.Id" class="form-control" />
+        <input type="hidden" asp-for="updateorder.Status" class="form-control" />
+        <input type="hidden" asp-for="updateorder.Broker" class="form-control" />
     </form>
 </div>
