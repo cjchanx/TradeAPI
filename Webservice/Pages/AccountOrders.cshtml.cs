@@ -20,7 +20,19 @@ namespace TradingDB.Pages
         }
 
         public IActionResult Delete(int id) {
-            OrdersHelper_db.Remove(id, _context.DBContext, out StatusResponse resp);
+            foreach (var order in OrdersHelper_db.getCollection(_context.DBContext)) {
+                if (order.Id == id) {
+                    foreach (var summary in Account_SummaryHelper_db.getCollection(_context.DBContext))
+                    {
+                        if (summary.AccountRef == order.AccountRef)
+                        {
+                            Account_SummaryHelper_db.UpdateFunds(summary.AccountRef, summary.AvailableFunds + (order.TargetPrice * order.Quantity), _context.DBContext, out StatusResponse ressp);
+                            OrdersHelper_db.Remove(id, _context.DBContext, out StatusResponse resp);
+                            return RedirectToPage("/AccountOrders");
+                        }
+                    }
+                }
+            }
             return RedirectToPage("/AccountOrders");
         }
 
