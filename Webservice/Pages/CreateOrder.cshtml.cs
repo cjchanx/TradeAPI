@@ -29,6 +29,7 @@ namespace TradingDB.Pages
                 if (HttpContext.Session.GetString("AccountID") == item.Id.ToString())
                 {
                     OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
+                    OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
                     return RedirectToPage("AccountOrders");
                 }
             }

@@ -25,6 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/AccountTransactions">Transactions</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AccountSecurityView">Securities</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +44,7 @@
 
         
 <h2>Account Summary</h2>
-
+            <a asp-page="/AccountAddFunds" >Manage Funds</a>
             @foreach (var item in Account_SummaryHelper_db.getCollection(context.DBContext))
             {
                 int id = int.Parse(HttpContext.Session.GetString("AccountID"));

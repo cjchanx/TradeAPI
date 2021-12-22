@@ -21,7 +21,7 @@ namespace TradingDB.Pages
         {
                 foreach (var item in OrdersHelper_db.getCollection(_context.DBContext))
                 {
-                 if (@item.Id == id && int.Parse(HttpContext.Session.GetString("AccountID")) == item.AccountRef) {
+                 if (@item.Id == id && int.Parse(HttpContext.Session.GetString("AccountID")) == @item.AccountRef) {
                         updateorder = new UpdateOrder();
                         updateorder.Action = @item.Action;
                         updateorder.Quantity = @item.Quantity;
