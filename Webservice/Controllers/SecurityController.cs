@@ -72,5 +72,33 @@ namespace Webservice.Controllers
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }
+
+        [HttpPut]
+        [Route("EditSecurity")]
+        public ResponseMessage EditSecurity([FromBody] JObject data)
+        {
+            var resp = SecurityHelper.UpdateFull(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
+
+        [HttpPut]
+        [Route("EditPrice")]
+        public ResponseMessage EditPrice([FromBody] JObject data)
+        {
+            var resp = SecurityHelper.UpdatePrice(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
+
+        [HttpGet]
+        [Route("GetPrice")]
+        public ResponseMessage GetPrice([FromBody] JObject data)
+        {
+            string name = (data.ContainsKey("symbol") ? data.GetValue("symbol").Value<string>() : null);
+            var response = SecurityHelper.GetPrice(name, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return response;
+        }
     }
 }
