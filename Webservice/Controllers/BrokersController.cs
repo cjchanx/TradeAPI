@@ -60,7 +60,7 @@ namespace Webservice.Controllers
             return resp;
         }
 
-        [HttpDelete("{name:string}")]
+        [HttpDelete("{name}")]
         [Route("DeleteBroker/{name}")]
         public ResponseMessage DeleteBroker(string name)
         {
