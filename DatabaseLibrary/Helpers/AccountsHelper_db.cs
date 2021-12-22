@@ -16,7 +16,7 @@ namespace DatabaseLibrary.Helpers
         /// Update updates an account's parameters based on it's Id 
         /// </summary>
         /// <returns>Account_db object</returns>
-        public static Accounts_db Update(int id, string broker, string name, string desc, string pass, DBContext context, out StatusResponse response)
+        public static Accounts_db ForceDelete(int id, string broker, string name, string desc, string pass, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace DatabaseLibrary.Helpers
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid name entered.");
                 if (string.IsNullOrEmpty(broker?.Trim()))
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid broker entered.");
-                if(string.IsNullOrEmpty(desc?.Trim()))
+                if (string.IsNullOrEmpty(desc?.Trim()))
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid description entered.");
                 if (string.IsNullOrEmpty(pass?.Trim()))
                     throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid password entered.");
@@ -50,6 +50,64 @@ namespace DatabaseLibrary.Helpers
                         {"@name", inst.Name },
                         {"@desc", inst.Description },
                         {"@pass", inst.Password }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1 || rowsAffected == 0)
+                    throw new Exception(message);
+
+                // Return
+
+                response = new StatusResponse("Account updated successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update updates an account's parameters based on it's Id 
+        /// </summary>
+        /// <returns>Account_db object</returns>
+        public static Accounts_db Update(int id, string broker, bool active, string name, string desc, string pass, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (string.IsNullOrEmpty(name?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid name entered.");
+                if (string.IsNullOrEmpty(broker?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid broker entered.");
+                if(string.IsNullOrEmpty(desc?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid description entered.");
+                if (string.IsNullOrEmpty(pass?.Trim()))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid password entered.");
+
+                // Create instance
+                Accounts_db inst = new Accounts_db(
+                    id,
+                    active,
+                    broker,
+                    DateTime.Now,
+                    name,
+                    desc,
+                    pass
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "UPDATE `Accounts` SET `Broker`=@broker,`Name`=@name,`Description`=@desc,`Password`=@pass, `Active`=@active WHERE `Id`=@Id,",
+                    parameters: new Dictionary<string, object> {
+                        {"@Id", inst.Id },
+                        {"@broker", inst.Broker },
+                        {"@name", inst.Name },
+                        {"@desc", inst.Description },
+                        {"@pass", inst.Password },
+                        {"@active", inst.Active }
                     },
                     message: out string message
                 );

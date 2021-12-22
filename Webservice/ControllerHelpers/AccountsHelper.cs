@@ -81,7 +81,7 @@ namespace Webservice.ControllerHelpers
             string pass = (data.ContainsKey("password") ? data.GetValue("password").Value<string>() : null);
 
             // Add instance to DB
-            var inst = AccountsHelper_db.Update(id, broker, name, desc, pass, context, out StatusResponse statusResponse);
+            var inst = AccountsHelper_db.Update(id, broker, active, name, desc, pass, context, out StatusResponse statusResponse);
 
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
