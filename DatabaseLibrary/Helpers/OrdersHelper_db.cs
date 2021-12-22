@@ -18,7 +18,7 @@ namespace DatabaseLibrary.Helpers
         /// Edits existing AccountRef of Order object based on the input data.
         /// </summary>
         /// <returns>Account_db object edited </returns>
-        public static Orders_db Edit(int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
+        public static Orders_db Edit(int Id, int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Create instance
                 Orders_db inst = new Orders_db(
-                    -1,
+                    Id,
                     AccountRef,
                     Action,
                     TargetPrice,
@@ -47,7 +47,7 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@Id, @accountref, @action, @targetprice, @datecreated, @quantity, @status, @symbol, @broker)",
+                    commandText: "UPDATE Orders SET AccountRef=@accountref, Action=@action, TargetPrice=@targetprice, DateCreated=@datecreated, Quantity=@quantity, Status=@status, Symbol=@symbol, BrokerName=@broker WHERE Id=@Id",
                     parameters: new Dictionary<string, object> {
                         {"@Id", inst.Id},
                         {"@accountref", inst.AccountRef },
@@ -61,11 +61,14 @@ namespace DatabaseLibrary.Helpers
                     },
                     message: out string message
                 );
+
                 if (rowsAffected == -1)
                     throw new Exception(message);
+                else if(rowsAffected == 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "No existing order.");
 
                 // Return
-                response = new StatusResponse("Order added successfully");
+                response = new StatusResponse("Order updated sucessfully.");
                 return inst;
             }
             catch (Exception ex)

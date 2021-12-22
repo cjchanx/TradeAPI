@@ -97,6 +97,14 @@ namespace Webservice.Controllers
             return resp;
         }
 
+        [HttpPut("{id:int}")]
+        [Route("EditOrder/{id}")]
+        public ResponseMessage EditOrder(int id, [FromBody] JObject data)
+        {
+            var resp = OrdersHelper.Edit(id, data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
 
     }
 }
