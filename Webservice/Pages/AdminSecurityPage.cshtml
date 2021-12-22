@@ -54,8 +54,8 @@
                     <td>@item.Price</td>
                     <td>@item.Description</td>
                     <td>
-                        <a asp-page="/AdminEditSecurity" asp-route-id="@item.Symbol" >Edit</a>
-                        <a type="submit" asp-action="Delete"  asp-controller="AccountOrdersModel" asp-route-id="@item.Symbol">Delete</a>
+                        <a asp-page="/AdminEditSecurity" asp-route-symbol="@item.Symbol" >Edit</a>
+                        <a type="submit" asp-action="Delete"  asp-controller="AdminSecurityPageModel" asp-route-symbol="@item.Symbol">Delete</a>
                     </td>
                 </tr>
             }
