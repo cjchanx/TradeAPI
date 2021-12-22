@@ -79,5 +79,25 @@ namespace Webservice.ControllerHelpers
             stat = statusResponse.StatusCode;
             return response;
         }
+
+        public static ResponseMessage GetSummaryByAccount(int Id, DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Get instances from DB
+            var dbInst = Account_SummaryHelper_db.GetSummaryByAccount(Id, context, out StatusResponse statusResponse);
+
+            // Convert to object
+            var inst = dbInst?.Select(x => Account_SummaryHelper.Convert(x)).ToList();
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Something went wrong while retrieving the Account.";
+            }
+
+            // Return response
+            var response = new ResponseMessage(inst != null, statusResponse.Message, inst);
+            stat = statusResponse.StatusCode;
+            return response;
+        }
     }
 }

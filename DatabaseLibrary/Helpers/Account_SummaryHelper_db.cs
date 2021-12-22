@@ -245,5 +245,47 @@ namespace DatabaseLibrary.Helpers
                 return null;
             }
         }
+
+        public static List<Account_Summary_db> GetSummaryByAccount(int Id, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM Account_Summary WHERE AccountRef=@accountref",
+                    parameters: new Dictionary<string, object>
+                    {
+                        {"@accountref", Id}
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<Account_Summary_db> inst = new List<Account_Summary_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new Account_Summary_db(
+                        AccountRef: int.Parse(row["accountref"].ToString()),
+                        AvailableFunds: double.Parse(row["availablefunds"].ToString()),
+                        GrossPositionValue: double.Parse(row["grosspositionvalue"].ToString()),
+                        NetLiquidation: double.Parse(row["netliquidation"].ToString())
+                        )
+                    );
+                }
+
+                // Return
+                response = new StatusResponse("Account_Summary successfully retreived.");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
     }
+
 }

@@ -58,5 +58,15 @@ namespace Webservice.Controllers
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }
+
+        [HttpGet("{id:int}")]
+        [Route("GetAccount_Summary/{id}")]
+        public ResponseMessage GetAccount_SummaryByAccount(int id)
+        {
+            var response = Account_SummaryHelper.GetSummaryByAccount(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return response;
+        }
+
     }
 }
