@@ -16,7 +16,7 @@ namespace TradingLibrary.Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="website"></param>
-        public Brokers(String name, String website)
+        public Brokers(string name, string website)
         {
             Name = name;
             Website = website;
@@ -30,13 +30,13 @@ namespace TradingLibrary.Models
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "website")]
-        public String Website { get; set; }
+        public string Website { get; set; }
 
 
         #endregion
