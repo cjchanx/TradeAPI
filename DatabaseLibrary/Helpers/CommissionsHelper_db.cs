@@ -10,7 +10,7 @@ using TradingLibrary.Models;
 
 namespace DatabaseLibrary.Helpers
 {
-    internal class CommissionsHelper_db
+    public class CommissionsHelper_db
     {
         public static Commission_db Add(string broker, int type, double rate, DBContext context, out StatusResponse response)
         {
@@ -135,6 +135,83 @@ namespace DatabaseLibrary.Helpers
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// Remove removes the relevant Commission from the database by BrokerName and Type, returns number of rows updated.
+        /// </summary>
+        /// <returns></returns>
+        public static int Remove(string broker, int type, DBContext context, out StatusResponse response)
+        {
+            Console.WriteLine("Running REMOVE.");
+            try
+            {
+                // Attempt to remove from database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Comissions` WHERE BrokerName=@name AND Type=@type",
+                    parameters: new Dictionary<string, object> {
+                        {"@brokername", broker},
+                        {"@type", type }
+                    },
+                    message: out string message
+                );
+
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                {
+                    response = new StatusResponse("Deletion unsucessful.");
+                    throw new Exception(message);
+                }
+
+                // Return
+                response = new StatusResponse("Deleted entry successfully.");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Remove removes the relevant Commission from the database by BrokerName, returns number of rows updated.
+        /// </summary>
+        /// <returns></returns>
+        public static int RemoveByBroker(string broker, DBContext context, out StatusResponse response)
+        {
+            Console.WriteLine("Running REMOVE.");
+            try
+            {
+                // Attempt to remove from database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Comissions` WHERE BrokerName=@name",
+                    parameters: new Dictionary<string, object> {
+                        {"@brokername", broker},
+                    },
+                    message: out string message
+                );
+
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                {
+                    response = new StatusResponse("Deletion unsucessful.");
+                    throw new Exception(message);
+                }
+
+                // Return
+                response = new StatusResponse("Deleted entry successfully.");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return 0;
+            }
         }
     }
 }
