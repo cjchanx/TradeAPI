@@ -113,6 +113,7 @@ https://localhost:7182/api/account_summary/EditAccountSummary/{Id}
 }
 ```
 ## BROKER API
+```
 GET
 https://localhost:7182/api/brokers/GetBrokers
 DELETE
