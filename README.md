@@ -133,7 +133,20 @@ https://localhost:7182/api/brokers/AddBrokers
 GET
 https://localhost:7182/api/commissions/GetCommissions
 DELETE
-( TO TEST )
+https://localhost:7182/api/commissions/DeleteCommission
+{
+    "broker": "ASPX",
+    "type": 1
+}
+https://localhost:7182/api/commissions/DeleteByBroker
+{
+    "broker": "ASPX"
+}
 POST
-( TO TEST )
+https://localhost:7182/api/commissions/AddCommission
+{
+    "broker": "ASPX",
+    "type": 0,
+    "rate": 1.5
+}
 ```
