@@ -14,8 +14,68 @@ namespace DatabaseLibrary.Helpers
 {
     public class OrdersHelper_db
     {
+        /// <summary>
+        /// Edits existing AccountRef of Order object based on the input data.
+        /// </summary>
+        /// <returns>Account_db object edited </returns>
+        public static Orders_db Edit(int AccountRef, int Action, double TargetPrice, DateTime DateCreated, int Quantity, int Status, string Symbol, string Broker, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Validate current data
+                if (TargetPrice < 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid target price.");
+                if (DateCreated == null)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid date created.");
+                if (Quantity < 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid quantity.");
+                if (!Enum.IsDefined(typeof(OrderAction), Status))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid order action.");
 
-      
+                // Create instance
+                Orders_db inst = new Orders_db(
+                    -1,
+                    AccountRef,
+                    Action,
+                    TargetPrice,
+                    DateCreated,
+                    Quantity,
+                    Status,
+                    Symbol,
+                    Broker
+                    );
+
+                // Attempt to add to database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@Id, @accountref, @action, @targetprice, @datecreated, @quantity, @status, @symbol, @broker)",
+                    parameters: new Dictionary<string, object> {
+                        {"@Id", inst.Id},
+                        {"@accountref", inst.AccountRef },
+                        {"@action", inst.Action },
+                        {"@targetprice", inst.TargetPrice },
+                        {"@datecreated", inst.DateCreated },
+                        {"@quantity", inst.Quantity },
+                        {"@status", inst.Status },
+                        {"@symbol", inst.Symbol },
+                        {"@broker", inst.Broker }
+                    },
+                    message: out string message
+                );
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+
+                // Return
+                response = new StatusResponse("Order added successfully");
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return null;
+            }
+        }
+
         /// <summary>
         /// Add adds a new account entry into the database, assuming that it is active and using the current UTC time.
         /// </summary>
@@ -25,7 +85,15 @@ namespace DatabaseLibrary.Helpers
             try
             {
                 // Validate current data
-                Console.WriteLine("STUFF!");
+                if (TargetPrice < 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid target price.");
+                if (DateCreated == null)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid date created.");
+                if (Quantity < 0)
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid quantity.");
+                if (!Enum.IsDefined(typeof(OrderAction), Status))
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid order action.");
+
 
                 // Create instance
                 Orders_db inst = new Orders_db(
