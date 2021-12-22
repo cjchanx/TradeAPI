@@ -1,0 +1,54 @@
+﻿@page
+@model TradingDB.Pages.AccountEditOrdersModel
+@{
+}
+
+<div class="container border" style="padding:20px">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="updateorder.Action"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="updateorder.Action" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="updateorder.Action"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="updateorder.TargetPrice"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="updateorder.TargetPrice" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="updateorder.TargetPrice"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="updateorder.Quantity"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="updateorder.Quantity" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="updateorder.Quantity"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="updateorder.Symbol"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="updateorder.Symbol" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="updateorder.Symbol"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Update"/>
+            </div>
+        </div>
+    </form>
+</div>

@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Webservice.Pages
 {
-    public class AccountOrdersModel : Controller
+    public class AdminEditSecurityModel : PageModel
     {
         public void OnGet()
         {
         }
-
     }
 }
