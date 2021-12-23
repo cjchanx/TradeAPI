@@ -13,7 +13,7 @@ namespace Webservice.ControllerHelpers
         #region Converters
 
         /// <summary>
-        /// Returns a Account from an instance of an Account_db
+        /// Returns a Order from an instance of an Order_db
         /// </summary>
         /// <param name="inst"></param>
         /// <returns>null if inst was null</returns>
@@ -52,7 +52,7 @@ namespace Webservice.ControllerHelpers
             // Process includeErrors
             if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetails)
             {
-                statusResponse.Message = "Error occured adding new account.";
+                statusResponse.Message = "Error occured adding new order.";
             }
 
             // Setup and return response
