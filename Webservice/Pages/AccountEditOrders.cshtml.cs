@@ -43,6 +43,7 @@ namespace TradingDB.Pages
                 if (HttpContext.Session.GetString("AccountID") == item.Id.ToString())
                 {
                     OrdersHelper_db.Edit(updateorder.Id, int.Parse(HttpContext.Session.GetString("AccountID")), updateorder.Action, updateorder.TargetPrice, DateTime.Now, updateorder.Quantity, updateorder.Status, updateorder.Symbol, updateorder.Broker, _context.DBContext, out StatusResponse resp);
+                    OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp1);
                     return RedirectToPage("AccountOrders");
                 }
             }

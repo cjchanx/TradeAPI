@@ -17,6 +17,7 @@ namespace TradingDB.Pages
         }
         public void OnGet()
         {
+            OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
         }
 
         public IActionResult Delete(int id) {

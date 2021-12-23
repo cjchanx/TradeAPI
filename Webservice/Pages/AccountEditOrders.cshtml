@@ -2,6 +2,8 @@
 @using Webservice.ContextHelpers
 @model TradingDB.Pages.AccountEditOrdersModel
 @inject DatabaseContextHelper context
+@using TradingLibrary.Enums;
+@using DatabaseLibrary.Helpers;
 @{
 }
 
@@ -13,7 +15,7 @@
                 <label asp-for="updateorder.Action"></label>
             </div>
             <div class="col-5">
-                <input type="text" asp-for="updateorder.Action" class="form-control" />
+                <select  asp-for="updateorder.Action" asp-items="Html.GetEnumSelectList<OrderAction>()" class="form-control"> </select>
             </div>
             <span class="text-danger" asp-validation-for="updateorder.Action"></span>
         </div>

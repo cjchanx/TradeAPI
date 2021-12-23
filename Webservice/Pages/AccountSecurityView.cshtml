@@ -34,6 +34,13 @@
                     </ul>
                 </div>
             </div>
+            <div>
+            @{
+                string name = HttpContext.Session.GetString("AccountName");
+            }
+                <div class="text-right" ><strong>@name</strong></div>
+                <a class="text-right" asp-page="/ClientPage">Logout</a>
+            </div>
         </nav>
     </header>
 

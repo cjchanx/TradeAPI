@@ -350,9 +350,11 @@ namespace DatabaseLibrary.Helpers
                             double avail = 0;
                             foreach (var sum in Account_SummaryHelper_db.GetSummaryByAccount(AccountRef, context, out StatusResponse resp5)) {
                                 avail = sum.AvailableFunds;
-                                foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context)) {
-                                    gross += owned.Quantity * owned.AveragePrice;
-                                }
+                            }
+
+                            foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context))
+                            {
+                                gross += (owned.Quantity * owned.AveragePrice);
                             }
                             Account_SummaryHelper_db.Update(AccountRef, avail, gross, context, out StatusResponse resp6);
 
@@ -368,11 +370,12 @@ namespace DatabaseLibrary.Helpers
                             foreach (var sum in Account_SummaryHelper_db.GetSummaryByAccount(AccountRef, context, out StatusResponse resp7))
                             {
                                 avail = sum.AvailableFunds;
-                                foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context))
-                                {
-                                    gross += owned.Quantity * owned.AveragePrice;
-                                }
                             }
+                            foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context))
+                            {
+                                gross += owned.Quantity * owned.AveragePrice;
+                            }
+
                             Account_SummaryHelper_db.Update(AccountRef, avail, gross, context, out StatusResponse resp8);
                         }
                         
