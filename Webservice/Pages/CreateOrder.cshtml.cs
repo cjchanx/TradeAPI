@@ -41,7 +41,6 @@ namespace TradingDB.Pages
                                 {
                                     if (security.Symbol == CreateOrder.Symbol)
                                     {
-                                        Account_SummaryHelper_db.UpdateFunds(item.Id, summary.AvailableFunds - (CreateOrder.TargetPrice * CreateOrder.Quantity), _context.DBContext, out StatusResponse ressp);
                                         OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
                                         OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
                                         return RedirectToPage("AccountOrders");
@@ -55,9 +54,16 @@ namespace TradingDB.Pages
                                 {
                                     if(security.Symbol == CreateOrder.Symbol)
                                     {
-
-
-
+                                        foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(summary.AccountRef, _context.DBContext)) {
+                                            if (owned.Symbol == CreateOrder.Symbol) {
+                                                if (owned.Quantity >= CreateOrder.Quantity) {
+                                                    OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
+                                                    OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
+                                                    return RedirectToPage("AccountOrders");
+                                                }
+                                                return RedirectToPage("CreateOrder");
+                                            }
+                                        }
                                         return RedirectToPage("AccountOrders");
                                     }
                                 }

@@ -45,7 +45,7 @@ namespace TradingDB.Pages
 
         public IActionResult OnPost()
         {
-            if (UpdateAdminAccount.AvailableFunds > 0) {
+            if (UpdateAdminAccount.AvailableFunds >= 0) {
                 AccountsHelper_db.Update(UpdateAdminAccount.Id, UpdateAdminAccount.Broker, UpdateAdminAccount.Active, UpdateAdminAccount.Name, UpdateAdminAccount.Description, UpdateAdminAccount.Password, _context.DBContext, out StatusResponse response);
                 Account_SummaryHelper_db.UpdateFunds(UpdateAdminAccount.Id, UpdateAdminAccount.AvailableFunds, _context.DBContext, out StatusResponse resp);
             }

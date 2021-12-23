@@ -332,13 +332,13 @@ namespace DatabaseLibrary.Helpers
                         {
                             realizedPnL = price;
                         }
-                        TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price * Quantity, realizedPnL, context, out StatusResponse resp1);
-
                         double oldquantity = 0;
                         string oldsymbol = symbol;
                         double oldavgprice = 0;
-                        foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context)) {
-                            if (owned.Symbol == symbol) {
+                        foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context))
+                        {
+                            if (owned.Symbol == symbol)
+                            {
                                 oldquantity = owned.Quantity;
                                 oldsymbol = owned.Symbol;
                                 oldavgprice = owned.AveragePrice;
@@ -348,7 +348,20 @@ namespace DatabaseLibrary.Helpers
                         double totalprice = oldavgprice * oldquantity;
                         totalprice += Quantity * price;
 
-                        OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity + (int)oldquantity, totalprice / (Quantity + oldquantity), context, out StatusResponse resp3);
+                        if (Action == 2 || Action == 3)
+                        {
+                            OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity + (int)oldquantity, totalprice / (Quantity + oldquantity), context, out StatusResponse resp3);
+                            Account_SummaryHelper_db.UpdateFundsDiff(AccountRef, -(Quantity * price), context, out StatusResponse resp4);
+
+                        }
+                        else {
+                            OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity - (int)oldquantity, (totalprice- (2* oldquantity*oldavgprice)) / (Quantity - oldquantity), context, out StatusResponse resp3);
+                            Account_SummaryHelper_db.UpdateFundsDiff(AccountRef, (Quantity * price), context, out StatusResponse resp4);
+                        }
+                        
+                        TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price * Quantity, realizedPnL, context, out StatusResponse resp1);
+
+
                         
                     }
                 }
