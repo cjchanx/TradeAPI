@@ -52,10 +52,19 @@ namespace Webservice.Controllers
         }
 
         [HttpPost]
-        [Route("AddTransactions")]
-        public ResponseMessage AddTransactions([FromBody] JObject data)
+        [Route("AddTransaction")]
+        public ResponseMessage AddTransaction([FromBody] JObject data)
         {
             var resp = TransactionsHelper.Add(data, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)stat;
+            return resp;
+        }
+
+        [HttpDelete("{id:int}")]
+        [Route("DeleteTransaction/{id}")]
+        public ResponseMessage DeleteTransaction(int id)
+        {
+            var resp = TransactionsHelper.Remove(id, Database.DBContext, out HttpStatusCode stat, HostingEnvironment.IsDevelopment());
             HttpContext.Response.StatusCode = (int)stat;
             return resp;
         }

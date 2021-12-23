@@ -120,6 +120,47 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        /// <summary>
+        /// Remove the relevant Transaction from the database by Id, returns rowsAffected.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="context"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static int Remove(int Id, DBContext context, out StatusResponse response)
+        {
+            try
+            {
+                // Attempt to remove from database
+                int rowsAffected = context.ExecuteNonQueryCommand(
+                    commandText: "DELETE FROM `Transactions` WHERE Id = @Id",
+                    parameters: new Dictionary<string, object> {
+                        {"@Id", Id },
+                    },
+                    message: out string message
+                );
+
+
+                if (rowsAffected == -1)
+                    throw new Exception(message);
+                if (rowsAffected == 0)
+                {
+                    response = new StatusResponse("Deletion unsucessful.");
+                    throw new Exception(message);
+                }
+
+                // Return
+                response = new StatusResponse("Deleted entry successfully.");
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                // Error occured.
+                response = new StatusResponse(ex);
+                return 0;
+            }
+        }
+
 
         public static List<Transactions_db> getCollection(DBContext context, out StatusResponse response)
         {
