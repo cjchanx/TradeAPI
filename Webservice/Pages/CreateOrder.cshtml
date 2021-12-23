@@ -54,7 +54,7 @@
                     }
 
                 }
-                <select asp-for="CreateOrder.Symbol" asp-items="@(new SelectList(Model.Symbols))" class="form-control" />
+                <input type="text" asp-for="CreateOrder.Symbol" class="form-control" />
             </div>
             <span class="text-danger" asp-validation-for="CreateOrder.Symbol"  ></span>
         </div>

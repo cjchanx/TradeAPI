@@ -3,15 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Webservice.ContextHelpers;
 using DatabaseLibrary.Helpers;
 using DatabaseLibrary.Core;
-using DatabaseLibrary.Models;
+using TradingLibrary.Models;
 
 namespace TradingDB.Pages
 {
     public class CreateOrderModel : PageModel
     {
         private readonly DatabaseContextHelper _context;
-
-        public List<Security_db> Symbols { get; set; }
 
         public CreateOrderModel(DatabaseContextHelper context)
         {
@@ -23,23 +21,47 @@ namespace TradingDB.Pages
 
         public void OnGet()
         {
-            Symbols = new List<string>();
-            Symbols.Add("hi");
+
         }
 
         public IActionResult OnPost()
         {
+            if (CreateOrder.TargetPrice <= 0) {
+                return RedirectToPage("CreateOrder");
+            }
             foreach (var item in AccountsHelper_db.getCollection(_context.DBContext))
             {
                 if (HttpContext.Session.GetString("AccountID") == item.Id.ToString())
                 {
                     foreach (var summary in Account_SummaryHelper_db.getCollection(_context.DBContext)) {
                         if (summary.AccountRef == item.Id) {
-                            if (summary.AvailableFunds >= (CreateOrder.TargetPrice * CreateOrder.Quantity) ){
-                                Account_SummaryHelper_db.UpdateFunds(item.Id, summary.AvailableFunds - (CreateOrder.TargetPrice * CreateOrder.Quantity), _context.DBContext, out StatusResponse ressp);
-                                OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
-                                OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
-                                return RedirectToPage("AccountOrders");
+                            if (summary.AvailableFunds >= (CreateOrder.TargetPrice * CreateOrder.Quantity) && (CreateOrder.Action == 2 || CreateOrder.Action == 3))
+                            {
+                                foreach (var security in SecurityHelper_db.getCollection(_context.DBContext))
+                                {
+                                    if (security.Symbol == CreateOrder.Symbol)
+                                    {
+                                        Account_SummaryHelper_db.UpdateFunds(item.Id, summary.AvailableFunds - (CreateOrder.TargetPrice * CreateOrder.Quantity), _context.DBContext, out StatusResponse ressp);
+                                        OrdersHelper_db.Add(item.Id, CreateOrder.Action, CreateOrder.TargetPrice, CreateOrder.Quantity, 1, CreateOrder.Symbol, item.Broker.ToString(), _context.DBContext);
+                                        OrdersHelper_db.UpdateOrders(_context.DBContext, out StatusResponse resp);
+                                        return RedirectToPage("AccountOrders");
+                                    }
+                                }
+                                return RedirectToPage("CreateOrder");
+
+                            }
+                            else {
+                                foreach (var security in SecurityHelper_db.getCollection(_context.DBContext))
+                                {
+                                    if(security.Symbol == CreateOrder.Symbol)
+                                    {
+
+
+
+                                        return RedirectToPage("AccountOrders");
+                                    }
+                                }
+                                return RedirectToPage("CreateOrder");
                             }
                         }
                     }
