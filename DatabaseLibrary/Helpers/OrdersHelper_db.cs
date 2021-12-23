@@ -323,14 +323,7 @@ namespace DatabaseLibrary.Helpers
 
                         // Realized PnL
                         double realizedPnL = 0;
-                        if (Action == (int)OrderAction.Upper_limit_sell)
-                        {
-                            realizedPnL = price;
-                        }
-                        else if (Action == (int)OrderAction.Lower_limit_sell)
-                        {
-                            realizedPnL = price;
-                        }
+
                         double oldquantity = 0;
                         string oldsymbol = symbol;
                         double oldavgprice = 0;
@@ -354,7 +347,8 @@ namespace DatabaseLibrary.Helpers
 
                         }
                         else {
-                            OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity - (int)oldquantity, (totalprice- (2* oldquantity*oldavgprice)) / (Quantity - oldquantity), context, out StatusResponse resp3);
+                            realizedPnL = (price * Quantity) - (oldavgprice * Quantity);
+                            OwnedSecurityHelper_db.Add(AccountRef, symbol, (int)oldquantity - Quantity, (totalprice- (2* oldquantity*oldavgprice)) / (Quantity - oldquantity), context, out StatusResponse resp3);
                             Account_SummaryHelper_db.UpdateFundsDiff(AccountRef, (Quantity * price), context, out StatusResponse resp4);
                         }
                         
