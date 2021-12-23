@@ -136,6 +136,45 @@ namespace DatabaseLibrary.Helpers
             }
         }
 
+        public static List<OwnedSecurity_db> GetOwnedByAccount(int AccountRef, DBContext context)
+        {
+            try
+            {
+                // Attempt to get from the database
+                DataTable table = context.ExecuteDataQueryCommand(
+                    commandText: "SELECT * FROM OwnedSecurity WHERE AccountRef=@accountref",
+                    parameters: new Dictionary<string, object>
+                    {
+                        {"@accountref", AccountRef }
+                    },
+                    message: out string message
+                );
+
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse
+                List<OwnedSecurity_db> inst = new List<OwnedSecurity_db>();
+                foreach (DataRow row in table.Rows)
+                {
+                    inst.Add(new OwnedSecurity_db(
+                        AccountRef: int.Parse(row["accountref"].ToString()),
+                        Symbol: row["symbol"].ToString(),
+                        Quantity: int.Parse(row["quantity"].ToString()),
+                        AveragePrice: double.Parse(row["averageprice"].ToString())
+                        )
+                    );
+                }
+
+                // Return
+                return inst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Remove removes the relevant OwnedSecurity from the database by Id and symbol. Returns rowsAffected.
         /// </summary>

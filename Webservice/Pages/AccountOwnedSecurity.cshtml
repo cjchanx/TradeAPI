@@ -56,9 +56,13 @@
             <th>
                 <a >@Html.DisplayNameFor(model => model.AveragePrice)</a>
             </th>
-            @foreach (var item in TransactionsHelper_db.getCollection(context.DBContext))
+            @foreach (var item in OwnedSecurityHelper_db.GetOwnedByAccount(int.Parse(HttpContext.Session.GetString("AccountID")), context.DBContext))
             {
-
+                <tr>
+                <td>@item.Symbol</td>
+                <td>@item.Quantity</td>
+                <td>@item.AveragePrice</td>
+                </tr>
             }
         </tr>
     </thead>
