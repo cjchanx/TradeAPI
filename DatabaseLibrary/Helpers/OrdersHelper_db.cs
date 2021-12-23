@@ -332,8 +332,24 @@ namespace DatabaseLibrary.Helpers
                         {
                             realizedPnL = price;
                         }
-                        // Add new entry to Transactions table
-                        TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price*Quantity,realizedPnL, context, out StatusResponse resp1);
+                        TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price * Quantity, realizedPnL, context, out StatusResponse resp1);
+
+                        double oldquantity = 0;
+                        string oldsymbol = symbol;
+                        double oldavgprice = 0;
+                        foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context)) {
+                            if (owned.Symbol == symbol) {
+                                oldquantity = owned.Quantity;
+                                oldsymbol = owned.Symbol;
+                                oldavgprice = owned.AveragePrice;
+                                OwnedSecurityHelper_db.Remove(AccountRef, symbol, context, out StatusResponse resp2);
+                            }
+                        }
+                        double totalprice = oldavgprice * oldquantity;
+                        totalprice += Quantity * price;
+
+                        OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity + (int)oldquantity, totalprice / (Quantity + oldquantity), context, out StatusResponse resp3);
+                        
                     }
                 }
 
