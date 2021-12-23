@@ -345,11 +345,35 @@ namespace DatabaseLibrary.Helpers
                             OwnedSecurityHelper_db.Add(AccountRef, symbol, Quantity + (int)oldquantity, totalprice / (Quantity + oldquantity), context, out StatusResponse resp3);
                             Account_SummaryHelper_db.UpdateFundsDiff(AccountRef, -(Quantity * price), context, out StatusResponse resp4);
 
+
+                            double gross = 0;
+                            double avail = 0;
+                            foreach (var sum in Account_SummaryHelper_db.GetSummaryByAccount(AccountRef, context, out StatusResponse resp5)) {
+                                avail = sum.AvailableFunds;
+                                foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context)) {
+                                    gross += owned.Quantity * owned.AveragePrice;
+                                }
+                            }
+                            Account_SummaryHelper_db.Update(AccountRef, avail, gross, context, out StatusResponse resp6);
+
+
                         }
                         else {
                             realizedPnL = (price * Quantity) - (oldavgprice * Quantity);
                             OwnedSecurityHelper_db.Add(AccountRef, symbol, (int)oldquantity - Quantity, (totalprice- (2* oldquantity*oldavgprice)) / (Quantity - oldquantity), context, out StatusResponse resp3);
                             Account_SummaryHelper_db.UpdateFundsDiff(AccountRef, (Quantity * price), context, out StatusResponse resp4);
+
+                            double gross = 0;
+                            double avail = 0;
+                            foreach (var sum in Account_SummaryHelper_db.GetSummaryByAccount(AccountRef, context, out StatusResponse resp7))
+                            {
+                                avail = sum.AvailableFunds;
+                                foreach (var owned in OwnedSecurityHelper_db.GetOwnedByAccount(AccountRef, context))
+                                {
+                                    gross += owned.Quantity * owned.AveragePrice;
+                                }
+                            }
+                            Account_SummaryHelper_db.Update(AccountRef, avail, gross, context, out StatusResponse resp8);
                         }
                         
                         TransactionsHelper_db.Add(AccountRef, Action, price, (double)(price * (rate / 100)), DateTime.Now, Quantity, price * Quantity, realizedPnL, context, out StatusResponse resp1);

@@ -42,7 +42,7 @@ namespace TradingDB.Pages
         {
             foreach (var item in Account_SummaryHelper_db.getCollection(_context.DBContext))
             {
-                if (int.Parse(HttpContext.Session.GetString("AccountID")) == @item.AccountRef && (@item.AvailableFunds - AddFunds.Amount) > 0)
+                if (int.Parse(HttpContext.Session.GetString("AccountID")) == @item.AccountRef && (@item.AvailableFunds - AddFunds.Amount) >= 0)
                 {
                     Account_SummaryHelper_db.UpdateFunds(int.Parse(HttpContext.Session.GetString("AccountID")), @item.AvailableFunds - AddFunds.Amount, _context.DBContext, out StatusResponse resp);
                     return RedirectToPage("/AccountSummary");

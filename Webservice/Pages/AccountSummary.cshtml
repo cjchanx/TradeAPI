@@ -50,6 +50,7 @@
             <a asp-page="/AccountAddFunds" >Manage Funds</a>
             @foreach (var item in Account_SummaryHelper_db.getCollection(context.DBContext))
             {
+
                 int id = int.Parse(HttpContext.Session.GetString("AccountID"));
                 if (id == @item.AccountRef)
                 {
