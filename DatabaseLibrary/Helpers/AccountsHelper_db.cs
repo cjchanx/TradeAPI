@@ -33,9 +33,14 @@ namespace DatabaseLibrary.Helpers
                     },
                     message: out string message
                 );
-                if (rowsAffected == -1 || rowsAffected == 0)
+                if (rowsAffected == -1)
                     throw new Exception(message);
-                response = new StatusResponse("Sucessfully deleted.");
+                if(rowsAffected == 0)
+                {
+                    response = new StatusResponse("No account with given id.");
+                }
+                else
+                    response = new StatusResponse("Sucessfully deleted.");
                 return rowsAffected;
             }
             catch (Exception ex)
