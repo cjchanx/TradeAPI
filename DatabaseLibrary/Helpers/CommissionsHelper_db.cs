@@ -18,7 +18,7 @@ namespace DatabaseLibrary.Helpers
             {
                 // Validate current data
                 if (string.IsNullOrEmpty(broker?.Trim()))
-                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid symbol entered.");;
+                    throw new StatusException(System.Net.HttpStatusCode.BadRequest, "Invalid symbol entered.");
 
                 // Create instance
                 Commission_db inst = new Commission_db(
@@ -122,7 +122,7 @@ namespace DatabaseLibrary.Helpers
                 }
 
                 // Return
-                response = new StatusResponse("Security successfully retreived.");
+                response = new StatusResponse("Commission successfully retreived.");
                 return inst;
             }
             catch (Exception ex)
