@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DatabaseLibrary.Models
 {
-    public class OwnedSecurity
+    public class OwnedSecurity_db
     {
         #region Constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public OwnedSecurity() { }
+        public OwnedSecurity_db() { }
 
         /// <summary>
         /// orders
@@ -24,7 +24,7 @@ namespace DatabaseLibrary.Models
         /// <param name="Quantity"></param>
         /// <param name="Status"></param>
         /// <param name="Symbol"></param>
-        public OwnedSecurity(int AccountRef, string Symbol, int Quantity, double AveragePrice)
+        public OwnedSecurity_db(int AccountRef, string Symbol, int Quantity, double AveragePrice)
         {
             this.AccountRef = AccountRef;
             this.Symbol = Symbol;
