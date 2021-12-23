@@ -112,7 +112,7 @@ namespace Webservice.ControllerHelpers
 
             if(inst == 0)
             {
-                statusResponse.Message = "Error occured removing order.";
+                statusResponse.Message = "No order matching specified id.";
             }
 
             // Process includeErrors

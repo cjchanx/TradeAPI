@@ -84,5 +84,32 @@ namespace Webservice.ControllerHelpers
             stat = statusResponse.StatusCode;
             return response;
         }
+
+        public static ResponseMessage Remove(int id, DBContext context, out HttpStatusCode stat, bool includeDetailsErrors = false)
+        {
+            // Remove instance from DB
+            var inst = TransactionsHelper_db.Remove(id, context, out StatusResponse statusResponse);
+
+            if (inst == 0)
+            {
+                statusResponse.Message = "No transaction matching specified ID.";
+            }
+
+            // Process includeErrors
+            if (statusResponse.StatusCode == HttpStatusCode.InternalServerError && !includeDetailsErrors)
+            {
+                statusResponse.Message = "Error occured removing Transaction.";
+            }
+
+            // Setup and return response
+            var response = new ResponseMessage(
+                inst != 0,
+                statusResponse.Message,
+                null
+            );
+            stat = statusResponse.StatusCode;
+            return response;
+        }
+
     }
 }
