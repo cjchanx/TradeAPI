@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Webservice.ControllerHelpers
 {
-    public class OwnedSecurityHelper : Controller
+    public class OwnedSecurityHelper
     {
         #region Converters
 
