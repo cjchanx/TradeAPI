@@ -112,9 +112,8 @@ namespace DatabaseLibrary.Helpers
 
                 // Attempt to add to database
                 int rowsAffected = context.ExecuteNonQueryCommand(
-                    commandText: "INSERT INTO Orders (Id, AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@Id, @accountref, @action, @targetprice, @datecreated, @quantity, @status, @symbol, @broker)",
+                    commandText: "INSERT INTO Orders (AccountRef, Action, TargetPrice, DateCreated, Quantity, Status, Symbol, BrokerName) VALUES (@accountref, @action, @targetprice, @datecreated, @quantity, @status, @symbol, @broker)",
                     parameters: new Dictionary<string, object> {
-                        {"@Id", inst.Id},
                         {"@accountref", inst.AccountRef },
                         {"@action", inst.Action },
                         {"@targetprice", inst.TargetPrice },
