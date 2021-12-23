@@ -1,6 +1,25 @@
 # TradeAPI
 Trading Data API Project.
 
+To run the project open TradingDB.sln inside Visual Studio 2022 (for compatability support with ASP.NET CORE 6). Press the continue buttons from the top to compile and run the program. A webpage will be available under https://localhost:7182 which links to the project. For API calls, direct them at the same URL. For instance https://localhost:7182/api/orders/GetOrders.
+
+In order to ensure a connection to a properly configured database, setup a database using the TradeDB.sql file. Once the database is setup, point to it inside Webservice/appsettings.json inside the connection string in the following format
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Database": {
+        "ConnectionString": "Server = {hostname}; Port = 3306; Database = TradeDB; Uid = {username}; Pwd={password};"
+  }
+}
+```
+The included appsettings.json file includes a connection to a temporary database which was used during the development process, and is configured with the current version of the SQL schema.
+
 # Dependencies
 Uses Libraries available from NuGet.
 - **Newtonsoft.Json**   *TradingDB and Webservice*
