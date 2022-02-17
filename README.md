@@ -1,5 +1,5 @@
 # TradeAPI
-Trading Data API Project.
+Trading Data API and Web Interface Project.
 
 To run the project, open TradingDB.sln inside Visual Studio 2022 (for compatibility with ASP.NET CORE 6). Press the continue buttons from the top to compile and run the program. A webpage will be available under https://localhost:7182 which links to the project. For API calls, direct them at the same URL. For instance https://localhost:7182/api/orders/GetOrders.
 
